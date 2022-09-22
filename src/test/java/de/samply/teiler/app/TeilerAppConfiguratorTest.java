@@ -86,22 +86,22 @@ class TeilerAppConfiguratorTest {
         return new SpringApplicationBuilder(TeilerCoreApplication.class)
                 .properties(TeilerCoreConst.DEFAULT_LANGUAGE + '=' + defaultLanguage,
                         "APPLICATION_PORT=" + APPLICATION_PORT,
-                        "TAPP1_NAME=" + teilerApp1.getName(),
-                        "TAPP1_TITLE=" + teilerApp1.getTitle(),
-                        "TAPP1_DESCRIPTION=" + teilerApp1.getDescription(),
-                        "TAPP1_ISEXTERNALLINK=" + teilerApp1.isExternLink(),
-                        "TAPP1_SOURCELINK=" + teilerApp1.getSourceLink(),
-                        "TAPP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
-                        "TAPP2_NAME=" + teilerApp2.getName(),
-                        "TAPP2_TITLE=" + teilerApp2.getTitle(),
-                        "TAPP2_DESCRIPTION=" + teilerApp2.getDescription(),
-                        "TAPP2_ISEXTERNALLINK=" + teilerApp2.isExternLink(),
-                        "TAPP2_SOURCELINK=" + teilerApp2.getSourceLink(),
-                        "TAPP2_ROLES=" + String.join(",", Arrays.stream(teilerApp2.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
-                        "TAPP2_EN_NAME=" + teilerApp3.getName(),
-                        "TAPP2_EN_TITLE=" + teilerApp3.getTitle(),
-                        "TAPP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
-                        "TAPP2_EN_SOURCELINK=" + teilerApp3.getSourceLink()
+                        "TEILER_APP1_NAME=" + teilerApp1.getName(),
+                        "TEILER_APP1_TITLE=" + teilerApp1.getTitle(),
+                        "TEILER_APP1_DESCRIPTION=" + teilerApp1.getDescription(),
+                        "TEILER_APP1_ISEXTERNALLINK=" + teilerApp1.isExternLink(),
+                        "TEILER_APP1_SOURCELINK=" + teilerApp1.getSourceLink(),
+                        "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
+                        "TEILER_APP2_NAME=" + teilerApp2.getName(),
+                        "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),
+                        "TEILER_APP2_DESCRIPTION=" + teilerApp2.getDescription(),
+                        "TEILER_APP2_ISEXTERNALLINK=" + teilerApp2.isExternLink(),
+                        "TEILER_APP2_SOURCELINK=" + teilerApp2.getSourceLink(),
+                        "TEILER_APP2_ROLES=" + String.join(",", Arrays.stream(teilerApp2.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
+                        "TEILER_APP2_EN_NAME=" + teilerApp3.getName(),
+                        "TEILER_APP2_EN_TITLE=" + teilerApp3.getTitle(),
+                        "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
+                        "TEILER_APP2_EN_SOURCELINK=" + teilerApp3.getSourceLink()
                 ).build();
     }
 

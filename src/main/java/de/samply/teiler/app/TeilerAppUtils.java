@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public class TeilerAppUtils {
 
-    public final static String APP_PREFIX = "TAPP";
+    public final static String APP_PREFIX = "TEILER_APP";
     public final static String NAME_SUFFIX = "NAME";
     public final static String TITLE_SUFFIX = "TITLE";
     public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
@@ -45,12 +45,14 @@ public class TeilerAppUtils {
     }
 
     public static Integer getAppId(String key) {
-        return Integer.valueOf(key.substring(APP_PREFIX.length(), key.indexOf('_')));
+        key = key.substring(APP_PREFIX.length());
+        return Integer.valueOf(key.substring(0, key.indexOf('_')));
     }
 
     public static String getLanguage(String key) {
         String language = null;
         if (containsLanguage(key)) {
+            key = key.substring(APP_PREFIX.length());
             int index1 = key.indexOf('_')+1;
             int index2 = index1 + key.substring(index1).indexOf('_');
             language = key.substring(index1, index2);
@@ -60,7 +62,7 @@ public class TeilerAppUtils {
     }
 
     public static boolean containsLanguage(String key) {
-        return (StringUtils.countOccurrencesOf(key, "_") >= 2);
+        return (StringUtils.countOccurrencesOf(key, "_") >= 3);
     }
 
     private static Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> initializeTeilerAppSetterMap() {
