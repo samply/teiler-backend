@@ -15,7 +15,7 @@ public class TeilerApp {
     private String routerLink;
     private String singleSpaLink;
     private String sourceLink;
-    private boolean isExternLink = false;
+    private Boolean isExternLink = false;
     private TeilerAppRole[] roles;
 
     public String getName() {
@@ -70,7 +70,7 @@ public class TeilerApp {
         return isExternLink;
     }
 
-    public void setExternLink(boolean externLink) {
+    public void setExternLink(Boolean externLink) {
         isExternLink = externLink;
     }
 

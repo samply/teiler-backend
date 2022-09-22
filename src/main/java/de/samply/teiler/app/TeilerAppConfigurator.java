@@ -8,6 +8,10 @@ import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @Component
@@ -21,6 +25,8 @@ public class TeilerAppConfigurator {
         this.environment = (AbstractEnvironment) environment;
 
         initializeLanguageTeilerAppMap();
+        expandNoLanguageValues();
+        addAutomativGeneratedValues();
     }
 
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
@@ -32,7 +38,6 @@ public class TeilerAppConfigurator {
         environment.getPropertySources().stream().filter(p -> p instanceof EnumerablePropertySource)
                 .map(p -> ((EnumerablePropertySource) p).getPropertyNames()).flatMap(Arrays::stream).distinct()
                 .filter(this::isTeilerApp).forEach(key -> addKeyValue(key, environment.getProperty(key)));
-        //System.getenv().keySet().stream().filter(this::isAppEnvVar).forEach(envVar -> addEnvVar(envVar, System.getenv(envVar)));
     }
 
     private void initializeLanguageTeilerAppMap(Map<String, Object> keyValues) {
@@ -53,7 +58,6 @@ public class TeilerAppConfigurator {
 
     }
 
-
     private TeilerApp getTeilerApp(Integer appId, String language) {
 
         if (language == null) {
@@ -71,6 +75,73 @@ public class TeilerAppConfigurator {
         }
 
         return teilerApp;
+
+    }
+
+    private void expandNoLanguageValues() {
+        convert(languageAppIdTeilerAppMap).forEach(this::expandNoLanguageValues);
+    }
+
+    private void expandNoLanguageValues(Map<String, TeilerApp> languageTeilerAppsMap) {
+        try {
+            expandNoLanguageValues_WithoutManagementException(languageTeilerAppsMap);
+        } catch (IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void expandNoLanguageValues_WithoutManagementException(Map<String, TeilerApp> languageTeilerAppsMap) throws IntrospectionException {
+        Arrays.stream(Introspector.getBeanInfo(TeilerApp.class).getPropertyDescriptors()).forEach(propertyDescriptor -> {
+            TeilerApp defaultLanguageTeilerApp = languageTeilerAppsMap.get(defaultLanguage);
+            languageTeilerAppsMap.values().stream()
+                    .filter(teilerApp -> teilerApp != defaultLanguageTeilerApp)
+                    .forEach(teilerApp -> expandValue(defaultLanguageTeilerApp, teilerApp, propertyDescriptor));
+        });
+    }
+
+    private void expandValue(TeilerApp originTeilerApp, TeilerApp goalTeilerApp, PropertyDescriptor propertyDescriptor) {
+        try {
+            expandValue_WithoutManagementException(originTeilerApp, goalTeilerApp, propertyDescriptor);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void expandValue_WithoutManagementException(TeilerApp originTeilerApp, TeilerApp goalTeilerApp, PropertyDescriptor propertyDescriptor) throws InvocationTargetException, IllegalAccessException {
+        Object goalTeilerAppField = propertyDescriptor.getReadMethod().invoke(goalTeilerApp);
+        if (goalTeilerAppField == null) {
+            Object originTeilerAppField = propertyDescriptor.getReadMethod().invoke(originTeilerApp);
+            if (originTeilerAppField != null) {
+                propertyDescriptor.getWriteMethod().invoke(goalTeilerApp, originTeilerAppField);
+            }
+        }
+    }
+
+    private List<Map<String, TeilerApp>> convert(Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap) {
+
+        Map<Integer, Map<String, TeilerApp>> appIdLanguageTeilerAppsMaps = new HashMap<>();
+        languageAppIdTeilerAppMap.keySet().forEach(language -> {
+            Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language);
+            appIdTeilerAppMap.keySet().forEach(appId ->
+                    {
+                        Map<String, TeilerApp> languageTeilerAppMap = appIdLanguageTeilerAppsMaps.get(appId);
+                        if (languageTeilerAppMap == null) {
+                            languageTeilerAppMap = new HashMap<>();
+                            appIdLanguageTeilerAppsMaps.put(appId, languageTeilerAppMap);
+                        }
+                        languageTeilerAppMap.put(language, appIdTeilerAppMap.get(appId));
+                    }
+            );
+        });
+
+        return appIdLanguageTeilerAppsMaps.values().stream().toList();
+
+    }
+
+    private void addAutomativGeneratedValues() {
+        //TODO
 
     }
 

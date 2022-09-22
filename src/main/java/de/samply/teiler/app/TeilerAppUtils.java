@@ -14,7 +14,6 @@ public class TeilerAppUtils {
     public final static String NAME_SUFFIX = "NAME";
     public final static String TITLE_SUFFIX = "TITLE";
     public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
-    //public final static String ROUTER_LINK_SUFFIX = "ROUTER_LINK";
     public final static String SOURCE_LINK_SUFFIX = "SOURCELINK";
     public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
     public final static String ROLES_SUFFIX = "ROLES";
@@ -32,12 +31,6 @@ public class TeilerAppUtils {
     public static boolean isDescription(String key) {
         return key.contains(DESCRIPTION_SUFFIX);
     }
-
-    /*
-    public static boolean isRouterLink(String key) {
-        return key.contains(ROUTER_LINK_SUFFIX);
-    }
-     */
 
     public static boolean isSourceLink(String key) {
         return key.contains(SOURCE_LINK_SUFFIX);
@@ -57,13 +50,17 @@ public class TeilerAppUtils {
 
     public static String getLanguage(String key) {
         String language = null;
-        if (StringUtils.countOccurrencesOf(key, "_") >= 2) {
-            int index1 = key.indexOf('_');
-            int index2 = key.substring(index1 + 1).indexOf('_');
+        if (containsLanguage(key)) {
+            int index1 = key.indexOf('_')+1;
+            int index2 = index1 + key.substring(index1).indexOf('_');
             language = key.substring(index1, index2);
         }
 
-        return null;
+        return language;
+    }
+
+    public static boolean containsLanguage(String key) {
+        return (StringUtils.countOccurrencesOf(key, "_") >= 2);
     }
 
     private static Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> initializeTeilerAppSetterMap() {
@@ -73,7 +70,6 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(TeilerAppUtils::isName, TeilerApp::setName);
         teilerAppSetterMap.put(TeilerAppUtils::isTitle, TeilerApp::setTitle);
         teilerAppSetterMap.put(TeilerAppUtils::isDescription, TeilerApp::setDescription);
-        //teilerAppSetterMap.put(TeilerAppUtils::isRouterLink, TeilerApp::setRouterLink);
         teilerAppSetterMap.put(TeilerAppUtils::isSourceLink, TeilerApp::setSourceLink);
         teilerAppSetterMap.put(TeilerAppUtils::isExternalLink, TeilerApp::setExternLink);
         teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
