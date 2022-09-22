@@ -6,13 +6,11 @@ public class TeilerCoreConst {
 
     // REST API path
     public final static String INFO_PATH = "/info";
-    public final static String SERVICE_URL_PATH = "/serviceUrl/{serviceName}";
 
-    // Services
-    public final static String NNGM_SERVICE = "NNGM";
-    public final static String QUALITY_REPORT_SERVICE = "QUALITY_REPORT";
+    // Environment Variables
+    public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
 
-    public final static String NNGM_URL_SV = "${" + NNGM_SERVICE + "_URL:#{null}}";
-    public final static String QUALITY_REPORT_URL_SV = "${" + QUALITY_REPORT_SERVICE + "_URL:#{null}}";
+    // Spring Values
+    public final static String DEFAULT_LANGUAGE_SV = "${"+ DEFAULT_LANGUAGE+":EN}";
 
 }
