@@ -9,8 +9,10 @@ public class TeilerCoreConst {
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
+    public final static String PROJECT_ORGANISATION = "";
 
     // Spring Values
     public final static String DEFAULT_LANGUAGE_SV = "${"+ DEFAULT_LANGUAGE+":EN}";
+    public final static String PROJECT_ORGANISATION_SV = "${"+ PROJECT_ORGANISATION+":samply}";
 
 }

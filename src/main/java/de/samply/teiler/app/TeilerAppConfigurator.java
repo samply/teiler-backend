@@ -18,18 +18,21 @@ import java.util.*;
 public class TeilerAppConfigurator {
 
     private String defaultLanguage;
+    private String projectOrganisation;
     private AbstractEnvironment environment;
+    private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
 
-    public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage, @Autowired Environment environment) {
+    public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
+                                 @Value(TeilerCoreConst.PROJECT_ORGANISATION_SV) String projectOrganisation,
+                                 @Autowired Environment environment) {
         this.defaultLanguage = defaultLanguage;
+        this.projectOrganisation = projectOrganisation;
         this.environment = (AbstractEnvironment) environment;
 
         initializeLanguageTeilerAppMap();
         expandNoLanguageValues();
         addAutomativGeneratedValues();
     }
-
-    private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
 
 
     private void initializeLanguageTeilerAppMap() {
@@ -141,7 +144,12 @@ public class TeilerAppConfigurator {
     }
 
     private void addAutomativGeneratedValues() {
-        //TODO
+        languageAppIdTeilerAppMap.keySet().forEach(language -> {
+            languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
+                teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
+                teilerApp.setSingleSpaLink('@' + projectOrganisation + '/' + teilerApp.getRouterLink());
+            });
+        });
 
     }
 

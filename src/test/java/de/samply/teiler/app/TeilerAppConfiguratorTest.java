@@ -24,7 +24,6 @@ class TeilerAppConfiguratorTest {
     private static final String APPLICATION_PORT = "8383";
     private static TeilerApp teilerApp1;
     private static TeilerApp teilerApp2;
-
     private static TeilerApp teilerApp3;
     private ConfigurableApplicationContext teilerCoreContext1;
 
@@ -46,10 +45,8 @@ class TeilerAppConfiguratorTest {
         teilerApp1.setSourceLink("sourceLink1");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
         teilerApp1.setRoles(roles);
-
-        //TODO:
-        //teilerApp2.setRouterLink("name1");
-        //teilerApp2.setSingleSpaLink("@samply/de/name1");
+        teilerApp1.setRouterLink("de/name1");
+        teilerApp1.setSingleSpaLink("@samply/de/name1");
 
     }
 
@@ -64,10 +61,8 @@ class TeilerAppConfiguratorTest {
         teilerApp2.setSourceLink("sourceLink2");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
         teilerApp2.setRoles(roles);
-
-        //TODO:
-        //teilerApp2.setRouterLink("name2");
-        //teilerApp2.setSingleSpaLink("@samply/de/name2");
+        teilerApp2.setRouterLink("de/name2");
+        teilerApp2.setSingleSpaLink("@samply/de/name2");
 
     }
 
@@ -75,17 +70,15 @@ class TeilerAppConfiguratorTest {
 
         teilerApp3 = new TeilerApp();
 
-        teilerApp3.setName("name2" + languge2);
+        teilerApp3.setName("name2");
         teilerApp3.setTitle("title2" + languge2);
         teilerApp3.setDescription("description2" + languge2);
         teilerApp3.setExternLink(false);
         teilerApp3.setSourceLink("sourceLink2" + languge2);
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
         teilerApp3.setRoles(roles);
-
-        //TODO:
-        //teilerApp3.setRouterLink("name2");
-        //teilerApp3.setSingleSpaLink("@samply/de/name2");
+        teilerApp3.setRouterLink("en/name2");
+        teilerApp3.setSingleSpaLink("@samply/en/name2");
 
     }
 
@@ -133,11 +126,11 @@ class TeilerAppConfiguratorTest {
         String[] languages = {defaultLanguage, languge2};
         Arrays.stream(languages).forEach(language ->
                 teilerAppConfigurator.getTeilerApps(language).forEach(teilerApp -> {
-                    if (teilerApp.getName().equals(teilerApp1.getName())) {
+                    if (teilerApp.getTitle().equals(teilerApp1.getTitle())) {
                         generatedTeilerApp1.set(teilerApp);
-                    } else if (teilerApp.getName().equals(teilerApp2.getName())) {
+                    } else if (teilerApp.getTitle().equals(teilerApp2.getTitle())) {
                         generatedTeilerApp2.set(teilerApp);
-                    } else if (teilerApp.getName().equals(teilerApp3.getName())) {
+                    } else if (teilerApp.getTitle().equals(teilerApp3.getTitle())) {
                         generatedTeilerApp3.set(teilerApp);
                     }
                 }));
