@@ -17,7 +17,8 @@ public class TeilerApp implements Serializable {
     private String routerLink;
     private String singleSpaLink;
     private String sourceLink;
-    private Boolean isExternLink = false;
+    private Boolean isExternLink;
+    private Boolean isActivated;
     private TeilerAppRole[] roles;
 
     public String getName() {
@@ -68,7 +69,7 @@ public class TeilerApp implements Serializable {
         this.sourceLink = sourceLink;
     }
 
-    public boolean isExternLink() {
+    public Boolean getExternLink() {
         return isExternLink;
     }
 
@@ -78,6 +79,18 @@ public class TeilerApp implements Serializable {
 
     public void setExternLink(String externLink) {
         isExternLink = Boolean.valueOf(externLink);
+    }
+
+    public Boolean getActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(Boolean activated) {
+        isActivated = activated;
+    }
+
+    public void setActivated(String activated) {
+        isActivated = Boolean.valueOf(activated);
     }
 
     public TeilerAppRole[] getRoles() {
@@ -102,7 +115,10 @@ public class TeilerApp implements Serializable {
                 .append(description, teilerApp.description)
                 .append(routerLink, teilerApp.routerLink)
                 .append(singleSpaLink, teilerApp.singleSpaLink)
-                .append(sourceLink, teilerApp.sourceLink).isEquals();
+                .append(sourceLink, teilerApp.sourceLink)
+                .append(isExternLink, teilerApp.isExternLink)
+                .append(isActivated, teilerApp.isActivated)
+                .isEquals();
 
         if (isEquals) {
             if (roles == teilerApp.roles) return true;
@@ -117,11 +133,22 @@ public class TeilerApp implements Serializable {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(name).append(title).append(description).append(routerLink).append(singleSpaLink).append(sourceLink).append(isExternLink).append(roles).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(name)
+                .append(title)
+                .append(description)
+                .append(routerLink)
+                .append(singleSpaLink)
+                .append(sourceLink)
+                .append(isExternLink)
+                .append(isActivated)
+                .append(roles)
+                .toHashCode();
     }
 
     @Override
     public TeilerApp clone() {
         return SerializationUtils.clone(this);
     }
+
 }

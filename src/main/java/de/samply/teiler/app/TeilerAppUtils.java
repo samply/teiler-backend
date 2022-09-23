@@ -16,7 +16,11 @@ public class TeilerAppUtils {
     public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
     public final static String SOURCE_LINK_SUFFIX = "SOURCELINK";
     public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
+    public final static String IS_ACTIVATED_SUFFIX = "ISACTIVATED";
     public final static String ROLES_SUFFIX = "ROLES";
+
+    public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
+    public final static boolean IS_ACTIVATED_DEFAULT = true;
 
     private final static Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> teilerAppSetterMap = initializeTeilerAppSetterMap();
 
@@ -42,6 +46,9 @@ public class TeilerAppUtils {
 
     public static boolean isExternalLink(String key) {
         return key.contains(IS_EXTERNAL_LINK_SUFFIX);
+    }
+    public static boolean isActivated(String key) {
+        return key.contains(IS_ACTIVATED_SUFFIX);
     }
 
     public static boolean isRoles(String key) {
@@ -78,6 +85,7 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(TeilerAppUtils::isDescription, TeilerApp::setDescription);
         teilerAppSetterMap.put(TeilerAppUtils::isSourceLink, TeilerApp::setSourceLink);
         teilerAppSetterMap.put(TeilerAppUtils::isExternalLink, TeilerApp::setExternLink);
+        teilerAppSetterMap.put(TeilerAppUtils::isActivated, TeilerApp::setActivated);
         teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
 

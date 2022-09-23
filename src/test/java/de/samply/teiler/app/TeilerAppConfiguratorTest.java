@@ -30,73 +30,85 @@ class TeilerAppConfiguratorTest {
 
     @BeforeAll
     static void beforeAll() {
-        initializeTeilerApp1();
-        initializeTeilerApp2();
-        initializeTeilerApp3();
-        initializeTeilerApp4();
+        teilerApp1 = initializeTeilerApp1();
+        teilerApp2 = initializeTeilerApp2();
+        teilerApp3 = initializeTeilerApp3();
+        teilerApp4 = initializeTeilerApp4();
     }
 
-    private static void initializeTeilerApp1() {
+    private static TeilerApp initializeTeilerApp1() {
 
-        teilerApp1 = new TeilerApp();
+        TeilerApp teilerApp = new TeilerApp();
 
-        teilerApp1.setName("name1");
-        teilerApp1.setTitle("title1");
-        teilerApp1.setDescription("description1");
-        teilerApp1.setExternLink(false);
-        teilerApp1.setSourceLink("sourceLink1");
+        teilerApp.setName("name1");
+        teilerApp.setTitle("title1");
+        teilerApp.setDescription("description1");
+        teilerApp.setExternLink(false);
+        teilerApp.setSourceLink("sourceLink1");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
-        teilerApp1.setRoles(roles);
-        teilerApp1.setRouterLink("de/name1");
-        teilerApp1.setSingleSpaLink("@samply/de/name1");
+        teilerApp.setRoles(roles);
+        teilerApp.setRouterLink("de/name1");
+        teilerApp.setSingleSpaLink("@samply/de/name1");
+        teilerApp.setActivated(true);
+
+        return teilerApp;
 
     }
 
-    private static void initializeTeilerApp2() {
+    private static TeilerApp initializeTeilerApp2() {
 
-        teilerApp2 = new TeilerApp();
+        TeilerApp teilerApp = new TeilerApp();
 
-        teilerApp2.setName("name2");
-        teilerApp2.setTitle("title2");
-        teilerApp2.setDescription("description2");
-        teilerApp2.setExternLink(false);
-        teilerApp2.setSourceLink("sourceLink2");
+        teilerApp.setName("name2");
+        teilerApp.setTitle("title2");
+        teilerApp.setDescription("description2");
+        teilerApp.setExternLink(false);
+        teilerApp.setSourceLink("sourceLink2");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
-        teilerApp2.setRoles(roles);
-        teilerApp2.setRouterLink("de/name2");
-        teilerApp2.setSingleSpaLink("@samply/de/name2");
+        teilerApp.setRoles(roles);
+        teilerApp.setRouterLink("de/name2");
+        teilerApp.setSingleSpaLink("@samply/de/name2");
+        teilerApp.setActivated(false);
+
+        return teilerApp;
 
     }
 
-    private static void initializeTeilerApp3() {
+    private static TeilerApp initializeTeilerApp3() {
 
-        teilerApp3 = new TeilerApp();
+        TeilerApp teilerApp = new TeilerApp();
 
-        teilerApp3.setName("name2");
-        teilerApp3.setTitle("title2" + languge2);
-        teilerApp3.setDescription("description2" + languge2);
-        teilerApp3.setExternLink(false);
-        teilerApp3.setSourceLink("sourceLink2" + languge2);
+        teilerApp.setName("name2");
+        teilerApp.setTitle("title2" + languge2);
+        teilerApp.setDescription("description2" + languge2);
+        teilerApp.setExternLink(false);
+        teilerApp.setSourceLink("sourceLink2" + languge2);
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
-        teilerApp3.setRoles(roles);
-        teilerApp3.setRouterLink("en/name2");
-        teilerApp3.setSingleSpaLink("@samply/en/name2");
+        teilerApp.setRoles(roles);
+        teilerApp.setRouterLink("en/name2");
+        teilerApp.setSingleSpaLink("@samply/en/name2");
+        teilerApp.setActivated(false);
+
+        return teilerApp;
 
     }
 
-    private static void initializeTeilerApp4() {
+    private static TeilerApp initializeTeilerApp4() {
 
-        teilerApp4 = new TeilerApp();
+        TeilerApp teilerApp = new TeilerApp();
 
-        teilerApp4.setName("name1");
-        teilerApp4.setTitle("title1");
-        teilerApp4.setDescription("description1");
-        teilerApp4.setExternLink(false);
-        teilerApp4.setSourceLink("sourceLink1");
+        teilerApp.setName("name1");
+        teilerApp.setTitle("title1");
+        teilerApp.setDescription("description1");
+        teilerApp.setExternLink(false);
+        teilerApp.setSourceLink("sourceLink1");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
-        teilerApp4.setRoles(roles);
-        teilerApp4.setRouterLink("en/name1");
-        teilerApp4.setSingleSpaLink("@samply/en/name1");
+        teilerApp.setRoles(roles);
+        teilerApp.setRouterLink("en/name1");
+        teilerApp.setSingleSpaLink("@samply/en/name1");
+        teilerApp.setActivated(true);
+
+        return teilerApp;
 
     }
 
@@ -107,19 +119,20 @@ class TeilerAppConfiguratorTest {
                         "TEILER_APP1_NAME=" + teilerApp1.getName(),
                         "TEILER_APP1_TITLE=" + teilerApp1.getTitle(),
                         "TEILER_APP1_DESCRIPTION=" + teilerApp1.getDescription(),
-                        "TEILER_APP1_ISEXTERNALLINK=" + teilerApp1.isExternLink(),
+                        "TEILER_APP1_ISEXTERNALLINK=" + teilerApp1.getExternLink(),
                         "TEILER_APP1_SOURCELINK=" + teilerApp1.getSourceLink(),
                         "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
                         "TEILER_APP2_NAME=" + teilerApp2.getName(),
                         "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),
                         "TEILER_APP2_DESCRIPTION=" + teilerApp2.getDescription(),
-                        "TEILER_APP2_ISEXTERNALLINK=" + teilerApp2.isExternLink(),
+                        "TEILER_APP2_ISEXTERNALLINK=" + teilerApp2.getExternLink(),
                         "TEILER_APP2_SOURCELINK=" + teilerApp2.getSourceLink(),
                         "TEILER_APP2_ROLES=" + String.join(",", Arrays.stream(teilerApp2.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
                         "TEILER_APP2_EN_NAME=" + teilerApp3.getName(),
                         "TEILER_APP2_EN_TITLE=" + teilerApp3.getTitle(),
                         "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
                         "TEILER_APP2_EN_SOURCELINK=" + teilerApp3.getSourceLink(),
+                        "TEILER_APP2_ISACTIVATED=" + teilerApp3.getActivated(),
                         "TEILER_UI_EN_URL=" + "asdf",
                         "TEILER_UI_DE_URL=" + "fdsa"
                 ).build();
