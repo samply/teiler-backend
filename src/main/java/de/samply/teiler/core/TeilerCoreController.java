@@ -1,5 +1,6 @@
 package de.samply.teiler.core;
 
+import de.samply.teiler.root.ImportsMapConfigurator;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.utils.CorsChecker;
@@ -22,6 +23,7 @@ public class TeilerCoreController {
     private final String projectVersion = ProjectVersion.getProjectVersion();
     private CorsChecker corsChecker;
     private TeilerAppConfigurator teilerAppConfigurator;
+    private ImportsMapConfigurator importsMapConfigurator;
     private String defaultLanguage;
 
     @GetMapping(TeilerCoreConst.INFO_PATH)
@@ -30,7 +32,7 @@ public class TeilerCoreController {
     }
 
     @GetMapping(TeilerCoreConst.APPS_PATH)
-    public ResponseEntity<TeilerApp[]> getApps (@PathVariable String language, HttpServletRequest request){
+    public ResponseEntity<TeilerApp[]> getApps(@PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -39,8 +41,18 @@ public class TeilerCoreController {
 
     }
 
+    @GetMapping(TeilerCoreConst.IMPORT_MAP_PATH)
+    public ResponseEntity<String> getImportMap(HttpServletRequest request) {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.set("Content-Type", "application/importmap+json");
+
+        return new ResponseEntity<>(importsMapConfigurator.getImportsMaps().toString(), httpHeaders, HttpStatus.OK);
+
+    }
+
     private TeilerApp[] fetchApps(String language) {
-        if (language == null){
+        if (language == null) {
             language = defaultLanguage;
         }
         return teilerAppConfigurator.getTeilerApps(language).toArray(TeilerApp[]::new);
@@ -51,7 +63,7 @@ public class TeilerCoreController {
         HttpHeaders httpHeaders = new HttpHeaders();
 
         String originUrl = request.getHeader(HttpHeaders.ORIGIN);
-        if (corsChecker.isOriginUrlAllowed(originUrl)){
+        if (corsChecker.isOriginUrlAllowed(originUrl)) {
             httpHeaders.set("Access-Control-Allow-Origin", originUrl);
         }
 
@@ -67,6 +79,11 @@ public class TeilerCoreController {
     @Autowired
     public void setTeilerAppConfigurator(TeilerAppConfigurator teilerAppConfigurator) {
         this.teilerAppConfigurator = teilerAppConfigurator;
+    }
+
+    @Autowired
+    public void setImportsMapConfigurator(ImportsMapConfigurator importsMapConfigurator) {
+        this.importsMapConfigurator = importsMapConfigurator;
     }
 
     @Autowired

@@ -7,6 +7,7 @@ public class TeilerCoreConst {
     // REST API path
     public final static String INFO_PATH = "/info";
     public final static String APPS_PATH = "/apps/{language}";
+    public final static String IMPORT_MAP_PATH = "/import-map";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
@@ -29,11 +30,12 @@ public class TeilerCoreConst {
 
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
     public final static boolean IS_ACTIVATED_DEFAULT = true;
+    public final static String SINGLE_SPA_IMPORTS = "imports";
 
 
     // Spring Values
-    public final static String DEFAULT_LANGUAGE_SV = "${"+ DEFAULT_LANGUAGE+":EN}";
-    public final static String PROJECT_ORGANISATION_SV = "${"+ PROJECT_ORGANISATION+":samply}";
-    public final static String TEILER_ROOT_CONFIG_URL_SV = "${"+ TEILER_ROOT_CONFIG_URL+":#{null}}";
+    public final static String DEFAULT_LANGUAGE_SV = "${" + DEFAULT_LANGUAGE + ":EN}";
+    public final static String PROJECT_ORGANISATION_SV = "${" + PROJECT_ORGANISATION + ":samply}";
+    public final static String TEILER_ROOT_CONFIG_URL_SV = "${" + TEILER_ROOT_CONFIG_URL + ":#{null}}";
 
 }

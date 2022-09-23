@@ -1,8 +1,11 @@
-package de.samply.teiler.app;
+package de.samply.teiler.core;
 
-import de.samply.teiler.core.TeilerCoreApplication;
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.app.TeilerApp;
+import de.samply.teiler.app.TeilerAppConfigurator;
+import de.samply.teiler.app.TeilerAppRole;
 import de.samply.teiler.utils.ProjectVersion;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +18,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TeilerAppConfiguratorTest {
+class TeilerCoreApplicationTests {
 
     private static String defaultLanguage = "DE";
     private static String languge2 = "EN";
@@ -27,10 +30,12 @@ class TeilerAppConfiguratorTest {
     private static TeilerApp teilerApp3;
     private static TeilerApp teilerApp4;
     private static TeilerApp[] originalTeilerApps;
+
+    private static JSONObject importMaps;
     private ConfigurableApplicationContext teilerCoreContext1;
 
     @BeforeAll
-    static void beforeAll() {
+    static void beforeAll() throws JSONException {
 
         teilerApp1 = initializeTeilerApp1();
         teilerApp2 = initializeTeilerApp2();
@@ -39,6 +44,8 @@ class TeilerAppConfiguratorTest {
 
         TeilerApp[] tempTeilerApps = {teilerApp1, teilerApp2, teilerApp3, teilerApp4};
         originalTeilerApps = tempTeilerApps;
+
+        importMaps = initializeImportMap(originalTeilerApps);
 
     }
 
@@ -125,6 +132,25 @@ class TeilerAppConfiguratorTest {
 
     }
 
+    private static JSONObject initializeImportMap(TeilerApp[] originalTeilerApps) throws JSONException {
+
+        JSONObject importMaps = new JSONObject();
+        JSONObject imports = new JSONObject();
+        importMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
+        Arrays.stream(originalTeilerApps).forEach(teilerApp -> addToImports(imports, teilerApp.getSingleSpaLink(), teilerApp.getSourceLink()));
+
+        return importMaps;
+
+    }
+
+    private static void addToImports(JSONObject imports, String key, String value) {
+        try {
+            imports.put(key, value);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private SpringApplication createTeilerCore() {
         return new SpringApplicationBuilder(TeilerCoreApplication.class)
                 .properties(TeilerCoreConst.DEFAULT_LANGUAGE + '=' + defaultLanguage,
@@ -182,7 +208,7 @@ class TeilerAppConfiguratorTest {
 
         Arrays.stream(originalTeilerApps).forEach(originalTeilerApp -> {
             TeilerApp generatedTeilerApp = routerLinkTeilerAppMap.get(originalTeilerApp.getRouterLink());
-            assertTrue(Objects.equals(generatedTeilerApp, originalTeilerApp));
+            assertEquals(originalTeilerApp, generatedTeilerApp);
         });
 
     }
@@ -193,9 +219,9 @@ class TeilerAppConfiguratorTest {
         List<TeilerApp> generatedTeilerApps = new ArrayList<>();
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/"+defaultLanguage, TeilerApp[].class);
+        ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + defaultLanguage, TeilerApp[].class);
         generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
-        response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/"+languge2, TeilerApp[].class);
+        response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + languge2, TeilerApp[].class);
         generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
 
         checkTeilerApps(generatedTeilerApps);
@@ -203,10 +229,38 @@ class TeilerAppConfiguratorTest {
     }
 
     @Test
-    void testInfo(){
+    void testInfo() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + TeilerCoreConst.INFO_PATH, String.class);
-        assertTrue(Objects.equals(ProjectVersion.getProjectVersion(),response.getBody()));
+        assertEquals(ProjectVersion.getProjectVersion(), response.getBody());
+    }
+
+    @Test
+    void testImportMaps() throws JSONException {
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + TeilerCoreConst.IMPORT_MAP_PATH, String.class);
+
+        JSONObject generatedImports = new JSONObject(response.getBody()).getJSONObject(TeilerCoreConst.SINGLE_SPA_IMPORTS);
+        JSONObject originalImports = importMaps.getJSONObject(TeilerCoreConst.SINGLE_SPA_IMPORTS);
+
+        Map<String, String> generatedImportsMap = extractImports(generatedImports);
+        Map<String, String> originalImportsMap = extractImports(originalImports);
+
+        originalImportsMap.keySet().forEach(key -> assertEquals( originalImportsMap.get(key), generatedImportsMap.get(key)));
+
+    }
+
+    private Map<String, String> extractImports (JSONObject imports) throws JSONException {
+        Map<String, String> importsMap = new HashMap<>();
+
+        for (Iterator key = imports.keys(); key.hasNext();){
+            String element1 = (String)key.next();
+            String element2 = (String) imports.get(element1);
+            importsMap.put(element1, element2);
+        }
+
+        return importsMap;
     }
 
     private String getTeilerCoreUrl(String port) {

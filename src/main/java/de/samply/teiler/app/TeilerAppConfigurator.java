@@ -167,10 +167,10 @@ public class TeilerAppConfigurator {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
                 teilerApp.setSingleSpaLink('@' + projectOrganisation + '/' + teilerApp.getRouterLink());
-                if (teilerApp.getExternLink() == null){
+                if (teilerApp.getExternLink() == null) {
                     teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
                 }
-                if (teilerApp.getActivated() == null){
+                if (teilerApp.getActivated() == null) {
                     teilerApp.setActivated(TeilerCoreConst.IS_ACTIVATED_DEFAULT);
                 }
             });
@@ -181,6 +181,11 @@ public class TeilerAppConfigurator {
     public Collection<TeilerApp> getTeilerApps(String language) {
         Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language.toLowerCase());
         return (appIdTeilerAppMap != null) ? appIdTeilerAppMap.values() : new ArrayList<>();
+    }
+
+    public List<TeilerApp> getTeilerApps() {
+        return languageAppIdTeilerAppMap.values().stream()
+                .map(appIdTeilerAppMap -> appIdTeilerAppMap.values()).flatMap(Collection::stream).toList();
     }
 
 }
