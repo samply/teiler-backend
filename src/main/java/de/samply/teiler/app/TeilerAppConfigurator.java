@@ -168,10 +168,10 @@ public class TeilerAppConfigurator {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
                 teilerApp.setSingleSpaLink('@' + projectOrganisation + '/' + teilerApp.getRouterLink());
                 if (teilerApp.getExternLink() == null){
-                    teilerApp.setExternLink(TeilerAppUtils.IS_EXTERNAL_LINK_DEFAULT);
+                    teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
                 }
                 if (teilerApp.getActivated() == null){
-                    teilerApp.setActivated(TeilerAppUtils.IS_ACTIVATED_DEFAULT);
+                    teilerApp.setActivated(TeilerCoreConst.IS_ACTIVATED_DEFAULT);
                 }
             });
         });

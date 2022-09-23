@@ -1,5 +1,6 @@
 package de.samply.teiler.app;
 
+import de.samply.teiler.core.TeilerCoreConst;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -10,75 +11,60 @@ import java.util.function.Function;
 
 public class TeilerAppUtils {
 
-    public final static String APP_PREFIX = "TEILER_APP";
-    public final static String NAME_SUFFIX = "NAME";
-    public final static String TITLE_SUFFIX = "TITLE";
-    public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
-    public final static String SOURCE_LINK_SUFFIX = "SOURCELINK";
-    public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
-    public final static String IS_ACTIVATED_SUFFIX = "ISACTIVATED";
-    public final static String ROLES_SUFFIX = "ROLES";
-    public final static String ICON_CLASS = "ICONCLASS";
-    public final static String ICON_SOURCE_URL = "ICONSOURCEURL";
-    public final static String ORDER = "ORDER";
-
-    public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
-    public final static boolean IS_ACTIVATED_DEFAULT = true;
-
     private final static Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> teilerAppSetterMap = initializeTeilerAppSetterMap();
 
     public static boolean isTeilerApp(String key) {
-        return key.startsWith(APP_PREFIX);
+        return key.startsWith(TeilerCoreConst.APP_PREFIX);
     }
 
     public static boolean isName(String key) {
-        return key.contains(NAME_SUFFIX);
+        return key.contains(TeilerCoreConst.NAME_SUFFIX);
     }
 
     public static boolean isTitle(String key) {
-        return key.contains(TITLE_SUFFIX);
+        return key.contains(TeilerCoreConst.TITLE_SUFFIX);
     }
 
     public static boolean isDescription(String key) {
-        return key.contains(DESCRIPTION_SUFFIX);
+        return key.contains(TeilerCoreConst.DESCRIPTION_SUFFIX);
     }
 
     public static boolean isSourceLink(String key) {
-        return key.contains(SOURCE_LINK_SUFFIX);
+        return key.contains(TeilerCoreConst.SOURCE_LINK_SUFFIX);
     }
 
     public static boolean isExternalLink(String key) {
-        return key.contains(IS_EXTERNAL_LINK_SUFFIX);
+        return key.contains(TeilerCoreConst.IS_EXTERNAL_LINK_SUFFIX);
     }
     public static boolean isActivated(String key) {
-        return key.contains(IS_ACTIVATED_SUFFIX);
+        return key.contains(TeilerCoreConst.IS_ACTIVATED_SUFFIX);
     }
 
     public static boolean isRoles(String key) {
-        return key.contains(ROLES_SUFFIX);
+        return key.contains(TeilerCoreConst.ROLES_SUFFIX);
     }
 
     public static boolean isIconClass(String key) {
-        return key.contains(ICON_CLASS);
+        return key.contains(TeilerCoreConst.ICON_CLASS);
     }
 
     public static boolean isIconSourceUrl(String key) {
-        return key.contains(ICON_SOURCE_URL);
+        return key.contains(TeilerCoreConst.ICON_SOURCE_URL);
     }
 
     public static boolean isOrder(String key) {
-        return key.contains(ORDER);
+        return key.contains(TeilerCoreConst.ORDER);
     }
 
     public static Integer getAppId(String key) {
-        key = key.substring(APP_PREFIX.length());
+        key = key.substring(TeilerCoreConst.APP_PREFIX.length());
         return Integer.valueOf(key.substring(0, key.indexOf('_')));
     }
 
     public static String getLanguage(String key) {
         String language = null;
         if (containsLanguage(key)) {
-            key = key.substring(APP_PREFIX.length());
+            key = key.substring(TeilerCoreConst.APP_PREFIX.length());
             int index1 = key.indexOf('_') + 1;
             int index2 = index1 + key.substring(index1).indexOf('_');
             language = key.substring(index1, index2);
