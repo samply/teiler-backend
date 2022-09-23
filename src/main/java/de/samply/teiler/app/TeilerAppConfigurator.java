@@ -1,10 +1,11 @@
 package de.samply.teiler.app;
 
 import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.ui.TeilerUiConfigurator;
+import de.samply.teiler.utils.EnvironmentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -13,51 +14,41 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class TeilerAppConfigurator {
 
-    private String defaultLanguage;
-    private String projectOrganisation;
-    private AbstractEnvironment environment;
+    private final String defaultLanguage;
+    private final String[] teilerUiLanguages;
+    private final String projectOrganisation;
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
 
     public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
                                  @Value(TeilerCoreConst.PROJECT_ORGANISATION_SV) String projectOrganisation,
+                                 @Autowired TeilerUiConfigurator teilerUiConfigurator,
                                  @Autowired Environment environment) {
         this.defaultLanguage = defaultLanguage;
+        this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
         this.projectOrganisation = projectOrganisation;
-        this.environment = (AbstractEnvironment) environment;
 
-        initializeLanguageTeilerAppMap();
+        initializeLanguageTeilerAppMap(environment);
         expandNoLanguageValues();
-        addAutomativGeneratedValues();
+        expandTeilerAppsToTeilerUiLanguages();
+        addAutomaticGeneratedValues();
     }
 
-
-    private void initializeLanguageTeilerAppMap() {
-        initializeLanguageTeilerAppMap(environment.getSystemEnvironment());
-        initializeLanguageTeilerAppMap(environment.getSystemProperties());
-        environment.getPropertySources().stream().filter(p -> p instanceof EnumerablePropertySource)
-                .map(p -> ((EnumerablePropertySource) p).getPropertyNames()).flatMap(Arrays::stream).distinct()
-                .filter(this::isTeilerApp).forEach(key -> addKeyValue(key, environment.getProperty(key)));
+    private void initializeLanguageTeilerAppMap(Environment environment) {
+        EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerAppUtils::isTeilerApp, this::addKeyValue);
     }
 
-    private void initializeLanguageTeilerAppMap(Map<String, Object> keyValues) {
-        keyValues.keySet().stream().filter(this::isTeilerApp).forEach(key -> addKeyValue(key, (String) keyValues.get(key)));
-    }
+    private void addKeyValue(String key, String value) {
 
-    private boolean isTeilerApp(String envVar) {
-        return envVar.startsWith(TeilerAppUtils.APP_PREFIX);
-    }
-
-    private void addKeyValue(String envVar, String value) {
-
-        Integer appId = TeilerAppUtils.getAppId(envVar);
-        String language = TeilerAppUtils.getLanguage(envVar);
+        Integer appId = TeilerAppUtils.getAppId(key);
+        String language = TeilerAppUtils.getLanguage(key);
         TeilerApp teilerApp = getTeilerApp(appId, language);
 
-        TeilerAppUtils.addKeyValue(envVar, value, teilerApp);
+        TeilerAppUtils.addKeyValue(key, value, teilerApp);
 
     }
 
@@ -143,7 +134,35 @@ public class TeilerAppConfigurator {
 
     }
 
-    private void addAutomativGeneratedValues() {
+    private void expandTeilerAppsToTeilerUiLanguages() {
+        List<Integer> definedAppIds = languageAppIdTeilerAppMap.values().stream().map(appIdTeilerAppMap ->
+                appIdTeilerAppMap.keySet()).flatMap(Collection::stream).toList();
+
+
+        Arrays.stream(teilerUiLanguages).forEach(language -> {
+            Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language);
+            definedAppIds.stream()
+                    .filter(appId -> !appIdTeilerAppMap.keySet().contains(appId))
+                    .forEach(appId -> appIdTeilerAppMap.put(appId, getDefaultTeilerApp(appId).clone()));
+        });
+
+    }
+
+    private TeilerApp getDefaultTeilerApp(Integer appId) {
+        TeilerApp teilerApp = languageAppIdTeilerAppMap.get(defaultLanguage).get(appId);
+        if (teilerApp == null) {
+            AtomicReference<TeilerApp> teilerAppAtomicReference = new AtomicReference<>();
+            languageAppIdTeilerAppMap.values().stream()
+                    .map(appIdTeilerAppMap -> appIdTeilerAppMap.get(appId))
+                    .filter(teilerAppTemp -> teilerAppTemp != null)
+                    .forEach(teilerAppTemp -> teilerAppAtomicReference.set(teilerAppTemp));
+            teilerApp = teilerAppAtomicReference.get();
+        }
+
+        return teilerApp;
+    }
+
+    private void addAutomaticGeneratedValues() {
         languageAppIdTeilerAppMap.keySet().forEach(language -> {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());

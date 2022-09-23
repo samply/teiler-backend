@@ -20,6 +20,10 @@ public class TeilerAppUtils {
 
     private final static Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> teilerAppSetterMap = initializeTeilerAppSetterMap();
 
+    public static boolean isTeilerApp(String key) {
+        return key.startsWith(APP_PREFIX);
+    }
+
     public static boolean isName(String key) {
         return key.contains(NAME_SUFFIX);
     }
@@ -53,7 +57,7 @@ public class TeilerAppUtils {
         String language = null;
         if (containsLanguage(key)) {
             key = key.substring(APP_PREFIX.length());
-            int index1 = key.indexOf('_')+1;
+            int index1 = key.indexOf('_') + 1;
             int index2 = index1 + key.substring(index1).indexOf('_');
             language = key.substring(index1, index2);
         }
@@ -74,7 +78,8 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(TeilerAppUtils::isDescription, TeilerApp::setDescription);
         teilerAppSetterMap.put(TeilerAppUtils::isSourceLink, TeilerApp::setSourceLink);
         teilerAppSetterMap.put(TeilerAppUtils::isExternalLink, TeilerApp::setExternLink);
-        teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
+        teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(
+                Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
 
         return teilerAppSetterMap;
 

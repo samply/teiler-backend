@@ -1,13 +1,15 @@
 package de.samply.teiler.app;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TeilerApp {
+public class TeilerApp implements Serializable {
 
     private String name;
     private String title;
@@ -116,5 +118,10 @@ public class TeilerApp {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(name).append(title).append(description).append(routerLink).append(singleSpaLink).append(sourceLink).append(isExternLink).append(roles).toHashCode();
+    }
+
+    @Override
+    public TeilerApp clone() {
+        return SerializationUtils.clone(this);
     }
 }

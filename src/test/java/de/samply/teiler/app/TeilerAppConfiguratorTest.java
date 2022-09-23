@@ -25,6 +25,7 @@ class TeilerAppConfiguratorTest {
     private static TeilerApp teilerApp1;
     private static TeilerApp teilerApp2;
     private static TeilerApp teilerApp3;
+    private static TeilerApp teilerApp4;
     private ConfigurableApplicationContext teilerCoreContext1;
 
     @BeforeAll
@@ -32,6 +33,7 @@ class TeilerAppConfiguratorTest {
         initializeTeilerApp1();
         initializeTeilerApp2();
         initializeTeilerApp3();
+        initializeTeilerApp4();
     }
 
     private static void initializeTeilerApp1() {
@@ -82,6 +84,22 @@ class TeilerAppConfiguratorTest {
 
     }
 
+    private static void initializeTeilerApp4() {
+
+        teilerApp4 = new TeilerApp();
+
+        teilerApp4.setName("name1");
+        teilerApp4.setTitle("title1");
+        teilerApp4.setDescription("description1");
+        teilerApp4.setExternLink(false);
+        teilerApp4.setSourceLink("sourceLink1");
+        TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
+        teilerApp4.setRoles(roles);
+        teilerApp4.setRouterLink("en/name1");
+        teilerApp4.setSingleSpaLink("@samply/en/name1");
+
+    }
+
     private SpringApplication createTeilerCore() {
         return new SpringApplicationBuilder(TeilerCoreApplication.class)
                 .properties(TeilerCoreConst.DEFAULT_LANGUAGE + '=' + defaultLanguage,
@@ -101,7 +119,9 @@ class TeilerAppConfiguratorTest {
                         "TEILER_APP2_EN_NAME=" + teilerApp3.getName(),
                         "TEILER_APP2_EN_TITLE=" + teilerApp3.getTitle(),
                         "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
-                        "TEILER_APP2_EN_SOURCELINK=" + teilerApp3.getSourceLink()
+                        "TEILER_APP2_EN_SOURCELINK=" + teilerApp3.getSourceLink(),
+                        "TEILER_UI_EN_URL=" + "asdf",
+                        "TEILER_UI_DE_URL=" + "fdsa"
                 ).build();
     }
 
@@ -123,21 +143,25 @@ class TeilerAppConfiguratorTest {
         AtomicReference<TeilerApp> generatedTeilerApp1 = new AtomicReference<>();
         AtomicReference<TeilerApp> generatedTeilerApp2 = new AtomicReference<>();
         AtomicReference<TeilerApp> generatedTeilerApp3 = new AtomicReference<>();
+        AtomicReference<TeilerApp> generatedTeilerApp4 = new AtomicReference<>();
         String[] languages = {defaultLanguage, languge2};
         Arrays.stream(languages).forEach(language ->
                 teilerAppConfigurator.getTeilerApps(language).forEach(teilerApp -> {
-                    if (teilerApp.getTitle().equals(teilerApp1.getTitle())) {
+                    if (teilerApp.getRouterLink().equals(teilerApp1.getRouterLink())) {
                         generatedTeilerApp1.set(teilerApp);
-                    } else if (teilerApp.getTitle().equals(teilerApp2.getTitle())) {
+                    } else if (teilerApp.getRouterLink().equals(teilerApp2.getRouterLink())) {
                         generatedTeilerApp2.set(teilerApp);
-                    } else if (teilerApp.getTitle().equals(teilerApp3.getTitle())) {
+                    } else if (teilerApp.getRouterLink().equals(teilerApp3.getRouterLink())) {
                         generatedTeilerApp3.set(teilerApp);
+                    } else if (teilerApp.getRouterLink().equals(teilerApp4.getRouterLink())) {
+                        generatedTeilerApp4.set(teilerApp);
                     }
                 }));
 
         assertTrue(Objects.equals(generatedTeilerApp1.get(), teilerApp1));
         assertTrue(Objects.equals(generatedTeilerApp2.get(), teilerApp2));
         assertTrue(Objects.equals(generatedTeilerApp3.get(), teilerApp3));
+        assertTrue(Objects.equals(generatedTeilerApp4.get(), teilerApp4));
 
     }
 
