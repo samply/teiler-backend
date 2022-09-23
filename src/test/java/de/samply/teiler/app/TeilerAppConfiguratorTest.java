@@ -2,6 +2,7 @@ package de.samply.teiler.app;
 
 import de.samply.teiler.core.TeilerCoreApplication;
 import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.utils.ProjectVersion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -199,6 +200,13 @@ class TeilerAppConfiguratorTest {
 
         checkTeilerApps(generatedTeilerApps);
 
+    }
+
+    @Test
+    void testInfo(){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + TeilerCoreConst.INFO_PATH, String.class);
+        assertTrue(Objects.equals(ProjectVersion.getProjectVersion(),response.getBody()));
     }
 
     private String getTeilerCoreUrl(String port) {
