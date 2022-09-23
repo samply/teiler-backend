@@ -69,6 +69,9 @@ class TeilerAppConfiguratorTest {
         teilerApp.setRouterLink("de/name2");
         teilerApp.setSingleSpaLink("@samply/de/name2");
         teilerApp.setActivated(false);
+        teilerApp.setOrder(1);
+        teilerApp.setIconClass("bi bi-emoji-sunglasses");
+        teilerApp.setIconSourceUrl("iconurl2");
 
         return teilerApp;
 
@@ -88,6 +91,10 @@ class TeilerAppConfiguratorTest {
         teilerApp.setRouterLink("en/name2");
         teilerApp.setSingleSpaLink("@samply/en/name2");
         teilerApp.setActivated(false);
+        teilerApp.setOrder(1);
+        teilerApp.setIconClass("bi bi-emoji-sunglasses");
+        teilerApp.setIconSourceUrl("iconurl2");
+
 
         return teilerApp;
 
@@ -133,6 +140,9 @@ class TeilerAppConfiguratorTest {
                         "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
                         "TEILER_APP2_EN_SOURCELINK=" + teilerApp3.getSourceLink(),
                         "TEILER_APP2_ISACTIVATED=" + teilerApp3.getActivated(),
+                        "TEILER_APP2_ICONCLASS=" + teilerApp3.getIconClass(),
+                        "TEILER_APP2_ICONSOURCEURL=" + teilerApp3.getIconSourceUrl(),
+                        "TEILER_APP2_ORDER=" + teilerApp3.getOrder(),
                         "TEILER_UI_EN_URL=" + "asdf",
                         "TEILER_UI_DE_URL=" + "fdsa"
                 ).build();

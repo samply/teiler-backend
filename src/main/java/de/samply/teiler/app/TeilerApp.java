@@ -20,6 +20,9 @@ public class TeilerApp implements Serializable {
     private Boolean isExternLink;
     private Boolean isActivated;
     private TeilerAppRole[] roles;
+    private String iconClass;
+    private String iconSourceUrl;
+    private Integer order;
 
     public String getName() {
         return name;
@@ -101,6 +104,34 @@ public class TeilerApp implements Serializable {
         this.roles = roles;
     }
 
+    public String getIconClass() {
+        return iconClass;
+    }
+
+    public void setIconClass(String iconClass) {
+        this.iconClass = iconClass;
+    }
+
+    public String getIconSourceUrl() {
+        return iconSourceUrl;
+    }
+
+    public void setIconSourceUrl(String iconSourceUrl) {
+        this.iconSourceUrl = iconSourceUrl;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+    public void setOrder(String order) {
+        this.order = Integer.valueOf(order);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,6 +149,9 @@ public class TeilerApp implements Serializable {
                 .append(sourceLink, teilerApp.sourceLink)
                 .append(isExternLink, teilerApp.isExternLink)
                 .append(isActivated, teilerApp.isActivated)
+                .append(iconClass, teilerApp.iconClass)
+                .append(iconSourceUrl, teilerApp.iconSourceUrl)
+                .append(order, teilerApp.order)
                 .isEquals();
 
         if (isEquals) {
@@ -143,6 +177,9 @@ public class TeilerApp implements Serializable {
                 .append(isExternLink)
                 .append(isActivated)
                 .append(roles)
+                .append(iconClass)
+                .append(iconSourceUrl)
+                .append(order)
                 .toHashCode();
     }
 

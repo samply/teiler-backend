@@ -18,6 +18,9 @@ public class TeilerAppUtils {
     public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
     public final static String IS_ACTIVATED_SUFFIX = "ISACTIVATED";
     public final static String ROLES_SUFFIX = "ROLES";
+    public final static String ICON_CLASS = "ICONCLASS";
+    public final static String ICON_SOURCE_URL = "ICONSOURCEURL";
+    public final static String ORDER = "ORDER";
 
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
     public final static boolean IS_ACTIVATED_DEFAULT = true;
@@ -55,6 +58,18 @@ public class TeilerAppUtils {
         return key.contains(ROLES_SUFFIX);
     }
 
+    public static boolean isIconClass(String key) {
+        return key.contains(ICON_CLASS);
+    }
+
+    public static boolean isIconSourceUrl(String key) {
+        return key.contains(ICON_SOURCE_URL);
+    }
+
+    public static boolean isOrder(String key) {
+        return key.contains(ORDER);
+    }
+
     public static Integer getAppId(String key) {
         key = key.substring(APP_PREFIX.length());
         return Integer.valueOf(key.substring(0, key.indexOf('_')));
@@ -86,6 +101,9 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(TeilerAppUtils::isSourceLink, TeilerApp::setSourceLink);
         teilerAppSetterMap.put(TeilerAppUtils::isExternalLink, TeilerApp::setExternLink);
         teilerAppSetterMap.put(TeilerAppUtils::isActivated, TeilerApp::setActivated);
+        teilerAppSetterMap.put(TeilerAppUtils::isIconClass, TeilerApp::setIconClass);
+        teilerAppSetterMap.put(TeilerAppUtils::isIconSourceUrl, TeilerApp::setIconSourceUrl);
+        teilerAppSetterMap.put(TeilerAppUtils::isOrder, TeilerApp::setOrder);
         teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
 
