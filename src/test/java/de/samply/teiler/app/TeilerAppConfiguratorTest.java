@@ -6,16 +6,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TeilerAppConfiguratorTest {
 
@@ -26,14 +25,20 @@ class TeilerAppConfiguratorTest {
     private static TeilerApp teilerApp2;
     private static TeilerApp teilerApp3;
     private static TeilerApp teilerApp4;
+    private static TeilerApp[] originalTeilerApps;
     private ConfigurableApplicationContext teilerCoreContext1;
 
     @BeforeAll
     static void beforeAll() {
+
         teilerApp1 = initializeTeilerApp1();
         teilerApp2 = initializeTeilerApp2();
         teilerApp3 = initializeTeilerApp3();
         teilerApp4 = initializeTeilerApp4();
+
+        TeilerApp[] tempTeilerApps = {teilerApp1, teilerApp2, teilerApp3, teilerApp4};
+        originalTeilerApps = tempTeilerApps;
+
     }
 
     private static TeilerApp initializeTeilerApp1() {
@@ -163,29 +168,41 @@ class TeilerAppConfiguratorTest {
     void getTeilerApps() {
 
         TeilerAppConfigurator teilerAppConfigurator = teilerCoreContext1.getBean(TeilerAppConfigurator.class);
-        AtomicReference<TeilerApp> generatedTeilerApp1 = new AtomicReference<>();
-        AtomicReference<TeilerApp> generatedTeilerApp2 = new AtomicReference<>();
-        AtomicReference<TeilerApp> generatedTeilerApp3 = new AtomicReference<>();
-        AtomicReference<TeilerApp> generatedTeilerApp4 = new AtomicReference<>();
         String[] languages = {defaultLanguage, languge2};
-        Arrays.stream(languages).forEach(language ->
-                teilerAppConfigurator.getTeilerApps(language).forEach(teilerApp -> {
-                    if (teilerApp.getRouterLink().equals(teilerApp1.getRouterLink())) {
-                        generatedTeilerApp1.set(teilerApp);
-                    } else if (teilerApp.getRouterLink().equals(teilerApp2.getRouterLink())) {
-                        generatedTeilerApp2.set(teilerApp);
-                    } else if (teilerApp.getRouterLink().equals(teilerApp3.getRouterLink())) {
-                        generatedTeilerApp3.set(teilerApp);
-                    } else if (teilerApp.getRouterLink().equals(teilerApp4.getRouterLink())) {
-                        generatedTeilerApp4.set(teilerApp);
-                    }
-                }));
+        List<TeilerApp> teilerApps = Arrays.stream(languages).map(language -> teilerAppConfigurator.getTeilerApps(language)).flatMap(Collection::stream).toList();
+        checkTeilerApps(teilerApps);
 
-        assertTrue(Objects.equals(generatedTeilerApp1.get(), teilerApp1));
-        assertTrue(Objects.equals(generatedTeilerApp2.get(), teilerApp2));
-        assertTrue(Objects.equals(generatedTeilerApp3.get(), teilerApp3));
-        assertTrue(Objects.equals(generatedTeilerApp4.get(), teilerApp4));
+    }
 
+    private void checkTeilerApps(List<TeilerApp> teilerApps) {
+
+        Map<String, TeilerApp> routerLinkTeilerAppMap = new HashMap<>();
+        teilerApps.forEach(teilerApp -> routerLinkTeilerAppMap.put(teilerApp.getRouterLink(), teilerApp));
+
+        Arrays.stream(originalTeilerApps).forEach(originalTeilerApp -> {
+            TeilerApp generatedTeilerApp = routerLinkTeilerAppMap.get(originalTeilerApp.getRouterLink());
+            assertTrue(Objects.equals(generatedTeilerApp, originalTeilerApp));
+        });
+
+    }
+
+    @Test
+    void getTeilerAppsPerHttpRequest() {
+
+        List<TeilerApp> generatedTeilerApps = new ArrayList<>();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/"+defaultLanguage, TeilerApp[].class);
+        generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
+        response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/"+languge2, TeilerApp[].class);
+        generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
+
+        checkTeilerApps(generatedTeilerApps);
+
+    }
+
+    private String getTeilerCoreUrl(String port) {
+        return "http://localhost:" + port;
     }
 
 }

@@ -28,7 +28,7 @@ public class TeilerAppConfigurator {
                                  @Value(TeilerCoreConst.PROJECT_ORGANISATION_SV) String projectOrganisation,
                                  @Autowired TeilerUiConfigurator teilerUiConfigurator,
                                  @Autowired Environment environment) {
-        this.defaultLanguage = defaultLanguage;
+        this.defaultLanguage = defaultLanguage.toLowerCase();
         this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
         this.projectOrganisation = projectOrganisation;
 
@@ -179,7 +179,7 @@ public class TeilerAppConfigurator {
     }
 
     public Collection<TeilerApp> getTeilerApps(String language) {
-        Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language);
+        Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language.toLowerCase());
         return (appIdTeilerAppMap != null) ? appIdTeilerAppMap.values() : new ArrayList<>();
     }
 

@@ -81,7 +81,9 @@ public class TeilerApp implements Serializable {
     }
 
     public void setExternLink(String externLink) {
-        isExternLink = Boolean.valueOf(externLink);
+        if (externLink != null){
+            isExternLink = Boolean.valueOf(externLink);
+        }
     }
 
     public Boolean getActivated() {
@@ -93,7 +95,9 @@ public class TeilerApp implements Serializable {
     }
 
     public void setActivated(String activated) {
-        isActivated = Boolean.valueOf(activated);
+        if (activated != null){
+            isActivated = Boolean.valueOf(activated);
+        }
     }
 
     public TeilerAppRole[] getRoles() {
@@ -129,7 +133,9 @@ public class TeilerApp implements Serializable {
     }
 
     public void setOrder(String order) {
-        this.order = Integer.valueOf(order);
+        if (order != null){
+            this.order = Integer.valueOf(order);
+        }
     }
 
     @Override

@@ -67,7 +67,7 @@ public class TeilerAppUtils {
             key = key.substring(TeilerCoreConst.APP_PREFIX.length());
             int index1 = key.indexOf('_') + 1;
             int index2 = index1 + key.substring(index1).indexOf('_');
-            language = key.substring(index1, index2);
+            language = key.substring(index1, index2).toLowerCase();
         }
 
         return language;

@@ -6,6 +6,7 @@ public class TeilerCoreConst {
 
     // REST API path
     public final static String INFO_PATH = "/info";
+    public final static String APPS_PATH = "/apps/{language}";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
@@ -21,8 +22,9 @@ public class TeilerCoreConst {
     public final static String ICON_CLASS = "ICONCLASS";
     public final static String ICON_SOURCE_URL = "ICONSOURCEURL";
     public final static String ORDER = "ORDER";
-    public static String TEILER_UI_PREFIX = "TEILER_UI";
-    public static String URL_SUFFIX = "URL";
+    public final static String TEILER_UI_PREFIX = "TEILER_UI";
+    public final static String URL_SUFFIX = "URL";
+    public final static String TEILER_ROOT_CONFIG_URL = "TEILER_ROOT_CONFIG_URL";
 
 
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
@@ -32,5 +34,6 @@ public class TeilerCoreConst {
     // Spring Values
     public final static String DEFAULT_LANGUAGE_SV = "${"+ DEFAULT_LANGUAGE+":EN}";
     public final static String PROJECT_ORGANISATION_SV = "${"+ PROJECT_ORGANISATION+":samply}";
+    public final static String TEILER_ROOT_CONFIG_URL_SV = "${"+ TEILER_ROOT_CONFIG_URL+":#{null}}";
 
 }
