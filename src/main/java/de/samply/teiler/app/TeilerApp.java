@@ -17,6 +17,8 @@ public class TeilerApp implements Serializable {
     private String routerLink;
     private String singleSpaLink;
     private String sourceUrl;
+
+    private String singleSpaMainJs;
     private Boolean isExternLink;
     private Boolean isActivated;
     private TeilerAppRole[] roles;
@@ -147,6 +149,14 @@ public class TeilerApp implements Serializable {
         }
     }
 
+    public String getSingleSpaMainJs() {
+        return singleSpaMainJs;
+    }
+
+    public void setSingleSpaMainJs(String singleSpaMainJs) {
+        this.singleSpaMainJs = singleSpaMainJs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -168,6 +178,7 @@ public class TeilerApp implements Serializable {
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
                 .append(backendUrl, teilerApp.backendUrl)
                 .append(order, teilerApp.order)
+                .append(singleSpaMainJs, teilerApp.singleSpaMainJs)
                 .isEquals();
 
         if (isEquals) {
@@ -197,6 +208,7 @@ public class TeilerApp implements Serializable {
                 .append(iconSourceUrl)
                 .append(backendUrl)
                 .append(order)
+                .append(singleSpaMainJs)
                 .toHashCode();
     }
 

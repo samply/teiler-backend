@@ -68,6 +68,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setBackendUrl("http://backendurl1:4000");
         teilerApp.setActivated(true);
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
+        teilerApp.setSingleSpaMainJs("samply-name1.js");
 
         return teilerApp;
 
@@ -89,6 +90,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setActivated(false);
         teilerApp.setOrder(1);
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
+        teilerApp.setSingleSpaMainJs("main.js");
 
         return teilerApp;
 
@@ -110,7 +112,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setActivated(false);
         teilerApp.setOrder(1);
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
-
+        teilerApp.setSingleSpaMainJs("main.js");
 
 
         return teilerApp;
@@ -133,6 +135,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setBackendUrl("http://backendurl1:4000");
         teilerApp.setActivated(true);
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
+        teilerApp.setSingleSpaMainJs("samply-name1.js");
 
         return teilerApp;
 
@@ -143,19 +146,19 @@ class TeilerCoreApplicationTests {
         JSONObject importMaps = new JSONObject();
         JSONObject imports = new JSONObject();
         importMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
-        imports.put("@samply/root-config", generateSingleSpaUrl(rootConfigUrl)+"/samply-root-config.js");
-        imports.put("@samply/en/teiler-ui", generateSingleSpaUrl(enTeilerUiUrl)+"/main.js");
-        imports.put("@samply/de/teiler-ui", generateSingleSpaUrl(deTeilerUiUrl)+"/main.js");
+        imports.put("@samply/root-config", generateSingleSpaUrl(rootConfigUrl) + "/samply-root-config.js");
+        imports.put("@samply/en/teiler-ui", generateSingleSpaUrl(enTeilerUiUrl) + "/main.js");
+        imports.put("@samply/de/teiler-ui", generateSingleSpaUrl(deTeilerUiUrl) + "/main.js");
         Arrays.stream(originalTeilerApps).forEach(teilerApp -> addToImports(
                 imports,
                 teilerApp.getSingleSpaLink(),
-                generateSingleSpaUrl(teilerApp.getSourceUrl())+"/main.js"));
+                generateSingleSpaUrl(teilerApp.getSourceUrl()) + '/' + ((teilerApp.getSingleSpaMainJs() != null) ? teilerApp.getSingleSpaMainJs() : "main.js")));
 
         return importMaps;
 
     }
 
-    private static String generateSingleSpaUrl (String url){
+    private static String generateSingleSpaUrl(String url) {
         return url.substring("http:".length());
     }
 
@@ -178,6 +181,7 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP1_SOURCEURL=" + teilerApp1.getSourceUrl(),
                         "TEILER_APP1_BACKENDURL=" + teilerApp1.getBackendUrl(),
                         "TEILER_APP1_ICONSOURCEURL=" + teilerApp1.getIconSourceUrl(),
+                        "TEILER_APP1_SINGLESPAMAINJS=" + teilerApp1.getSingleSpaMainJs(),
                         "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
                         "TEILER_APP2_NAME=" + teilerApp2.getName(),
                         "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),
@@ -265,15 +269,15 @@ class TeilerCoreApplicationTests {
         Map<String, String> generatedImportsMap = extractImports(generatedImports);
         Map<String, String> originalImportsMap = extractImports(originalImports);
 
-        originalImportsMap.keySet().forEach(key -> assertEquals( originalImportsMap.get(key), generatedImportsMap.get(key)));
+        originalImportsMap.keySet().forEach(key -> assertEquals(originalImportsMap.get(key), generatedImportsMap.get(key)));
 
     }
 
-    private Map<String, String> extractImports (JSONObject imports) throws JSONException {
+    private Map<String, String> extractImports(JSONObject imports) throws JSONException {
         Map<String, String> importsMap = new HashMap<>();
 
-        for (Iterator key = imports.keys(); key.hasNext();){
-            String element1 = (String)key.next();
+        for (Iterator key = imports.keys(); key.hasNext(); ) {
+            String element1 = (String) key.next();
             String element2 = (String) imports.get(element1);
             importsMap.put(element1, element2);
         }

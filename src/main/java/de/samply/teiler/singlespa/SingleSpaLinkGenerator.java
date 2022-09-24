@@ -30,7 +30,11 @@ public class SingleSpaLinkGenerator {
     }
 
     public String generateSingleSpaSourceLink(String teilerAppSourceUrl) {
-        return createUrl(teilerAppSourceUrl, TeilerCoreConst.SINGLE_SPA_FRAGMENT_JS);
+        return generateSingleSpaSourceLink(teilerAppSourceUrl, null);
+    }
+
+    public String generateSingleSpaSourceLink(String teilerAppSourceUrl, String teilerAppSingleSpaMainJs) {
+        return createUrl(teilerAppSourceUrl, (teilerAppSingleSpaMainJs != null) ? teilerAppSingleSpaMainJs : TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
     }
 
     private String createUrl(String baseUrl, String path) {

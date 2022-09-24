@@ -29,7 +29,7 @@ public class ImportsMapConfigurator {
                         singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerUiConfigurator.getTeilerUiUrl(language))));
         teilerAppConfigurator.getTeilerApps().forEach(teilerApp -> imports.put(
                 teilerApp.getSingleSpaLink(),
-                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl())));
+                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl(), teilerApp.getSingleSpaMainJs())));
         importsMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
 
     }

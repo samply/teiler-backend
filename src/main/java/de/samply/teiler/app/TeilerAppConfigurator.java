@@ -168,6 +168,9 @@ public class TeilerAppConfigurator {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
                 teilerApp.setSingleSpaLink(singleSpaLinkGenerator.generateSingleSpaLink(teilerApp.getName(), language));
+                if (teilerApp.getSingleSpaMainJs() == null){
+                    teilerApp.setSingleSpaMainJs(TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
+                }
                 if (teilerApp.getExternLink() == null) {
                     teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
                 }
