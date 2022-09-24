@@ -21,15 +21,21 @@ public class ImportsMapConfigurator {
                                   @Autowired TeilerUiConfigurator teilerUiConfigurator) {
 
         JSONObject imports = new JSONObject();
+
         imports.put(
                 singleSpaLinkGenerator.generateSingleSpaLink(TeilerCoreConst.SINGLE_SPA_ROOT_CONFIG),
                 singleSpaLinkGenerator.generateSingleSpaSourceLinkForRootConfig(teilerRootConfigUrl));
+
         Arrays.stream(teilerUiConfigurator.getTeilerUiLanguages()).forEach(language -> imports.put(
-                        singleSpaLinkGenerator.generateSingleSpaLink(TeilerCoreConst.TEILER_UI_APP_NAME, language),
-                        singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerUiConfigurator.getTeilerUiUrl(language))));
-        teilerAppConfigurator.getTeilerApps().forEach(teilerApp -> imports.put(
-                teilerApp.getSingleSpaLink(),
-                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl(), teilerApp.getSingleSpaMainJs())));
+                singleSpaLinkGenerator.generateSingleSpaLink(TeilerCoreConst.TEILER_UI_APP_NAME, language),
+                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerUiConfigurator.getTeilerUiUrl(language))));
+
+        teilerAppConfigurator.getTeilerApps().stream()
+                .filter(teilerApp -> !teilerApp.getExternLink())
+                .forEach(teilerApp -> imports.put(
+                        teilerApp.getSingleSpaLink(),
+                        singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl(), teilerApp.getSingleSpaMainJs())));
+
         importsMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
 
     }

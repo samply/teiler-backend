@@ -40,7 +40,7 @@ public class TeilerUiConfigurator {
         if (language == null) {
             language = defaultLanguage;
         }
-        languageUrlMap.put(language, value);
+        languageUrlMap.put(language.toLowerCase(), value);
 
     }
 
@@ -49,7 +49,7 @@ public class TeilerUiConfigurator {
     }
 
     public String getTeilerUiUrl(String language) {
-        return languageUrlMap.get(language);
+        return languageUrlMap.get(language.toLowerCase());
     }
 
     public String[] getTeilerUiUrls() {
