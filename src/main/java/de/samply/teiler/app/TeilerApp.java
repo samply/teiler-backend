@@ -21,6 +21,7 @@ public class TeilerApp implements Serializable {
     private String singleSpaMainJs;
     private Boolean isExternLink;
     private Boolean isActivated;
+    private Boolean isLocal;
     private TeilerAppRole[] roles;
     private String iconClass;
     private String iconSourceUrl;
@@ -95,6 +96,20 @@ public class TeilerApp implements Serializable {
 
     public void setActivated(Boolean activated) {
         isActivated = activated;
+    }
+
+    public Boolean getLocal() {
+        return isLocal;
+    }
+
+    public void setLocal(Boolean local) {
+        isLocal = local;
+    }
+
+    public void setLocal(String local) {
+        if (local != null){
+            isLocal = Boolean.valueOf(local);
+        }
     }
 
     public void setActivated(String activated) {
@@ -174,6 +189,7 @@ public class TeilerApp implements Serializable {
                 .append(sourceUrl, teilerApp.sourceUrl)
                 .append(isExternLink, teilerApp.isExternLink)
                 .append(isActivated, teilerApp.isActivated)
+                .append(isLocal, teilerApp.isLocal)
                 .append(iconClass, teilerApp.iconClass)
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
                 .append(backendUrl, teilerApp.backendUrl)
@@ -203,6 +219,7 @@ public class TeilerApp implements Serializable {
                 .append(sourceUrl)
                 .append(isExternLink)
                 .append(isActivated)
+                .append(isLocal)
                 .append(roles)
                 .append(iconClass)
                 .append(iconSourceUrl)

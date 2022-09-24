@@ -19,6 +19,7 @@ public class TeilerCoreConst {
     public final static String SOURCE_URL_SUFFIX = "SOURCEURL";
     public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
     public final static String IS_ACTIVATED_SUFFIX = "ISACTIVATED";
+    public final static String IS_LOCAL_SUFFIX = "ISLOCAL";
     public final static String ROLES_SUFFIX = "ROLES";
     public final static String ICON_CLASS_SUFFIX = "ICONCLASS";
     public final static String ICON_SOURCE_URL_SUFFIX = "ICONSOURCEURL";
@@ -32,6 +33,7 @@ public class TeilerCoreConst {
 
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
     public final static boolean IS_ACTIVATED_DEFAULT = true;
+    public final static boolean IS_LOCAL_DEFAULT = true;
     public final static String SINGLE_SPA_IMPORTS = "imports";
     public final static String SINGLE_SPA_ROOT_CONFIG = "root-config";
     public final static String SINGLE_SPA_DEFAULT_MAIN_JS = "main.js";

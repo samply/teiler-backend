@@ -69,6 +69,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setActivated(true);
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
         teilerApp.setSingleSpaMainJs("samply-name1.js");
+        teilerApp.setLocal(true);
 
         return teilerApp;
 
@@ -91,6 +92,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setOrder(1);
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
         teilerApp.setSingleSpaMainJs("main.js");
+        teilerApp.setLocal(false);
 
         return teilerApp;
 
@@ -113,6 +115,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setOrder(1);
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
         teilerApp.setSingleSpaMainJs("main.js");
+        teilerApp.setLocal(false);
 
 
         return teilerApp;
@@ -136,6 +139,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setActivated(true);
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
         teilerApp.setSingleSpaMainJs("samply-name1.js");
+        teilerApp.setLocal(true);
 
         return teilerApp;
 
@@ -194,6 +198,7 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
                         "TEILER_APP2_EN_SOURCEURL=" + teilerApp3.getSourceUrl(),
                         "TEILER_APP2_ISACTIVATED=" + teilerApp3.getActivated(),
+                        "TEILER_APP2_ISLOCAL=" + teilerApp3.getLocal(),
                         "TEILER_APP2_ICONCLASS=" + teilerApp3.getIconClass(),
                         "TEILER_APP2_ORDER=" + teilerApp3.getOrder(),
                         "TEILER_UI_EN_URL=" + enTeilerUiUrl,
