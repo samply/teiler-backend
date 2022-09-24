@@ -16,7 +16,7 @@ public class TeilerApp implements Serializable {
     private String description;
     private String routerLink;
     private String singleSpaLink;
-    private String sourceLink;
+    private String sourceUrl;
     private Boolean isExternLink;
     private Boolean isActivated;
     private TeilerAppRole[] roles;
@@ -65,12 +65,12 @@ public class TeilerApp implements Serializable {
         this.singleSpaLink = singleSpaLink;
     }
 
-    public String getSourceLink() {
-        return sourceLink;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setSourceLink(String sourceLink) {
-        this.sourceLink = sourceLink;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
     public Boolean getExternLink() {
@@ -161,7 +161,7 @@ public class TeilerApp implements Serializable {
                 .append(description, teilerApp.description)
                 .append(routerLink, teilerApp.routerLink)
                 .append(singleSpaLink, teilerApp.singleSpaLink)
-                .append(sourceLink, teilerApp.sourceLink)
+                .append(sourceUrl, teilerApp.sourceUrl)
                 .append(isExternLink, teilerApp.isExternLink)
                 .append(isActivated, teilerApp.isActivated)
                 .append(iconClass, teilerApp.iconClass)
@@ -189,7 +189,7 @@ public class TeilerApp implements Serializable {
                 .append(description)
                 .append(routerLink)
                 .append(singleSpaLink)
-                .append(sourceLink)
+                .append(sourceUrl)
                 .append(isExternLink)
                 .append(isActivated)
                 .append(roles)

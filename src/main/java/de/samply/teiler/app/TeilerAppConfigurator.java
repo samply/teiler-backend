@@ -3,6 +3,7 @@ package de.samply.teiler.app;
 import de.samply.teiler.core.TeilerCoreConst;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
+import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
@@ -21,16 +22,16 @@ public class TeilerAppConfigurator {
 
     private final String defaultLanguage;
     private final String[] teilerUiLanguages;
-    private final String projectOrganisation;
+    private SingleSpaLinkGenerator singleSpaLinkGenerator;
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
 
     public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
-                                 @Value(TeilerCoreConst.PROJECT_ORGANISATION_SV) String projectOrganisation,
+                                 @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                  @Autowired TeilerUiConfigurator teilerUiConfigurator,
                                  @Autowired Environment environment) {
         this.defaultLanguage = defaultLanguage.toLowerCase();
         this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
-        this.projectOrganisation = projectOrganisation;
+        this.singleSpaLinkGenerator = singleSpaLinkGenerator;
 
         initializeLanguageTeilerAppMap(environment);
         expandNoLanguageValues();
@@ -166,7 +167,7 @@ public class TeilerAppConfigurator {
         languageAppIdTeilerAppMap.keySet().forEach(language -> {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
-                teilerApp.setSingleSpaLink('@' + projectOrganisation + '/' + teilerApp.getRouterLink());
+                teilerApp.setSingleSpaLink(singleSpaLinkGenerator.generateSingleSpaLink(teilerApp.getName(), language));
                 if (teilerApp.getExternLink() == null) {
                     teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
                 }

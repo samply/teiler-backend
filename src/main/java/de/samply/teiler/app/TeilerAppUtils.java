@@ -17,46 +17,8 @@ public class TeilerAppUtils {
         return key.startsWith(TeilerCoreConst.APP_PREFIX);
     }
 
-    public static boolean isName(String key) {
-        return key.contains(TeilerCoreConst.NAME_SUFFIX);
-    }
-
-    public static boolean isTitle(String key) {
-        return key.contains(TeilerCoreConst.TITLE_SUFFIX);
-    }
-
-    public static boolean isDescription(String key) {
-        return key.contains(TeilerCoreConst.DESCRIPTION_SUFFIX);
-    }
-
-    public static boolean isSourceLink(String key) {
-        return key.contains(TeilerCoreConst.SOURCE_LINK_SUFFIX);
-    }
-
-    public static boolean isExternalLink(String key) {
-        return key.contains(TeilerCoreConst.IS_EXTERNAL_LINK_SUFFIX);
-    }
-    public static boolean isActivated(String key) {
-        return key.contains(TeilerCoreConst.IS_ACTIVATED_SUFFIX);
-    }
-
-    public static boolean isRoles(String key) {
-        return key.contains(TeilerCoreConst.ROLES_SUFFIX);
-    }
-
-    public static boolean isIconClass(String key) {
-        return key.contains(TeilerCoreConst.ICON_CLASS);
-    }
-
-    public static boolean isIconSourceUrl(String key) {
-        return key.contains(TeilerCoreConst.ICON_SOURCE_URL);
-    }
-    public static boolean isBackendUrl(String key) {
-        return key.contains(TeilerCoreConst.BACKEND_URL);
-    }
-
-    public static boolean isOrder(String key) {
-        return key.contains(TeilerCoreConst.ORDER);
+    private static boolean isSuffix(String key, String suffix) {
+        return key != null && key.contains("_" + suffix);
     }
 
     public static Integer getAppId(String key) {
@@ -84,17 +46,17 @@ public class TeilerAppUtils {
 
         Map<Function<String, Boolean>, BiConsumer<TeilerApp, String>> teilerAppSetterMap = new HashMap<>();
 
-        teilerAppSetterMap.put(TeilerAppUtils::isName, TeilerApp::setName);
-        teilerAppSetterMap.put(TeilerAppUtils::isTitle, TeilerApp::setTitle);
-        teilerAppSetterMap.put(TeilerAppUtils::isDescription, TeilerApp::setDescription);
-        teilerAppSetterMap.put(TeilerAppUtils::isSourceLink, TeilerApp::setSourceLink);
-        teilerAppSetterMap.put(TeilerAppUtils::isExternalLink, TeilerApp::setExternLink);
-        teilerAppSetterMap.put(TeilerAppUtils::isActivated, TeilerApp::setActivated);
-        teilerAppSetterMap.put(TeilerAppUtils::isIconClass, TeilerApp::setIconClass);
-        teilerAppSetterMap.put(TeilerAppUtils::isIconSourceUrl, TeilerApp::setIconSourceUrl);
-        teilerAppSetterMap.put(TeilerAppUtils::isBackendUrl, TeilerApp::setBackendUrl);
-        teilerAppSetterMap.put(TeilerAppUtils::isOrder, TeilerApp::setOrder);
-        teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.NAME_SUFFIX), TeilerApp::setName);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.TITLE_SUFFIX), TeilerApp::setTitle);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.DESCRIPTION_SUFFIX), TeilerApp::setDescription);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SOURCE_URL_SUFFIX), TeilerApp::setSourceUrl);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IS_EXTERNAL_LINK_SUFFIX), TeilerApp::setExternLink);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IS_ACTIVATED_SUFFIX), TeilerApp::setActivated);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ICON_CLASS_SUFFIX), TeilerApp::setIconClass);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ICON_SOURCE_URL_SUFFIX), TeilerApp::setIconSourceUrl);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.BACKEND_URL_SUFFIX), TeilerApp::setBackendUrl);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ORDER_SUFFIX), TeilerApp::setOrder);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ROLES_SUFFIX), (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
 
         return teilerAppSetterMap;

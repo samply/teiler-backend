@@ -1,6 +1,6 @@
 package de.samply.teiler.core;
 
-import de.samply.teiler.root.ImportsMapConfigurator;
+import de.samply.teiler.singlespa.ImportsMapConfigurator;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.utils.CorsChecker;

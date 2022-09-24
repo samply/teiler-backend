@@ -52,6 +52,10 @@ public class TeilerUiConfigurator {
         return languageUrlMap.get(language);
     }
 
+    public String[] getTeilerUiUrls() {
+        return languageUrlMap.keySet().stream().map(key -> languageUrlMap.get(key)).toArray(String[]::new);
+    }
+
     public String[] getTeilerUiLanguages() {
         return languageUrlMap.keySet().toArray(String[]::new);
     }
