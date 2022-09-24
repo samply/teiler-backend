@@ -62,6 +62,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("de/name1");
         teilerApp.setSingleSpaLink("@samply/de/name1");
+        teilerApp.setBackendUrl("backendurl1");
         teilerApp.setActivated(true);
 
         return teilerApp;
@@ -126,6 +127,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("en/name1");
         teilerApp.setSingleSpaLink("@samply/en/name1");
+        teilerApp.setBackendUrl("backendurl1");
         teilerApp.setActivated(true);
 
         return teilerApp;
@@ -160,6 +162,7 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP1_DESCRIPTION=" + teilerApp1.getDescription(),
                         "TEILER_APP1_ISEXTERNALLINK=" + teilerApp1.getExternLink(),
                         "TEILER_APP1_SOURCELINK=" + teilerApp1.getSourceLink(),
+                        "TEILER_APP1_BACKENDURL=" + teilerApp1.getBackendUrl(),
                         "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
                         "TEILER_APP2_NAME=" + teilerApp2.getName(),
                         "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),

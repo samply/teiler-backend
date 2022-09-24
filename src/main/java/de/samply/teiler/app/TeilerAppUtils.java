@@ -51,6 +51,9 @@ public class TeilerAppUtils {
     public static boolean isIconSourceUrl(String key) {
         return key.contains(TeilerCoreConst.ICON_SOURCE_URL);
     }
+    public static boolean isBackendUrl(String key) {
+        return key.contains(TeilerCoreConst.BACKEND_URL);
+    }
 
     public static boolean isOrder(String key) {
         return key.contains(TeilerCoreConst.ORDER);
@@ -89,6 +92,7 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(TeilerAppUtils::isActivated, TeilerApp::setActivated);
         teilerAppSetterMap.put(TeilerAppUtils::isIconClass, TeilerApp::setIconClass);
         teilerAppSetterMap.put(TeilerAppUtils::isIconSourceUrl, TeilerApp::setIconSourceUrl);
+        teilerAppSetterMap.put(TeilerAppUtils::isBackendUrl, TeilerApp::setBackendUrl);
         teilerAppSetterMap.put(TeilerAppUtils::isOrder, TeilerApp::setOrder);
         teilerAppSetterMap.put(TeilerAppUtils::isRoles, (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));

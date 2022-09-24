@@ -22,6 +22,7 @@ public class TeilerCoreConst {
     public final static String ROLES_SUFFIX = "ROLES";
     public final static String ICON_CLASS = "ICONCLASS";
     public final static String ICON_SOURCE_URL = "ICONSOURCEURL";
+    public final static String BACKEND_URL = "BACKENDURL";
     public final static String ORDER = "ORDER";
     public final static String TEILER_UI_PREFIX = "TEILER_UI";
     public final static String URL_SUFFIX = "URL";

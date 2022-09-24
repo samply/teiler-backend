@@ -22,6 +22,7 @@ public class TeilerApp implements Serializable {
     private TeilerAppRole[] roles;
     private String iconClass;
     private String iconSourceUrl;
+    private String backendUrl;
     private Integer order;
 
     public String getName() {
@@ -124,6 +125,14 @@ public class TeilerApp implements Serializable {
         this.iconSourceUrl = iconSourceUrl;
     }
 
+    public String getBackendUrl() {
+        return backendUrl;
+    }
+
+    public void setBackendUrl(String backendUrl) {
+        this.backendUrl = backendUrl;
+    }
+
     public Integer getOrder() {
         return order;
     }
@@ -157,6 +166,7 @@ public class TeilerApp implements Serializable {
                 .append(isActivated, teilerApp.isActivated)
                 .append(iconClass, teilerApp.iconClass)
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
+                .append(backendUrl, teilerApp.backendUrl)
                 .append(order, teilerApp.order)
                 .isEquals();
 
@@ -185,6 +195,7 @@ public class TeilerApp implements Serializable {
                 .append(roles)
                 .append(iconClass)
                 .append(iconSourceUrl)
+                .append(backendUrl)
                 .append(order)
                 .toHashCode();
     }
