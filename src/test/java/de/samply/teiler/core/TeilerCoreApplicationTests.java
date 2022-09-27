@@ -203,7 +203,8 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP2_ORDER=" + teilerApp3.getOrder(),
                         "TEILER_UI_EN_URL=" + enTeilerUiUrl,
                         "TEILER_UI_DE_URL=" + deTeilerUiUrl,
-                        "TEILER_ROOT_CONFIG_URL=" + rootConfigUrl
+                        "TEILER_ROOT_CONFIG_URL=" + rootConfigUrl,
+                        "CONFIG_ENV_VAR_FILENAME=ccp.conf"
                 ).build();
     }
 

@@ -7,6 +7,7 @@ public class TeilerCoreConst {
     // REST API path
     public final static String INFO_PATH = "/info";
     public final static String APPS_PATH = "/apps/{language}";
+    public final static String CONFIG_PATH = "/config";
     public final static String IMPORT_MAP_PATH = "/import-map";
 
     // Environment Variables
@@ -29,6 +30,7 @@ public class TeilerCoreConst {
     public final static String TEILER_UI_PREFIX = "TEILER_UI";
     public final static String URL_SUFFIX = "URL";
     public final static String TEILER_ROOT_CONFIG_URL = "TEILER_ROOT_CONFIG_URL";
+    public final static String CONFIG_ENV_VAR_FILENAME = "CONFIG_ENV_VAR_FILENAME";
 
 
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
@@ -41,8 +43,12 @@ public class TeilerCoreConst {
 
 
     // Spring Values
-    public final static String DEFAULT_LANGUAGE_SV = "${" + DEFAULT_LANGUAGE + ":EN}";
-    public final static String PROJECT_ORGANISATION_SV = "${" + PROJECT_ORGANISATION + ":samply}";
-    public final static String TEILER_ROOT_CONFIG_URL_SV = "${" + TEILER_ROOT_CONFIG_URL + ":#{null}}";
+    public final static String HEAD_SV = "${";
+    public final static String BOTTOM_SV = "}";
+    public final static String DEFAULT_LANGUAGE_SV = HEAD_SV + DEFAULT_LANGUAGE + ":EN"+ BOTTOM_SV;
+    public final static String PROJECT_ORGANISATION_SV = HEAD_SV + PROJECT_ORGANISATION + ":samply" + BOTTOM_SV;
+    public final static String TEILER_ROOT_CONFIG_URL_SV = HEAD_SV + TEILER_ROOT_CONFIG_URL + ":#{null}" + BOTTOM_SV;
+
+    public final static String CONFIG_ENV_VAR_FILENAME_SV = HEAD_SV + CONFIG_ENV_VAR_FILENAME + BOTTOM_SV;
 
 }

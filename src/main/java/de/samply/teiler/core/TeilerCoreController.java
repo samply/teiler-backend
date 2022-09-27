@@ -1,5 +1,7 @@
 package de.samply.teiler.core;
 
+import de.samply.teiler.config.ConfigBlock;
+import de.samply.teiler.config.ConfigBlocksConfigurator;
 import de.samply.teiler.singlespa.ImportsMapConfigurator;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
@@ -24,6 +26,7 @@ public class TeilerCoreController {
     private CorsChecker corsChecker;
     private TeilerAppConfigurator teilerAppConfigurator;
     private ImportsMapConfigurator importsMapConfigurator;
+    private ConfigBlocksConfigurator configBlocksConfigurator;
     private String defaultLanguage;
 
     @GetMapping(TeilerCoreConst.INFO_PATH)
@@ -50,6 +53,17 @@ public class TeilerCoreController {
         return new ResponseEntity<>(importsMapConfigurator.getImportsMaps().toString(), httpHeaders, HttpStatus.OK);
 
     }
+
+    @GetMapping(TeilerCoreConst.CONFIG_PATH)
+    public ResponseEntity<ConfigBlock[]> getApps(HttpServletRequest request) {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        return new ResponseEntity<>(configBlocksConfigurator.getConfigBlocks(), httpHeaders, HttpStatus.OK);
+
+    }
+
 
     private TeilerApp[] fetchApps(String language) {
         if (language == null) {
@@ -84,6 +98,11 @@ public class TeilerCoreController {
     @Autowired
     public void setImportsMapConfigurator(ImportsMapConfigurator importsMapConfigurator) {
         this.importsMapConfigurator = importsMapConfigurator;
+    }
+
+    @Autowired
+    public void setConfigBlocksConfigurator(ConfigBlocksConfigurator configBlocksConfigurator) {
+        this.configBlocksConfigurator = configBlocksConfigurator;
     }
 
     @Autowired
