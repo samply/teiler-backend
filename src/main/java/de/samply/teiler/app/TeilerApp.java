@@ -28,6 +28,9 @@ public class TeilerApp implements Serializable {
     private String backendUrl;
     private Integer order;
 
+    private Boolean isFrontendReachable;
+    private Boolean isBackendReachable;
+
     public String getName() {
         return name;
     }
@@ -172,6 +175,22 @@ public class TeilerApp implements Serializable {
         this.singleSpaMainJs = singleSpaMainJs;
     }
 
+    public Boolean getFrontendReachable() {
+        return isFrontendReachable;
+    }
+
+    public void setFrontendReachable(Boolean frontendReachable) {
+        isFrontendReachable = frontendReachable;
+    }
+
+    public Boolean getBackendReachable() {
+        return isBackendReachable;
+    }
+
+    public void setBackendReachable(Boolean backendReachable) {
+        isBackendReachable = backendReachable;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,6 +209,8 @@ public class TeilerApp implements Serializable {
                 .append(isExternLink, teilerApp.isExternLink)
                 .append(isActivated, teilerApp.isActivated)
                 .append(isLocal, teilerApp.isLocal)
+                .append(isFrontendReachable, teilerApp.isFrontendReachable)
+                .append(isBackendReachable, teilerApp.isBackendReachable)
                 .append(iconClass, teilerApp.iconClass)
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
                 .append(backendUrl, teilerApp.backendUrl)
@@ -220,6 +241,8 @@ public class TeilerApp implements Serializable {
                 .append(isExternLink)
                 .append(isActivated)
                 .append(isLocal)
+                .append(isFrontendReachable)
+                .append(isBackendReachable)
                 .append(roles)
                 .append(iconClass)
                 .append(iconSourceUrl)

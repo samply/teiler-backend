@@ -1,9 +1,9 @@
 package de.samply.teiler.app;
 
 import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
-import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
@@ -37,6 +37,7 @@ public class TeilerAppConfigurator {
         expandNoLanguageValues();
         expandTeilerAppsToTeilerUiLanguages();
         addAutomaticGeneratedValues();
+        updateLanguageAppIdTeilerAppMap();
     }
 
     private void initializeLanguageTeilerAppMap(Environment environment) {
@@ -168,11 +169,11 @@ public class TeilerAppConfigurator {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
                 teilerApp.setRouterLink(language.toLowerCase() + '/' + teilerApp.getName());
                 teilerApp.setSingleSpaLink(singleSpaLinkGenerator.generateSingleSpaLink(teilerApp.getName(), language));
-                if (teilerApp.getSingleSpaMainJs() == null){
-                    teilerApp.setSingleSpaMainJs(TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
-                }
                 if (teilerApp.getExternLink() == null) {
                     teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
+                }
+                if (teilerApp.getExternLink() == false && teilerApp.getSingleSpaMainJs() == null) {
+                    teilerApp.setSingleSpaMainJs(TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
                 }
                 if (teilerApp.getActivated() == null) {
                     teilerApp.setActivated(TeilerCoreConst.IS_ACTIVATED_DEFAULT);
@@ -185,14 +186,27 @@ public class TeilerAppConfigurator {
 
     }
 
+    public void updateLanguageAppIdTeilerAppMap() {
+        getLanguageAppIdTeilerAppMap().values().stream()
+                .map(appIdTeilerAppMap -> appIdTeilerAppMap.values())
+                .flatMap(Collection::stream).toList()
+                .forEach(teilerApp -> TeilerAppUtils.updatePing(teilerApp));
+
+    }
+
     public Collection<TeilerApp> getTeilerApps(String language) {
-        Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language.toLowerCase());
+        Map<Integer, TeilerApp> appIdTeilerAppMap = getLanguageAppIdTeilerAppMap().get(language.toLowerCase());
         return (appIdTeilerAppMap != null) ? appIdTeilerAppMap.values() : new ArrayList<>();
     }
 
     public List<TeilerApp> getTeilerApps() {
-        return languageAppIdTeilerAppMap.values().stream()
+        return getLanguageAppIdTeilerAppMap().values().stream()
                 .map(appIdTeilerAppMap -> appIdTeilerAppMap.values()).flatMap(Collection::stream).toList();
     }
+
+    private synchronized Map<String, Map<Integer, TeilerApp>> getLanguageAppIdTeilerAppMap() {
+        return languageAppIdTeilerAppMap;
+    }
+
 
 }

@@ -70,6 +70,8 @@ class TeilerCoreApplicationTests {
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
         teilerApp.setSingleSpaMainJs("samply-name1.js");
         teilerApp.setLocal(true);
+        teilerApp.setBackendReachable(false);
+        teilerApp.setFrontendReachable(false);
 
         return teilerApp;
 
@@ -93,6 +95,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
         teilerApp.setSingleSpaMainJs("main.js");
         teilerApp.setLocal(false);
+        teilerApp.setFrontendReachable(false);
 
         return teilerApp;
 
@@ -116,6 +119,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setIconClass("bi bi-emoji-sunglasses");
         teilerApp.setSingleSpaMainJs("main.js");
         teilerApp.setLocal(false);
+        teilerApp.setFrontendReachable(false);
 
 
         return teilerApp;
@@ -140,6 +144,8 @@ class TeilerCoreApplicationTests {
         teilerApp.setIconSourceUrl("http://www.myicons.com/iconurl1");
         teilerApp.setSingleSpaMainJs("samply-name1.js");
         teilerApp.setLocal(true);
+        teilerApp.setBackendReachable(false);
+        teilerApp.setFrontendReachable(false);
 
         return teilerApp;
 
@@ -204,7 +210,8 @@ class TeilerCoreApplicationTests {
                         "TEILER_UI_EN_URL=" + enTeilerUiUrl,
                         "TEILER_UI_DE_URL=" + deTeilerUiUrl,
                         "TEILER_ROOT_CONFIG_URL=" + rootConfigUrl,
-                        "CONFIG_ENV_VAR_FILENAME=ccp.conf"
+                        "CONFIG_ENV_VAR_FILENAME=ccp.conf",
+                        "TEILER_CONFIG_UPDATER_CRON=0 1 * * * *"
                 ).build();
     }
 
