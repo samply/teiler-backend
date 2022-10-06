@@ -1,5 +1,5 @@
 #python
-#exec(open("EnvConcatVariables.py").read())
+#exec(open("ConcatEnvVariables.py").read())
 envFile = open(".env","r")
 result = ""
 for line in envFile:
