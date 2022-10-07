@@ -1,8 +1,4 @@
-FROM openjdk:17-oracle
-
-RUN microdnf upgrade && microdnf remove expat fontconfig freetype \
-  aajohan-comfortaa-fonts fontpackages-filesystem gzip bzip2 tar libpng \
-  binutils && microdnf clean all
+FROM amazoncorretto:17.0.4-alpine3.16
 
 COPY target/teiler-core.jar /app/
 
