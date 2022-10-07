@@ -24,12 +24,13 @@ class TeilerCoreApplicationTests {
 
     private static String defaultLanguage = "DE";
     private static String language2 = "EN";
+    private static String[] languages = {defaultLanguage, language2};
     private static final String APPLICATION_PORT = "8383";
     private static TeilerApp teilerApp1;
     private static TeilerApp teilerApp2;
     private static TeilerApp teilerApp3;
     private static TeilerApp teilerApp4;
-    private static TeilerApp[] originalTeilerApps;
+    private static Map<String,TeilerApp[]> languageOriginalTeilerApps;
     private static String enTeilerUiUrl = "http://teiler-ui:8540";
     private static String deTeilerUiUrl = "http://teiler-ui:8541";
     private static String rootConfigUrl = "http://root-config:9000";
@@ -45,10 +46,15 @@ class TeilerCoreApplicationTests {
         teilerApp3 = initializeTeilerApp3();
         teilerApp4 = initializeTeilerApp4();
 
-        TeilerApp[] tempTeilerApps = {teilerApp1, teilerApp2, teilerApp3, teilerApp4};
-        originalTeilerApps = tempTeilerApps;
 
-        importMaps = initializeImportMap(originalTeilerApps);
+        languageOriginalTeilerApps = new HashMap<>();
+        TeilerApp[] defaultLanguageTeilerApps = {teilerApp1, teilerApp2};
+        languageOriginalTeilerApps.put(defaultLanguage, defaultLanguageTeilerApps);
+        TeilerApp[] language2TeilerApps = {teilerApp3, teilerApp4};
+        languageOriginalTeilerApps.put(language2, language2TeilerApps);
+
+        TeilerApp[] teilerApps = {teilerApp1, teilerApp2, teilerApp3, teilerApp4};
+        importMaps = initializeImportMap(teilerApps);
 
     }
 
@@ -63,7 +69,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl1:9292");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("de/name1");
+        teilerApp.setRouterLink("name1");
         teilerApp.setSingleSpaLink("@samply/de/name1");
         teilerApp.setBackendUrl("http://backendurl1:4000");
         teilerApp.setActivated(true);
@@ -88,7 +94,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl2:7070");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("de/name2");
+        teilerApp.setRouterLink("name2");
         teilerApp.setSingleSpaLink("@samply/de/name2");
         teilerApp.setActivated(false);
         teilerApp.setOrder(1);
@@ -112,7 +118,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl2:7070/" + language2.toLowerCase());
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("en/name2");
+        teilerApp.setRouterLink("name2");
         teilerApp.setSingleSpaLink("@samply/en/name2");
         teilerApp.setActivated(false);
         teilerApp.setOrder(1);
@@ -137,7 +143,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl1:9292");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("en/name1");
+        teilerApp.setRouterLink("name1");
         teilerApp.setSingleSpaLink("@samply/en/name1");
         teilerApp.setBackendUrl("http://backendurl1:4000");
         teilerApp.setActivated(true);
@@ -228,21 +234,17 @@ class TeilerCoreApplicationTests {
 
     @Test
     void getTeilerApps() {
-
         TeilerAppConfigurator teilerAppConfigurator = teilerCoreContext1.getBean(TeilerAppConfigurator.class);
-        String[] languages = {defaultLanguage, language2};
-        List<TeilerApp> teilerApps = Arrays.stream(languages).map(language -> teilerAppConfigurator.getTeilerApps(language)).flatMap(Collection::stream).toList();
-        checkTeilerApps(teilerApps);
-
+        Arrays.stream(languages).forEach(language -> checkTeilerApps(teilerAppConfigurator.getTeilerApps(language),language));
     }
 
-    private void checkTeilerApps(List<TeilerApp> teilerApps) {
+    private void checkTeilerApps(List<TeilerApp> teilerApps, String language) {
 
         Map<String, TeilerApp> routerLinkTeilerAppMap = new HashMap<>();
-        teilerApps.forEach(teilerApp -> routerLinkTeilerAppMap.put(teilerApp.getRouterLink(), teilerApp));
+        teilerApps.forEach(teilerApp -> routerLinkTeilerAppMap.put(teilerApp.getName(), teilerApp));
 
-        Arrays.stream(originalTeilerApps).forEach(originalTeilerApp -> {
-            TeilerApp generatedTeilerApp = routerLinkTeilerAppMap.get(originalTeilerApp.getRouterLink());
+        Arrays.stream(languageOriginalTeilerApps.get(language)).forEach(originalTeilerApp -> {
+            TeilerApp generatedTeilerApp = routerLinkTeilerAppMap.get(originalTeilerApp.getName());
             assertEquals(originalTeilerApp, generatedTeilerApp);
         });
 
@@ -254,12 +256,10 @@ class TeilerCoreApplicationTests {
         List<TeilerApp> generatedTeilerApps = new ArrayList<>();
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + defaultLanguage, TeilerApp[].class);
-        generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
-        response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + language2, TeilerApp[].class);
-        generatedTeilerApps.addAll(Arrays.stream(response.getBody()).toList());
-
-        checkTeilerApps(generatedTeilerApps);
+        Arrays.stream(languages).forEach(language -> {
+            ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + language, TeilerApp[].class);
+            checkTeilerApps(Arrays.stream(response.getBody()).toList(), language);
+        });
 
     }
 
