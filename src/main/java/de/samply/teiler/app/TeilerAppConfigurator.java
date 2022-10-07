@@ -143,9 +143,13 @@ public class TeilerAppConfigurator {
 
         Arrays.stream(teilerUiLanguages).forEach(language -> {
             Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language);
+            if (appIdTeilerAppMap == null){
+                appIdTeilerAppMap = new HashMap<>();
+                languageAppIdTeilerAppMap.put(language, appIdTeilerAppMap);
+            }
             definedAppIds.stream()
-                    .filter(appId -> !appIdTeilerAppMap.keySet().contains(appId))
-                    .forEach(appId -> appIdTeilerAppMap.put(appId, getDefaultTeilerApp(appId).clone()));
+                    .filter(appId -> !languageAppIdTeilerAppMap.get(language).keySet().contains(appId))
+                    .forEach(appId -> languageAppIdTeilerAppMap.get(language).put(appId, getDefaultTeilerApp(appId).clone()));
         });
 
     }
