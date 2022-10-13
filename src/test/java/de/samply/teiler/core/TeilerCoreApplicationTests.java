@@ -118,7 +118,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl2:7070/" + language2.toLowerCase());
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("name2");
+        teilerApp.setRouterLink("en/name2");
         teilerApp.setSingleSpaLink("@samply/en/name2");
         teilerApp.setActivated(false);
         teilerApp.setOrder(1);
@@ -143,7 +143,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSourceUrl("http://sourceurl1:9292");
         TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
         teilerApp.setRoles(roles);
-        teilerApp.setRouterLink("name1");
+        teilerApp.setRouterLink("en/name1");
         teilerApp.setSingleSpaLink("@samply/en/name1");
         teilerApp.setBackendUrl("http://backendurl1:4000");
         teilerApp.setActivated(true);

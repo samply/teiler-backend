@@ -171,7 +171,7 @@ public class TeilerAppConfigurator {
     private void addAutomaticGeneratedValues() {
         languageAppIdTeilerAppMap.keySet().forEach(language -> {
             languageAppIdTeilerAppMap.get(language).values().forEach(teilerApp -> {
-                teilerApp.setRouterLink(teilerApp.getName());
+                teilerApp.setRouterLink(generateRouterLink(teilerApp, language));
                 teilerApp.setSingleSpaLink(singleSpaLinkGenerator.generateSingleSpaLink(teilerApp.getName(), language));
                 if (teilerApp.getExternLink() == null) {
                     teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
@@ -188,6 +188,10 @@ public class TeilerAppConfigurator {
             });
         });
 
+    }
+
+    private String generateRouterLink(TeilerApp teilerApp, String language){
+        return (language.equals(defaultLanguage)) ? teilerApp.getName() : language + '/' + teilerApp.getName();
     }
 
     public void updateLanguageAppIdTeilerAppMap() {
