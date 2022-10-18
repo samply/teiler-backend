@@ -27,6 +27,7 @@ public class TeilerApp implements Serializable {
     private String iconSourceUrl;
     private String backendUrl;
     private Integer order;
+    private Boolean inMenu;
 
     private Boolean isFrontendReachable;
     private Boolean isBackendReachable;
@@ -167,6 +168,20 @@ public class TeilerApp implements Serializable {
         }
     }
 
+    public Boolean getInMenu() {
+        return inMenu;
+    }
+
+    public void setInMenu(Boolean inMenu) {
+        this.inMenu = inMenu;
+    }
+
+    public void setInMenu(String inMenu) {
+        if (inMenu != null){
+            this.inMenu = Boolean.valueOf(inMenu);
+        }
+    }
+
     public String getSingleSpaMainJs() {
         return singleSpaMainJs;
     }
@@ -215,6 +230,7 @@ public class TeilerApp implements Serializable {
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
                 .append(backendUrl, teilerApp.backendUrl)
                 .append(order, teilerApp.order)
+                .append(inMenu, teilerApp.inMenu)
                 .append(singleSpaMainJs, teilerApp.singleSpaMainJs)
                 .isEquals();
 
@@ -248,6 +264,7 @@ public class TeilerApp implements Serializable {
                 .append(iconSourceUrl)
                 .append(backendUrl)
                 .append(order)
+                .append(inMenu)
                 .append(singleSpaMainJs)
                 .toHashCode();
     }

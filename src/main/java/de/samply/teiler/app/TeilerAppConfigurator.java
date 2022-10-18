@@ -185,6 +185,9 @@ public class TeilerAppConfigurator {
                 if (teilerApp.getLocal() == null) {
                     teilerApp.setLocal(TeilerCoreConst.IS_LOCAL_DEFAULT);
                 }
+                if (teilerApp.getInMenu() == null){
+                    teilerApp.setInMenu(TeilerCoreConst.IN_MENU_DEFAULT);
+                }
             });
         });
 

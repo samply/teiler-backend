@@ -29,6 +29,7 @@ public class TeilerCoreConst {
     public final static String SINGLE_SPA_MAIN_JS_SUFFIX = "SINGLESPAMAINJS";
     public final static String TEILER_UI_PREFIX = "TEILER_UI";
     public final static String URL_SUFFIX = "URL";
+    public final static String IN_MENU_SUFFIX = "INMENU";
     public final static String TEILER_ROOT_CONFIG_URL = "TEILER_ROOT_CONFIG_URL";
     public final static String CONFIG_ENV_VAR_PATH = "CONFIG_ENV_VAR_PATH";
     public final static String TEILER_CONFIG_UPDATER_CRON = "TEILER_CONFIG_UPDATER_CRON";
@@ -50,6 +51,7 @@ public class TeilerCoreConst {
     public final static boolean IS_EXTERNAL_LINK_DEFAULT = false;
     public final static boolean IS_ACTIVATED_DEFAULT = true;
     public final static boolean IS_LOCAL_DEFAULT = true;
+    public final static boolean IN_MENU_DEFAULT = true;
     public final static String SINGLE_SPA_IMPORTS = "imports";
     public final static String SINGLE_SPA_ROOT_CONFIG = "root-config";
     public final static String SINGLE_SPA_DEFAULT_MAIN_JS = "main.js";

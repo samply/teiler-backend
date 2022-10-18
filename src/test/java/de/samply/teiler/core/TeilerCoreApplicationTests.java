@@ -78,6 +78,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setLocal(true);
         teilerApp.setBackendReachable(false);
         teilerApp.setFrontendReachable(false);
+        teilerApp.setInMenu(true);
 
         return teilerApp;
 
@@ -102,6 +103,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSingleSpaMainJs("main.js");
         teilerApp.setLocal(false);
         teilerApp.setFrontendReachable(false);
+        teilerApp.setInMenu(true);
 
         return teilerApp;
 
@@ -126,7 +128,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setSingleSpaMainJs("main.js");
         teilerApp.setLocal(false);
         teilerApp.setFrontendReachable(false);
-
+        teilerApp.setInMenu(true);
 
         return teilerApp;
 
@@ -152,6 +154,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setLocal(true);
         teilerApp.setBackendReachable(false);
         teilerApp.setFrontendReachable(false);
+        teilerApp.setInMenu(true);
 
         return teilerApp;
 

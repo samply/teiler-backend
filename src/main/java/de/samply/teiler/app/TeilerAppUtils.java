@@ -59,6 +59,7 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ICON_SOURCE_URL_SUFFIX), TeilerApp::setIconSourceUrl);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.BACKEND_URL_SUFFIX), TeilerApp::setBackendUrl);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ORDER_SUFFIX), TeilerApp::setOrder);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IN_MENU_SUFFIX), TeilerApp::setInMenu);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SINGLE_SPA_MAIN_JS_SUFFIX), TeilerApp::setSingleSpaMainJs);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ROLES_SUFFIX), (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
