@@ -26,6 +26,7 @@ public class TeilerCoreConst {
     public final static String ICON_SOURCE_URL_SUFFIX = "ICONSOURCEURL";
     public final static String BACKEND_URL_SUFFIX = "BACKENDURL";
     public final static String ORDER_SUFFIX = "ORDER";
+    public final static String ROUTER_LINK_EXTENSION_SUFFIX = "ROUTERLINKEXTENSION";
     public final static String SINGLE_SPA_MAIN_JS_SUFFIX = "SINGLESPAMAINJS";
     public final static String TEILER_UI_PREFIX = "TEILER_UI";
     public final static String URL_SUFFIX = "URL";

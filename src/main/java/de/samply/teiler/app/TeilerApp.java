@@ -15,6 +15,7 @@ public class TeilerApp implements Serializable {
     private String title;
     private String description;
     private String routerLink;
+    private String routerLinkExtension;
     private String singleSpaLink;
     private String sourceUrl;
 
@@ -62,6 +63,14 @@ public class TeilerApp implements Serializable {
 
     public void setRouterLink(String routerLink) {
         this.routerLink = routerLink;
+    }
+
+    public String getRouterLinkExtension() {
+        return routerLinkExtension;
+    }
+
+    public void setRouterLinkExtension(String routerLinkExtension) {
+        this.routerLinkExtension = routerLinkExtension;
     }
 
     public String getSingleSpaLink() {
@@ -219,6 +228,7 @@ public class TeilerApp implements Serializable {
                 .append(title, teilerApp.title)
                 .append(description, teilerApp.description)
                 .append(routerLink, teilerApp.routerLink)
+                .append(routerLinkExtension, teilerApp.routerLinkExtension)
                 .append(singleSpaLink, teilerApp.singleSpaLink)
                 .append(sourceUrl, teilerApp.sourceUrl)
                 .append(isExternLink, teilerApp.isExternLink)
@@ -252,6 +262,7 @@ public class TeilerApp implements Serializable {
                 .append(title)
                 .append(description)
                 .append(routerLink)
+                .append(routerLinkExtension)
                 .append(singleSpaLink)
                 .append(sourceUrl)
                 .append(isExternLink)

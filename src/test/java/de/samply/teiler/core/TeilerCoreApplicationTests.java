@@ -79,6 +79,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setBackendReachable(false);
         teilerApp.setFrontendReachable(false);
         teilerApp.setInMenu(true);
+        teilerApp.setRouterLinkExtension("/:id");
 
         return teilerApp;
 
@@ -155,6 +156,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setBackendReachable(false);
         teilerApp.setFrontendReachable(false);
         teilerApp.setInMenu(true);
+        teilerApp.setRouterLinkExtension("/:id");
 
         return teilerApp;
 
@@ -196,6 +198,7 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP1_NAME=" + teilerApp1.getName(),
                         "TEILER_APP1_TITLE=" + teilerApp1.getTitle(),
                         "TEILER_APP1_DESCRIPTION=" + teilerApp1.getDescription(),
+                        "TEILER_APP1_ROUTERLINKEXTENSION=" + teilerApp1.getRouterLinkExtension(),
                         "TEILER_APP1_ISEXTERNALLINK=" + teilerApp1.getExternLink(),
                         "TEILER_APP1_SOURCEURL=" + teilerApp1.getSourceUrl(),
                         "TEILER_APP1_BACKENDURL=" + teilerApp1.getBackendUrl(),
