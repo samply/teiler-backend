@@ -33,6 +33,8 @@ public class TeilerApp implements Serializable {
     private Boolean isFrontendReachable;
     private Boolean isBackendReachable;
 
+    private String subroutes;
+
     public String getName() {
         return name;
     }
@@ -215,6 +217,14 @@ public class TeilerApp implements Serializable {
         isBackendReachable = backendReachable;
     }
 
+    public String getSubroutes() {
+        return subroutes;
+    }
+
+    public void setSubroutes(String subroutes) {
+        this.subroutes = subroutes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -242,6 +252,7 @@ public class TeilerApp implements Serializable {
                 .append(order, teilerApp.order)
                 .append(inMenu, teilerApp.inMenu)
                 .append(singleSpaMainJs, teilerApp.singleSpaMainJs)
+                .append(subroutes, teilerApp.subroutes)
                 .isEquals();
 
         if (isEquals) {
@@ -277,6 +288,7 @@ public class TeilerApp implements Serializable {
                 .append(order)
                 .append(inMenu)
                 .append(singleSpaMainJs)
+                .append(subroutes)
                 .toHashCode();
     }
 

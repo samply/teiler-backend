@@ -80,6 +80,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setFrontendReachable(false);
         teilerApp.setInMenu(true);
         teilerApp.setRouterLinkExtension("/:id");
+        teilerApp.setSubroutes("[{path: 'myRoute', teilerAppName: 'my-component'}]");
 
         return teilerApp;
 
@@ -157,6 +158,7 @@ class TeilerCoreApplicationTests {
         teilerApp.setFrontendReachable(false);
         teilerApp.setInMenu(true);
         teilerApp.setRouterLinkExtension("/:id");
+        teilerApp.setSubroutes("[{path: 'myRoute', teilerAppName: 'my-component'}]");
 
         return teilerApp;
 
@@ -204,6 +206,7 @@ class TeilerCoreApplicationTests {
                         "TEILER_APP1_BACKENDURL=" + teilerApp1.getBackendUrl(),
                         "TEILER_APP1_ICONSOURCEURL=" + teilerApp1.getIconSourceUrl(),
                         "TEILER_APP1_SINGLESPAMAINJS=" + teilerApp1.getSingleSpaMainJs(),
+                        "TEILER_APP1_SUBROUTES=" + teilerApp1.getSubroutes(),
                         "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
                         "TEILER_APP2_NAME=" + teilerApp2.getName(),
                         "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),

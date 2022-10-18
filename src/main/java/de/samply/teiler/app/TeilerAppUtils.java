@@ -61,6 +61,7 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ORDER_SUFFIX), TeilerApp::setOrder);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ROUTER_LINK_EXTENSION_SUFFIX), TeilerApp::setRouterLinkExtension);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IN_MENU_SUFFIX), TeilerApp::setInMenu);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SUBROUTES_SUFFIX), TeilerApp::setSubroutes);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SINGLE_SPA_MAIN_JS_SUFFIX), TeilerApp::setSingleSpaMainJs);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ROLES_SUFFIX), (teilerApp, value) -> teilerApp.setRoles(
                 Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));

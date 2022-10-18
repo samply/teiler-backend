@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - language to router link if not default language
 - in menu
 - router link extension
+- subroutes
 
 ### Fixed
 - Filter external links of import map
