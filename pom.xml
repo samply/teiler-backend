@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>de.samply</groupId>
 	<artifactId>teiler-core</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>teiler-core</name>
 	<description>Teiler Backend</description>
 	<properties>
