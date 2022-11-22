@@ -1,4 +1,4 @@
-FROM amazoncorretto:17.0.4-alpine3.16
+FROM amazoncorretto:17.0.5-alpine
 
 COPY target/teiler-core.jar /app/
 
