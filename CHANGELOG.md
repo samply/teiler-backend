@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - router link extension
 - subroutes
 - dockerignore
+- Spring 2.7.5
 
 ### Fixed
 - Filter external links of import map
