@@ -4,6 +4,8 @@ import de.samply.teiler.core.TeilerCoreConst;
 import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
@@ -20,6 +22,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Component
 public class TeilerAppConfigurator {
 
+    private final static Logger logger = LoggerFactory.getLogger(TeilerAppConfigurator.class);
     private final String defaultLanguage;
     private final String[] teilerUiLanguages;
     private SingleSpaLinkGenerator singleSpaLinkGenerator;
@@ -41,6 +44,7 @@ public class TeilerAppConfigurator {
     }
 
     private void initializeLanguageTeilerAppMap(Environment environment) {
+        logger.info("Initialize Teiler App Config...");
         EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerAppUtils::isTeilerApp, this::addKeyValue);
     }
 

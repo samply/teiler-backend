@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - subroutes
 - dockerignore
 - Spring 2.7.5
+- Log environment initialization
 
 ### Fixed
 - Filter external links of import map
