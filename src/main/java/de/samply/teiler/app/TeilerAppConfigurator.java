@@ -36,15 +36,19 @@ public class TeilerAppConfigurator {
         this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
         this.singleSpaLinkGenerator = singleSpaLinkGenerator;
 
+        logger.info("Initialize Teiler App Config...");
         initializeLanguageTeilerAppMap(environment);
+        logger.info("Expand no languages values...");
         expandNoLanguageValues();
+        logger.info("Expand Teiler apps to teiler UI languages...");
         expandTeilerAppsToTeilerUiLanguages();
+        logger.info("Add automatic generated values...");
         addAutomaticGeneratedValues();
+        logger.info("Update language app id teiler app map...");
         updateLanguageAppIdTeilerAppMap();
     }
 
     private void initializeLanguageTeilerAppMap(Environment environment) {
-        logger.info("Initialize Teiler App Config...");
         EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerAppUtils::isTeilerApp, this::addKeyValue);
     }
 
