@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Spring 2.7.5
 - Log environment initialization
 - Timeout in Ping
+- Java 19
 
 ### Fixed
 - Filter external links of import map
