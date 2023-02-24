@@ -36,6 +36,8 @@ public class TeilerCoreConst {
     public final static String CONFIG_ENV_VAR_PATH = "CONFIG_ENV_VAR_PATH";
     public final static String TEILER_CONFIG_UPDATER_CRON = "TEILER_CONFIG_UPDATER_CRON";
     public final static String TEILER_CORE_ASSETS_DIRECTORY = "TEILER_CORE_ASSETS_DIRECTORY";
+    public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
+    public final static String PING_READ_TIMEOUT_IN_SECONDS = "PING_READ_TIMEOUT_IN_SECONDS";
 
 
     // Spring Values
@@ -47,6 +49,8 @@ public class TeilerCoreConst {
     public final static String CONFIG_ENV_VAR_PATH_SV = HEAD_SV + CONFIG_ENV_VAR_PATH + BOTTOM_SV;
     public final static String TEILER_CONFIG_UPDATER_CRON_SV = HEAD_SV + TEILER_CONFIG_UPDATER_CRON + ":#{'-'}" + BOTTOM_SV;
     public final static String TEILER_CORE_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_CORE_ASSETS_DIRECTORY + ":#{null}" + BOTTOM_SV;
+    public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_CONNECTION_TIMEOUT_IN_SECONDS + ":10" + BOTTOM_SV;
+    public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":10" + BOTTOM_SV;
 
 
     // Other constants

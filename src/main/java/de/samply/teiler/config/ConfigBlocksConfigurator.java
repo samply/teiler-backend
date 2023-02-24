@@ -37,9 +37,11 @@ public class ConfigBlocksConfigurator {
     }
 
     private void generateConfigBlocks(Stream<String> lines) {
+        logger.info("Generating config blocks...");
         ConfigBuilder configBuilder = new ConfigBuilder();
         lines.forEach(line -> configBuilder.addLine(line));
         configBlocks = configBuilder.build();
+        logger.info("Config blocks generated.");
     }
 
     private Stream<String> fetchFileLines(ResourceLoader resourceLoader, String configEnvVarPath) throws IOException {

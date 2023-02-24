@@ -4,6 +4,9 @@ import de.samply.teiler.core.TeilerCoreConst;
 import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
+import de.samply.teiler.utils.Ping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
@@ -20,23 +23,32 @@ import java.util.concurrent.atomic.AtomicReference;
 @Component
 public class TeilerAppConfigurator {
 
+    private final static Logger logger = LoggerFactory.getLogger(TeilerAppConfigurator.class);
     private final String defaultLanguage;
     private final String[] teilerUiLanguages;
     private SingleSpaLinkGenerator singleSpaLinkGenerator;
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
+    private Ping ping;
 
     public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
                                  @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                  @Autowired TeilerUiConfigurator teilerUiConfigurator,
-                                 @Autowired Environment environment) {
+                                 @Autowired Environment environment,
+                                 @Autowired Ping ping) {
         this.defaultLanguage = defaultLanguage.toLowerCase();
         this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
         this.singleSpaLinkGenerator = singleSpaLinkGenerator;
+        this.ping = ping;
 
+        logger.info("Initialize Teiler App Config...");
         initializeLanguageTeilerAppMap(environment);
+        logger.info("Expand no languages values...");
         expandNoLanguageValues();
+        logger.info("Expand Teiler apps to teiler UI languages...");
         expandTeilerAppsToTeilerUiLanguages();
+        logger.info("Add automatic generated values...");
         addAutomaticGeneratedValues();
+        logger.info("Update language app id teiler app map...");
         updateLanguageAppIdTeilerAppMap();
     }
 
@@ -201,7 +213,7 @@ public class TeilerAppConfigurator {
         getLanguageAppIdTeilerAppMap().values().stream()
                 .map(appIdTeilerAppMap -> appIdTeilerAppMap.values())
                 .flatMap(Collection::stream).toList()
-                .forEach(teilerApp -> TeilerAppUtils.updatePing(teilerApp));
+                .forEach(teilerApp -> ping.updatePing(teilerApp));
 
     }
 

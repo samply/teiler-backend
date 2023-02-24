@@ -2,6 +2,8 @@ package de.samply.teiler.ui;
 
 import de.samply.teiler.core.TeilerCoreConst;
 import de.samply.teiler.utils.EnvironmentUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
@@ -14,6 +16,7 @@ import java.util.Map;
 @Component
 public class TeilerUiConfigurator {
 
+    private final static Logger logger = LoggerFactory.getLogger(TeilerUiConfigurator.class);
     private final String defaultLanguage;
 
     private Map<String, String> languageUrlMap = new HashMap<>();
@@ -25,6 +28,7 @@ public class TeilerUiConfigurator {
     }
 
     private void initializeLanguageUrlMap(Environment environment) {
+        logger.info("Initialize Teiler UI config...");
         EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerUiUtils::isTeilerUi, this::addKeyValue);
     }
 
