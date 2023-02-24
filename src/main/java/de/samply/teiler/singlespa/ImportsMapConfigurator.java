@@ -4,6 +4,8 @@ import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.core.TeilerCoreConst;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,7 @@ import java.util.Arrays;
 @Component
 public class ImportsMapConfigurator {
 
+    private final static Logger logger = LoggerFactory.getLogger(ImportsMapConfigurator.class);
     private JSONObject importsMaps = new JSONObject();
 
     public ImportsMapConfigurator(@Value(TeilerCoreConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
@@ -20,6 +23,7 @@ public class ImportsMapConfigurator {
                                   @Autowired TeilerAppConfigurator teilerAppConfigurator,
                                   @Autowired TeilerUiConfigurator teilerUiConfigurator) {
 
+        logger.info("Initialize imports map configurator...");
         JSONObject imports = new JSONObject();
 
         imports.put(
@@ -37,6 +41,7 @@ public class ImportsMapConfigurator {
                         singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl(), teilerApp.getSingleSpaMainJs())));
 
         importsMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
+        logger.info("Imports map configurated.");
 
     }
 

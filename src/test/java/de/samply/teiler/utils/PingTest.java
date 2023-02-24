@@ -15,6 +15,7 @@ class PingTest {
     //TODO: Finish test
     @Test
     void ping() {
-        Arrays.stream(urls).forEach(url -> assertTrue(Ping.ping(url)));
+        Ping ping = new Ping(10, 10);
+        Arrays.stream(urls).forEach(url -> assertTrue(ping.ping(url)));
     }
 }

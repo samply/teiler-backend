@@ -1,9 +1,7 @@
 package de.samply.teiler.app;
 
 import de.samply.teiler.core.TeilerCoreConst;
-import de.samply.teiler.utils.Ping;
 import org.springframework.util.StringUtils;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -74,27 +72,5 @@ public class TeilerAppUtils {
         teilerAppSetterMap.keySet().stream().filter(is -> is.apply(key)).forEach(is -> teilerAppSetterMap.get(is).accept(teilerApp, value));
     }
 
-    public static void updatePing(TeilerApp teilerApp) {
-        updatePingFrontendUrl(teilerApp);
-        updatePingBackendUrl(teilerApp);
-    }
-
-    private static void updatePingFrontendUrl(TeilerApp teilerApp) {
-        if (teilerApp.getSourceUrl() != null) {
-            String frontendUrl = (teilerApp.getSingleSpaMainJs() != null) ?
-                    UriComponentsBuilder
-                            .fromHttpUrl(teilerApp.getSourceUrl())
-                            .path('/' + teilerApp.getSingleSpaMainJs()).toUriString()
-                    : teilerApp.getSourceUrl();
-
-            teilerApp.setFrontendReachable(Ping.ping(frontendUrl));
-        }
-    }
-
-    private static void updatePingBackendUrl(TeilerApp teilerApp) {
-        if (teilerApp.getBackendUrl() != null) {
-            teilerApp.setBackendReachable(Ping.ping(teilerApp.getBackendUrl()));
-        }
-    }
 
 }
