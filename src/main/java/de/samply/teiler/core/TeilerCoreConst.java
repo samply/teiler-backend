@@ -50,7 +50,7 @@ public class TeilerCoreConst {
     public final static String TEILER_CONFIG_UPDATER_CRON_SV = HEAD_SV + TEILER_CONFIG_UPDATER_CRON + ":#{'-'}" + BOTTOM_SV;
     public final static String TEILER_CORE_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_CORE_ASSETS_DIRECTORY + ":#{null}" + BOTTOM_SV;
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_CONNECTION_TIMEOUT_IN_SECONDS + ":10" + BOTTOM_SV;
-    public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":10" + BOTTOM_SV;
+    public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
 
 
     // Other constants
