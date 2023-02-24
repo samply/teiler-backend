@@ -80,8 +80,8 @@ public class Ping {
         public CloseableHttpUrlConnection(String url) throws IOException {
             httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
             httpUrlConnection.setInstanceFollowRedirects(followRedirects);
-            httpUrlConnection.setConnectTimeout(connectTimeoutInSeconds);
-            httpUrlConnection.setReadTimeout(readTimeoutInSeconds);
+            httpUrlConnection.setConnectTimeout(connectTimeoutInSeconds*1000);
+            httpUrlConnection.setReadTimeout(readTimeoutInSeconds*1000);
         }
 
         @Override
