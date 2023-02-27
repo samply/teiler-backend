@@ -1,9 +1,9 @@
-FROM eclipse-temurin:19-jre-alpine
+FROM eclipse-temurin:19-jre-focal
 
 COPY target/teiler-core.jar /app/
 
 WORKDIR /app
 
-RUN apk upgrade
+RUN apt-get update && apt-get upgrade -y
 
 CMD ["java", "-jar", "teiler-core.jar"]
