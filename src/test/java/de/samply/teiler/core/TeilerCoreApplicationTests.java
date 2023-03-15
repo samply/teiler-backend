@@ -25,7 +25,7 @@ class TeilerCoreApplicationTests {
     private static String defaultLanguage = "DE";
     private static String language2 = "EN";
     private static String[] languages = {defaultLanguage, language2};
-    private static final String APPLICATION_PORT = "8383";
+    private static final String APPLICATION_PORT = "8989";
     private static TeilerApp teilerApp1;
     private static TeilerApp teilerApp2;
     private static TeilerApp teilerApp3;

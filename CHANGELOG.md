@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2022-10-18
+## [1.0.0] - 2023-03-15
 ### Added
 - Initial commit
 - Init project
@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Log environment initialization
 - Timeout in Ping
 - Java 19
+- Server Address and forward strategy
 
 ### Fixed
 - Filter external links of import map
