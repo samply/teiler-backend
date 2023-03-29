@@ -25,17 +25,21 @@ public class TeilerAppConfigurator {
 
     private final static Logger logger = LoggerFactory.getLogger(TeilerAppConfigurator.class);
     private final String defaultLanguage;
+
+    private final String teilerRootConfigHttpRelativePath;
     private final String[] teilerUiLanguages;
     private SingleSpaLinkGenerator singleSpaLinkGenerator;
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
     private Ping ping;
 
     public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
+                                 @Value(TeilerCoreConst.TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH_SV) String teilerRootConfigHttpRelativePath,
                                  @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                  @Autowired TeilerUiConfigurator teilerUiConfigurator,
                                  @Autowired Environment environment,
                                  @Autowired Ping ping) {
         this.defaultLanguage = defaultLanguage.toLowerCase();
+        this.teilerRootConfigHttpRelativePath = fetchTeilerRootConfigHttpRelativePath(teilerRootConfigHttpRelativePath);
         this.teilerUiLanguages = teilerUiConfigurator.getTeilerUiLanguages();
         this.singleSpaLinkGenerator = singleSpaLinkGenerator;
         this.ping = ping;
@@ -50,6 +54,14 @@ public class TeilerAppConfigurator {
         addAutomaticGeneratedValues();
         logger.info("Update language app id teiler app map...");
         updateLanguageAppIdTeilerAppMap();
+    }
+
+    private String fetchTeilerRootConfigHttpRelativePath(String teilerRootConfigHttpRelativePath) {
+        String result = "";
+        if (teilerRootConfigHttpRelativePath != null && teilerRootConfigHttpRelativePath.length() > 0) {
+            result = (teilerRootConfigHttpRelativePath.charAt(0) == '/') ? teilerRootConfigHttpRelativePath.substring(1) : teilerRootConfigHttpRelativePath;
+        }
+        return result;
     }
 
     private void initializeLanguageTeilerAppMap(Environment environment) {
@@ -155,7 +167,7 @@ public class TeilerAppConfigurator {
 
         Arrays.stream(teilerUiLanguages).forEach(language -> {
             Map<Integer, TeilerApp> appIdTeilerAppMap = languageAppIdTeilerAppMap.get(language);
-            if (appIdTeilerAppMap == null){
+            if (appIdTeilerAppMap == null) {
                 appIdTeilerAppMap = new HashMap<>();
                 languageAppIdTeilerAppMap.put(language, appIdTeilerAppMap);
             }
@@ -197,7 +209,7 @@ public class TeilerAppConfigurator {
                 if (teilerApp.getLocal() == null) {
                     teilerApp.setLocal(TeilerCoreConst.IS_LOCAL_DEFAULT);
                 }
-                if (teilerApp.getInMenu() == null){
+                if (teilerApp.getInMenu() == null) {
                     teilerApp.setInMenu(TeilerCoreConst.IN_MENU_DEFAULT);
                 }
             });
@@ -205,8 +217,10 @@ public class TeilerAppConfigurator {
 
     }
 
-    private String generateRouterLink(TeilerApp teilerApp, String language){
-        return (language.equals(defaultLanguage)) ? teilerApp.getName() : language + '/' + teilerApp.getName();
+    private String generateRouterLink(TeilerApp teilerApp, String language) {
+        String routerLink = (language.equals(defaultLanguage)) ? teilerApp.getName() : language + '/' + teilerApp.getName();
+        String root = (teilerRootConfigHttpRelativePath.length() > 0 && routerLink.length() > 0) ? teilerRootConfigHttpRelativePath + '/' : teilerRootConfigHttpRelativePath;
+        return root + routerLink;
     }
 
     public void updateLanguageAppIdTeilerAppMap() {
