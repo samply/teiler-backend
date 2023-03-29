@@ -12,6 +12,7 @@ public class TeilerCoreConst {
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
+    public final static String TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH = "TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH";
     public final static String PROJECT_ORGANISATION = "PROJECT_ORGANISATION";
     public final static String APP_PREFIX = "TEILER_APP";
     public final static String NAME_SUFFIX = "NAME";
@@ -44,6 +45,7 @@ public class TeilerCoreConst {
     public final static String HEAD_SV = "${";
     public final static String BOTTOM_SV = "}";
     public final static String DEFAULT_LANGUAGE_SV = HEAD_SV + DEFAULT_LANGUAGE + ":EN" + BOTTOM_SV;
+    public final static String TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH_SV = HEAD_SV + TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH + ":#{''}" + BOTTOM_SV;
     public final static String PROJECT_ORGANISATION_SV = HEAD_SV + PROJECT_ORGANISATION + ":samply" + BOTTOM_SV;
     public final static String TEILER_ROOT_CONFIG_URL_SV = HEAD_SV + TEILER_ROOT_CONFIG_URL + ":#{null}" + BOTTOM_SV;
     public final static String CONFIG_ENV_VAR_PATH_SV = HEAD_SV + CONFIG_ENV_VAR_PATH + BOTTOM_SV;

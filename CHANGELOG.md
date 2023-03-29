@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Log environment initialization
 - Timeout in Ping
 - Java 19
+- Http relative path
 
 ### Fixed
 - Filter external links of import map
