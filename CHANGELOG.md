@@ -48,3 +48,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Read environment variables files from resources or from directory
 - Read environment variables files from resources or from directory.
 - check if appidteilerappmap is not null by certains languages.
+
+### Changed
+- Rename to develop
