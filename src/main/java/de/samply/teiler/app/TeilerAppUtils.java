@@ -50,12 +50,14 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.TITLE_SUFFIX), TeilerApp::setTitle);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.DESCRIPTION_SUFFIX), TeilerApp::setDescription);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SOURCE_URL_SUFFIX), TeilerApp::setSourceUrl);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.SOURCE_CHECK_URL_SUFFIX), TeilerApp::setSourceCheckUrl);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IS_EXTERNAL_LINK_SUFFIX), TeilerApp::setExternLink);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IS_ACTIVATED_SUFFIX), TeilerApp::setActivated);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IS_LOCAL_SUFFIX), TeilerApp::setLocal);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ICON_CLASS_SUFFIX), TeilerApp::setIconClass);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ICON_SOURCE_URL_SUFFIX), TeilerApp::setIconSourceUrl);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.BACKEND_URL_SUFFIX), TeilerApp::setBackendUrl);
+        teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.BACKEND_CHECK_URL_SUFFIX), TeilerApp::setBackendCheckUrl);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ORDER_SUFFIX), TeilerApp::setOrder);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.ROUTER_LINK_EXTENSION_SUFFIX), TeilerApp::setRouterLinkExtension);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerCoreConst.IN_MENU_SUFFIX), TeilerApp::setInMenu);

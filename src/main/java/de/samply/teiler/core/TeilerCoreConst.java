@@ -19,6 +19,7 @@ public class TeilerCoreConst {
     public final static String TITLE_SUFFIX = "TITLE";
     public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
     public final static String SOURCE_URL_SUFFIX = "SOURCEURL";
+    public final static String SOURCE_CHECK_URL_SUFFIX = "SOURCECHECKURL";
     public final static String IS_EXTERNAL_LINK_SUFFIX = "ISEXTERNALLINK";
     public final static String IS_ACTIVATED_SUFFIX = "ISACTIVATED";
     public final static String IS_LOCAL_SUFFIX = "ISLOCAL";
@@ -26,6 +27,7 @@ public class TeilerCoreConst {
     public final static String ICON_CLASS_SUFFIX = "ICONCLASS";
     public final static String ICON_SOURCE_URL_SUFFIX = "ICONSOURCEURL";
     public final static String BACKEND_URL_SUFFIX = "BACKENDURL";
+    public final static String BACKEND_CHECK_URL_SUFFIX = "BACKENDCHECKURL";
     public final static String ORDER_SUFFIX = "ORDER";
     public final static String ROUTER_LINK_EXTENSION_SUFFIX = "ROUTERLINKEXTENSION";
     public final static String SINGLE_SPA_MAIN_JS_SUFFIX = "SINGLESPAMAINJS";
@@ -39,6 +41,7 @@ public class TeilerCoreConst {
     public final static String TEILER_CORE_ASSETS_DIRECTORY = "TEILER_CORE_ASSETS_DIRECTORY";
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
     public final static String PING_READ_TIMEOUT_IN_SECONDS = "PING_READ_TIMEOUT_IN_SECONDS";
+    public final static String CHECK_URLS_CRON_EXPRESSION = "CHECK_URLS_CRON_EXPRESSION";
 
 
     // Spring Values
@@ -53,6 +56,9 @@ public class TeilerCoreConst {
     public final static String TEILER_CORE_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_CORE_ASSETS_DIRECTORY + ":#{null}" + BOTTOM_SV;
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_CONNECTION_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
     public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
+    public final static String CHECK_URLS_CRON_EXPRESSION_SV =
+            HEAD_SV + CHECK_URLS_CRON_EXPRESSION + ":#{'0 */5 * * * *'}" + BOTTOM_SV;
+
 
 
     // Other constants

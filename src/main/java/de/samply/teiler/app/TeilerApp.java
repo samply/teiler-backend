@@ -18,6 +18,7 @@ public class TeilerApp implements Serializable {
     private String routerLinkExtension;
     private String singleSpaLink;
     private String sourceUrl;
+    private String sourceCheckUrl;
 
     private String singleSpaMainJs;
     private Boolean isExternLink;
@@ -27,6 +28,7 @@ public class TeilerApp implements Serializable {
     private String iconClass;
     private String iconSourceUrl;
     private String backendUrl;
+    private String backendCheckUrl;
     private Integer order;
     private Boolean inMenu;
 
@@ -225,6 +227,22 @@ public class TeilerApp implements Serializable {
         this.subroutes = subroutes;
     }
 
+    public String getSourceCheckUrl() {
+        return sourceCheckUrl;
+    }
+
+    public void setSourceCheckUrl(String sourceCheckUrl) {
+        this.sourceCheckUrl = sourceCheckUrl;
+    }
+
+    public String getBackendCheckUrl() {
+        return backendCheckUrl;
+    }
+
+    public void setBackendCheckUrl(String backendCheckUrl) {
+        this.backendCheckUrl = backendCheckUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -241,6 +259,7 @@ public class TeilerApp implements Serializable {
                 .append(routerLinkExtension, teilerApp.routerLinkExtension)
                 .append(singleSpaLink, teilerApp.singleSpaLink)
                 .append(sourceUrl, teilerApp.sourceUrl)
+                .append(sourceCheckUrl, teilerApp.sourceCheckUrl)
                 .append(isExternLink, teilerApp.isExternLink)
                 .append(isActivated, teilerApp.isActivated)
                 .append(isLocal, teilerApp.isLocal)
@@ -249,6 +268,7 @@ public class TeilerApp implements Serializable {
                 .append(iconClass, teilerApp.iconClass)
                 .append(iconSourceUrl, teilerApp.iconSourceUrl)
                 .append(backendUrl, teilerApp.backendUrl)
+                .append(backendCheckUrl, teilerApp.backendCheckUrl)
                 .append(order, teilerApp.order)
                 .append(inMenu, teilerApp.inMenu)
                 .append(singleSpaMainJs, teilerApp.singleSpaMainJs)
@@ -276,6 +296,7 @@ public class TeilerApp implements Serializable {
                 .append(routerLinkExtension)
                 .append(singleSpaLink)
                 .append(sourceUrl)
+                .append(sourceCheckUrl)
                 .append(isExternLink)
                 .append(isActivated)
                 .append(isLocal)
@@ -285,6 +306,7 @@ public class TeilerApp implements Serializable {
                 .append(iconClass)
                 .append(iconSourceUrl)
                 .append(backendUrl)
+                .append(backendCheckUrl)
                 .append(order)
                 .append(inMenu)
                 .append(singleSpaMainJs)

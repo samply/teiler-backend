@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.beans.IntrospectionException;
@@ -223,6 +224,7 @@ public class TeilerAppConfigurator {
         return root + routerLink;
     }
 
+    @Scheduled(cron = TeilerCoreConst.CHECK_URLS_CRON_EXPRESSION_SV)
     public void updateLanguageAppIdTeilerAppMap() {
         getLanguageAppIdTeilerAppMap().values().stream()
                 .map(appIdTeilerAppMap -> appIdTeilerAppMap.values())

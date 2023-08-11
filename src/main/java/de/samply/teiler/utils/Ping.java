@@ -34,20 +34,19 @@ public class Ping {
     }
 
     private void updatePingFrontendUrl(TeilerApp teilerApp) {
-        if (teilerApp.getSourceUrl() != null) {
-            String frontendUrl = (teilerApp.getSingleSpaMainJs() != null) ?
-                    UriComponentsBuilder
-                            .fromHttpUrl(teilerApp.getSourceUrl())
-                            .path('/' + teilerApp.getSingleSpaMainJs()).toUriString()
-                    : teilerApp.getSourceUrl();
-
+        String frontendUrl = (teilerApp.getSourceCheckUrl() != null) ? teilerApp.getSourceCheckUrl() : teilerApp.getSourceUrl();
+        if (frontendUrl != null) {
+            if (teilerApp.getSingleSpaMainJs() != null) {
+                frontendUrl = UriComponentsBuilder.fromHttpUrl(frontendUrl).path('/' + teilerApp.getSingleSpaMainJs()).toUriString();
+            }
             teilerApp.setFrontendReachable(ping(frontendUrl));
         }
     }
 
     private void updatePingBackendUrl(TeilerApp teilerApp) {
-        if (teilerApp.getBackendUrl() != null) {
-            teilerApp.setBackendReachable(ping(teilerApp.getBackendUrl()));
+        String backendUrl = (teilerApp.getBackendCheckUrl() != null) ? teilerApp.getBackendCheckUrl() : teilerApp.getBackendUrl();
+        if (backendUrl != null) {
+            teilerApp.setBackendReachable(ping(backendUrl));
         }
     }
 
@@ -57,9 +56,9 @@ public class Ping {
     }
 
     private boolean openConnectionAndPing(String url) {
-        try (CloseableHttpUrlConnection httpUrlConnection = new CloseableHttpUrlConnection(url)){
-            logger.info("Ping to "+ url + "...");
-            return ping (httpUrlConnection);
+        try (CloseableHttpUrlConnection httpUrlConnection = new CloseableHttpUrlConnection(url)) {
+            logger.info("Ping to " + url + "...");
+            return ping(httpUrlConnection);
         } catch (IOException e) {
             return false;
         }
@@ -80,8 +79,8 @@ public class Ping {
         public CloseableHttpUrlConnection(String url) throws IOException {
             httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
             httpUrlConnection.setInstanceFollowRedirects(followRedirects);
-            httpUrlConnection.setConnectTimeout(connectTimeoutInSeconds*1000);
-            httpUrlConnection.setReadTimeout(readTimeoutInSeconds*1000);
+            httpUrlConnection.setConnectTimeout(connectTimeoutInSeconds * 1000);
+            httpUrlConnection.setReadTimeout(readTimeoutInSeconds * 1000);
         }
 
         @Override
