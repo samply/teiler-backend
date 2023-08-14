@@ -37,13 +37,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - router link extension
 - subroutes
 - dockerignore
-- Spring 2.7.5
 - Log environment initialization
 - Timeout in Ping
-- Java 19
 - Http relative path
 - Check URLS
 - Proxy
+- Java 20
+- Spring 3.1.0
 
 ### Fixed
 - Filter external links of import map
