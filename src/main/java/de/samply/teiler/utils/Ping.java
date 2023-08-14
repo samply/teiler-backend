@@ -11,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 
 @Component
 public class Ping {
@@ -20,10 +19,13 @@ public class Ping {
     private boolean followRedirects = true;
     private int connectTimeoutInSeconds;
     private int readTimeoutInSeconds;
+    private ProxyManager proxyManager;
 
     public Ping(
+            ProxyManager proxyManager,
             @Value(TeilerCoreConst.PING_CONNECTION_TIMEOUT_IN_SECONDS_SV) int connectTimeoutInSeconds,
             @Value(TeilerCoreConst.PING_READ_TIMEOUT_IN_SECONDS_SV) int readTimeoutInSeconds) {
+        this.proxyManager = proxyManager;
         this.connectTimeoutInSeconds = connectTimeoutInSeconds;
         this.readTimeoutInSeconds = readTimeoutInSeconds;
     }
@@ -52,7 +54,7 @@ public class Ping {
 
 
     public boolean ping(String url) {
-        return (url != null) ? openConnectionAndPing(url) : false;
+        return (url != null && !url.isEmpty()) ? openConnectionAndPing(url) : false;
     }
 
     private boolean openConnectionAndPing(String url) {
@@ -77,7 +79,7 @@ public class Ping {
         private HttpURLConnection httpUrlConnection;
 
         public CloseableHttpUrlConnection(String url) throws IOException {
-            httpUrlConnection = (HttpURLConnection) new URL(url).openConnection();
+            httpUrlConnection = proxyManager.openConnection(url);
             httpUrlConnection.setInstanceFollowRedirects(followRedirects);
             httpUrlConnection.setConnectTimeout(connectTimeoutInSeconds * 1000);
             httpUrlConnection.setReadTimeout(readTimeoutInSeconds * 1000);

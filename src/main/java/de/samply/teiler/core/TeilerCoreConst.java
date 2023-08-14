@@ -42,6 +42,8 @@ public class TeilerCoreConst {
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
     public final static String PING_READ_TIMEOUT_IN_SECONDS = "PING_READ_TIMEOUT_IN_SECONDS";
     public final static String CHECK_URLS_CRON_EXPRESSION = "CHECK_URLS_CRON_EXPRESSION";
+    public final static String HTTP_PROXY = "HTTP_PROXY";
+    public final static String HTTPS_PROXY = "HTTPS_PROXY";
 
 
     // Spring Values
@@ -58,6 +60,8 @@ public class TeilerCoreConst {
     public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
     public final static String CHECK_URLS_CRON_EXPRESSION_SV =
             HEAD_SV + CHECK_URLS_CRON_EXPRESSION + ":#{'0 */5 * * * *'}" + BOTTOM_SV;
+    public final static String HTTP_PROXY_SV = HEAD_SV + HTTP_PROXY + ":#{null}" + BOTTOM_SV;
+    public final static String HTTPS_PROXY_SV = HEAD_SV + HTTPS_PROXY + ":#{null}" + BOTTOM_SV;
 
 
 
