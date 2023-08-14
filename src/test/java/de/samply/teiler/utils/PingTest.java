@@ -15,7 +15,8 @@ class PingTest {
     //TODO: Finish test
     @Test
     void ping() {
-        Ping ping = new Ping(10, 10);
+        ProxyManager proxyManager = new ProxyManager(null, null);
+        Ping ping = new Ping(proxyManager, 10, 10);
         Arrays.stream(urls).forEach(url -> assertTrue(ping.ping(url)));
     }
 }

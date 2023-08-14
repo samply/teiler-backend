@@ -1,4 +1,4 @@
-FROM eclipse-temurin:19-jre-focal
+FROM eclipse-temurin:20-jre
 
 COPY target/teiler-core.jar /app/
 
