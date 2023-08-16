@@ -1,4 +1,4 @@
-package de.samply.teiler.core;
+package de.samply.teiler.backend;
 
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class TeilerCoreApplicationTests {
+class TeilerBackendApplicationTests {
 
     private static String defaultLanguage = "DE";
     private static String language2 = "EN";
@@ -36,7 +36,7 @@ class TeilerCoreApplicationTests {
     private static String rootConfigUrl = "http://root-config:9000";
 
     private static JSONObject importMaps;
-    private ConfigurableApplicationContext teilerCoreContext1;
+    private ConfigurableApplicationContext teilerBackendContext1;
 
     @BeforeAll
     static void beforeAll() throws JSONException {
@@ -168,7 +168,7 @@ class TeilerCoreApplicationTests {
 
         JSONObject importMaps = new JSONObject();
         JSONObject imports = new JSONObject();
-        importMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
+        importMaps.put(TeilerBackendConst.SINGLE_SPA_IMPORTS, imports);
         imports.put("@samply/root-config", generateSingleSpaUrl(rootConfigUrl) + "/samply-root-config.js");
         imports.put("@samply/en/teiler-ui", generateSingleSpaUrl(enTeilerUiUrl) + "/main.js");
         imports.put("@samply/de/teiler-ui", generateSingleSpaUrl(deTeilerUiUrl) + "/main.js");
@@ -193,9 +193,9 @@ class TeilerCoreApplicationTests {
         }
     }
 
-    private SpringApplication createTeilerCore() {
-        return new SpringApplicationBuilder(TeilerCoreApplication.class)
-                .properties(TeilerCoreConst.DEFAULT_LANGUAGE + '=' + defaultLanguage,
+    private SpringApplication createTeilerBackend() {
+        return new SpringApplicationBuilder(TeilerBackendApplication.class)
+                .properties(TeilerBackendConst.DEFAULT_LANGUAGE + '=' + defaultLanguage,
                         "APPLICATION_PORT=" + APPLICATION_PORT,
                         "TEILER_APP1_NAME=" + teilerApp1.getName(),
                         "TEILER_APP1_TITLE=" + teilerApp1.getTitle(),
@@ -234,17 +234,17 @@ class TeilerCoreApplicationTests {
 
     @BeforeEach
     void setUp() {
-        teilerCoreContext1 = createTeilerCore().run();
+        teilerBackendContext1 = createTeilerBackend().run();
     }
 
     @AfterEach
     void tearDown() {
-        teilerCoreContext1.close();
+        teilerBackendContext1.close();
     }
 
     @Test
     void getTeilerApps() {
-        TeilerAppConfigurator teilerAppConfigurator = teilerCoreContext1.getBean(TeilerAppConfigurator.class);
+        TeilerAppConfigurator teilerAppConfigurator = teilerBackendContext1.getBean(TeilerAppConfigurator.class);
         Arrays.stream(languages).forEach(language -> checkTeilerApps(teilerAppConfigurator.getTeilerApps(language),language));
     }
 
@@ -267,7 +267,7 @@ class TeilerCoreApplicationTests {
 
         RestTemplate restTemplate = new RestTemplate();
         Arrays.stream(languages).forEach(language -> {
-            ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + "/apps/" + language, TeilerApp[].class);
+            ResponseEntity<TeilerApp[]> response = restTemplate.getForEntity(getTeilerBackendUrl(APPLICATION_PORT) + "/apps/" + language, TeilerApp[].class);
             checkTeilerApps(Arrays.stream(response.getBody()).toList(), language);
         });
 
@@ -276,7 +276,7 @@ class TeilerCoreApplicationTests {
     @Test
     void testInfo() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + TeilerCoreConst.INFO_PATH, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.INFO_PATH, String.class);
         assertEquals(ProjectVersion.getProjectVersion(), response.getBody());
     }
 
@@ -284,10 +284,10 @@ class TeilerCoreApplicationTests {
     void testImportMaps() throws JSONException {
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerCoreUrl(APPLICATION_PORT) + TeilerCoreConst.IMPORT_MAP_PATH, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.IMPORT_MAP_PATH, String.class);
 
-        JSONObject generatedImports = new JSONObject(response.getBody()).getJSONObject(TeilerCoreConst.SINGLE_SPA_IMPORTS);
-        JSONObject originalImports = importMaps.getJSONObject(TeilerCoreConst.SINGLE_SPA_IMPORTS);
+        JSONObject generatedImports = new JSONObject(response.getBody()).getJSONObject(TeilerBackendConst.SINGLE_SPA_IMPORTS);
+        JSONObject originalImports = importMaps.getJSONObject(TeilerBackendConst.SINGLE_SPA_IMPORTS);
 
         Map<String, String> generatedImportsMap = extractImports(generatedImports);
         Map<String, String> originalImportsMap = extractImports(originalImports);
@@ -308,7 +308,7 @@ class TeilerCoreApplicationTests {
         return importsMap;
     }
 
-    private String getTeilerCoreUrl(String port) {
+    private String getTeilerBackendUrl(String port) {
         return "http://localhost:" + port;
     }
 

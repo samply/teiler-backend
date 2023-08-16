@@ -1,7 +1,7 @@
 package de.samply.teiler.singlespa;
 
 import de.samply.teiler.app.TeilerAppConfigurator;
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class ImportsMapConfigurator {
     private final static Logger logger = LoggerFactory.getLogger(ImportsMapConfigurator.class);
     private JSONObject importsMaps = new JSONObject();
 
-    public ImportsMapConfigurator(@Value(TeilerCoreConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
+    public ImportsMapConfigurator(@Value(TeilerBackendConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
                                   @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                   @Autowired TeilerAppConfigurator teilerAppConfigurator,
                                   @Autowired TeilerUiConfigurator teilerUiConfigurator) {
@@ -27,11 +27,11 @@ public class ImportsMapConfigurator {
         JSONObject imports = new JSONObject();
 
         imports.put(
-                singleSpaLinkGenerator.generateSingleSpaLink(TeilerCoreConst.SINGLE_SPA_ROOT_CONFIG),
+                singleSpaLinkGenerator.generateSingleSpaLink(TeilerBackendConst.SINGLE_SPA_ROOT_CONFIG),
                 singleSpaLinkGenerator.generateSingleSpaSourceLinkForRootConfig(teilerRootConfigUrl));
 
         Arrays.stream(teilerUiConfigurator.getTeilerUiLanguages()).forEach(language -> imports.put(
-                singleSpaLinkGenerator.generateSingleSpaLink(TeilerCoreConst.TEILER_UI_APP_NAME, language),
+                singleSpaLinkGenerator.generateSingleSpaLink(TeilerBackendConst.TEILER_UI_APP_NAME, language),
                 singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerUiConfigurator.getTeilerUiUrl(language))));
 
         teilerAppConfigurator.getTeilerApps().stream()
@@ -40,7 +40,7 @@ public class ImportsMapConfigurator {
                         teilerApp.getSingleSpaLink(),
                         singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerApp.getSourceUrl(), teilerApp.getSingleSpaMainJs())));
 
-        importsMaps.put(TeilerCoreConst.SINGLE_SPA_IMPORTS, imports);
+        importsMaps.put(TeilerBackendConst.SINGLE_SPA_IMPORTS, imports);
         logger.info("Imports map configurated.");
 
     }

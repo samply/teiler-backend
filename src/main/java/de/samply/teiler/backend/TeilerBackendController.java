@@ -1,4 +1,4 @@
-package de.samply.teiler.core;
+package de.samply.teiler.backend;
 
 import de.samply.teiler.config.ConfigBlock;
 import de.samply.teiler.config.ConfigBlocksConfigurator;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class TeilerCoreController {
+public class TeilerBackendController {
 
     private final String projectVersion = ProjectVersion.getProjectVersion();
     private CorsChecker corsChecker;
@@ -30,12 +30,12 @@ public class TeilerCoreController {
     private ConfigBlocksConfigurator configBlocksConfigurator;
     private String defaultLanguage;
 
-    @GetMapping(TeilerCoreConst.INFO_PATH)
+    @GetMapping(TeilerBackendConst.INFO_PATH)
     public ResponseEntity<String> info() {
         return new ResponseEntity<>(projectVersion, HttpStatus.OK);
     }
 
-    @GetMapping(TeilerCoreConst.APPS_PATH)
+    @GetMapping(TeilerBackendConst.APPS_PATH)
     public ResponseEntity<TeilerApp[]> getApps(@PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
@@ -45,7 +45,7 @@ public class TeilerCoreController {
 
     }
 
-    @GetMapping(TeilerCoreConst.IMPORT_MAP_PATH)
+    @GetMapping(TeilerBackendConst.IMPORT_MAP_PATH)
     public ResponseEntity<String> getImportMap(HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
@@ -55,7 +55,7 @@ public class TeilerCoreController {
 
     }
 
-    @GetMapping(TeilerCoreConst.CONFIG_PATH)
+    @GetMapping(TeilerBackendConst.CONFIG_PATH)
     public ResponseEntity<ConfigBlock[]> getApps(HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
@@ -107,7 +107,7 @@ public class TeilerCoreController {
     }
 
     @Autowired
-    public void setDefaultLanguage(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage) {
+    public void setDefaultLanguage(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage) {
         this.defaultLanguage = defaultLanguage;
     }
 

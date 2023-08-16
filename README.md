@@ -5,7 +5,7 @@ This service is the backend of the teiler-ui.
 mvn clean package
 
 ## Running
-java -jar teiler-core.jar
+java -jar teiler-backend.jar
 -DAPPLICATION_PORT=
 
 ## Environment variables
@@ -13,5 +13,5 @@ APPLICATION_PORT: Port
 [OPTIONAL] TODO
 
 ## Docker
-docker build -t teiler-core .
-docker run teiler-core -p 8085:80
+docker build -t teiler-backend .
+docker run teiler-backend -p 8085:80

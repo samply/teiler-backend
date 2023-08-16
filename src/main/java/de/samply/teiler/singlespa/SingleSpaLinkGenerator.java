@@ -1,6 +1,6 @@
 package de.samply.teiler.singlespa;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -13,7 +13,7 @@ public class SingleSpaLinkGenerator {
 
     private String projectOrganisation;
 
-    public SingleSpaLinkGenerator(@Value(TeilerCoreConst.PROJECT_ORGANISATION_SV) String projectOrganisation) {
+    public SingleSpaLinkGenerator(@Value(TeilerBackendConst.PROJECT_ORGANISATION_SV) String projectOrganisation) {
         this.projectOrganisation = projectOrganisation;
     }
 
@@ -26,7 +26,7 @@ public class SingleSpaLinkGenerator {
     }
 
     public String generateSingleSpaSourceLinkForRootConfig(String rootConfigSourceUrl) {
-        return createUrl(rootConfigSourceUrl, projectOrganisation + '-' + TeilerCoreConst.SINGLE_SPA_ROOT_CONFIG + ".js");
+        return createUrl(rootConfigSourceUrl, projectOrganisation + '-' + TeilerBackendConst.SINGLE_SPA_ROOT_CONFIG + ".js");
     }
 
     public String generateSingleSpaSourceLink(String teilerAppSourceUrl) {
@@ -34,7 +34,7 @@ public class SingleSpaLinkGenerator {
     }
 
     public String generateSingleSpaSourceLink(String teilerAppSourceUrl, String teilerAppSingleSpaMainJs) {
-        return createUrl(teilerAppSourceUrl, (teilerAppSingleSpaMainJs != null) ? teilerAppSingleSpaMainJs : TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
+        return createUrl(teilerAppSourceUrl, (teilerAppSingleSpaMainJs != null) ? teilerAppSingleSpaMainJs : TeilerBackendConst.SINGLE_SPA_DEFAULT_MAIN_JS);
     }
 
     private String createUrl(String baseUrl, String path) {

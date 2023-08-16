@@ -1,6 +1,6 @@
 package de.samply.teiler.app;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
@@ -33,8 +33,8 @@ public class TeilerAppConfigurator {
     private Map<String, Map<Integer, TeilerApp>> languageAppIdTeilerAppMap = new HashMap<>();
     private Ping ping;
 
-    public TeilerAppConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
-                                 @Value(TeilerCoreConst.TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH_SV) String teilerRootConfigHttpRelativePath,
+    public TeilerAppConfigurator(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
+                                 @Value(TeilerBackendConst.TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH_SV) String teilerRootConfigHttpRelativePath,
                                  @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                  @Autowired TeilerUiConfigurator teilerUiConfigurator,
                                  @Autowired Environment environment,
@@ -199,19 +199,19 @@ public class TeilerAppConfigurator {
                 teilerApp.setRouterLink(generateRouterLink(teilerApp, language));
                 teilerApp.setSingleSpaLink(singleSpaLinkGenerator.generateSingleSpaLink(teilerApp.getName(), language));
                 if (teilerApp.getExternLink() == null) {
-                    teilerApp.setExternLink(TeilerCoreConst.IS_EXTERNAL_LINK_DEFAULT);
+                    teilerApp.setExternLink(TeilerBackendConst.IS_EXTERNAL_LINK_DEFAULT);
                 }
                 if (teilerApp.getExternLink() == false && teilerApp.getSingleSpaMainJs() == null) {
-                    teilerApp.setSingleSpaMainJs(TeilerCoreConst.SINGLE_SPA_DEFAULT_MAIN_JS);
+                    teilerApp.setSingleSpaMainJs(TeilerBackendConst.SINGLE_SPA_DEFAULT_MAIN_JS);
                 }
                 if (teilerApp.getActivated() == null) {
-                    teilerApp.setActivated(TeilerCoreConst.IS_ACTIVATED_DEFAULT);
+                    teilerApp.setActivated(TeilerBackendConst.IS_ACTIVATED_DEFAULT);
                 }
                 if (teilerApp.getLocal() == null) {
-                    teilerApp.setLocal(TeilerCoreConst.IS_LOCAL_DEFAULT);
+                    teilerApp.setLocal(TeilerBackendConst.IS_LOCAL_DEFAULT);
                 }
                 if (teilerApp.getInMenu() == null) {
-                    teilerApp.setInMenu(TeilerCoreConst.IN_MENU_DEFAULT);
+                    teilerApp.setInMenu(TeilerBackendConst.IN_MENU_DEFAULT);
                 }
             });
         });
@@ -224,7 +224,7 @@ public class TeilerAppConfigurator {
         return root + routerLink;
     }
 
-    @Scheduled(cron = TeilerCoreConst.CHECK_URLS_CRON_EXPRESSION_SV)
+    @Scheduled(cron = TeilerBackendConst.CHECK_URLS_CRON_EXPRESSION_SV)
     public void updateLanguageAppIdTeilerAppMap() {
         getLanguageAppIdTeilerAppMap().values().stream()
                 .map(appIdTeilerAppMap -> appIdTeilerAppMap.values())
