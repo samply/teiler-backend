@@ -1,6 +1,6 @@
 package de.samply.teiler.utils;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
@@ -16,8 +16,8 @@ public class ProxyManager {
     private Proxy httpProxy;
     private Proxy httpsProxy;
 
-    public ProxyManager(@Value(TeilerCoreConst.HTTP_PROXY_SV) String httpProxy,
-                        @Value(TeilerCoreConst.HTTPS_PROXY_SV) String httpsProxy) {
+    public ProxyManager(@Value(TeilerBackendConst.HTTP_PROXY_SV) String httpProxy,
+                        @Value(TeilerBackendConst.HTTPS_PROXY_SV) String httpsProxy) {
         Optional<Proxy> proxy = fetchProxyInfo(httpProxy);
         if (proxy.isPresent()){
             this.httpProxy = proxy.get();

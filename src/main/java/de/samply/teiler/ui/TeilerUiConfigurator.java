@@ -1,6 +1,6 @@
 package de.samply.teiler.ui;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import de.samply.teiler.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,7 @@ public class TeilerUiConfigurator {
 
     private Map<String, String> languageUrlMap = new HashMap<>();
 
-    public TeilerUiConfigurator(@Value(TeilerCoreConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
+    public TeilerUiConfigurator(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
                                 @Autowired Environment environment) {
         this.defaultLanguage = defaultLanguage;
         initializeLanguageUrlMap(environment);

@@ -1,7 +1,7 @@
 package de.samply.teiler.utils;
 
 import de.samply.teiler.app.TeilerApp;
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +23,8 @@ public class Ping {
 
     public Ping(
             ProxyManager proxyManager,
-            @Value(TeilerCoreConst.PING_CONNECTION_TIMEOUT_IN_SECONDS_SV) int connectTimeoutInSeconds,
-            @Value(TeilerCoreConst.PING_READ_TIMEOUT_IN_SECONDS_SV) int readTimeoutInSeconds) {
+            @Value(TeilerBackendConst.PING_CONNECTION_TIMEOUT_IN_SECONDS_SV) int connectTimeoutInSeconds,
+            @Value(TeilerBackendConst.PING_READ_TIMEOUT_IN_SECONDS_SV) int readTimeoutInSeconds) {
         this.proxyManager = proxyManager;
         this.connectTimeoutInSeconds = connectTimeoutInSeconds;
         this.readTimeoutInSeconds = readTimeoutInSeconds;

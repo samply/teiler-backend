@@ -1,7 +1,6 @@
 package de.samply.teiler.config;
 
-import de.samply.teiler.core.TeilerCoreConst;
-import de.samply.teiler.utils.ProjectVersion;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +20,7 @@ public class ConfigBlocksConfigurator {
     private final static Logger logger = LoggerFactory.getLogger(ConfigBlocksConfigurator.class);
     private ConfigBlock[] configBlocks;
 
-    public ConfigBlocksConfigurator(@Value(TeilerCoreConst.CONFIG_ENV_VAR_PATH_SV) String configEnvVarPath,
+    public ConfigBlocksConfigurator(@Value(TeilerBackendConst.CONFIG_ENV_VAR_PATH_SV) String configEnvVarPath,
                                     @Autowired ResourceLoader resourceLoader) {
         parseConfigEnvVarFile(resourceLoader, configEnvVarPath);
     }

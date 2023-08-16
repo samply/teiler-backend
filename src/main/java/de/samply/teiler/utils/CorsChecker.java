@@ -1,6 +1,6 @@
 package de.samply.teiler.utils;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import de.samply.teiler.ui.TeilerUiConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +15,7 @@ public class CorsChecker {
 
     Set<String> allowedOriginUrls = new HashSet<>();
 
-    public CorsChecker(@Value(TeilerCoreConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
+    public CorsChecker(@Value(TeilerBackendConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
                        @Autowired TeilerUiConfigurator teilerUiConfigurator) {
 
         if (teilerRootConfigUrl != null) {

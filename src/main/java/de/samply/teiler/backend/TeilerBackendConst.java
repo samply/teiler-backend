@@ -1,8 +1,8 @@
-package de.samply.teiler.core;
+package de.samply.teiler.backend;
 
-public class TeilerCoreConst {
+public class TeilerBackendConst {
 
-    public final static String APP_NAME = "teiler-core";
+    public final static String APP_NAME = "teiler-backend";
 
     // REST API path
     public final static String INFO_PATH = "/info";

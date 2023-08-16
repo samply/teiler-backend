@@ -1,6 +1,6 @@
 package de.samply.teiler.app;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class TeilerAppsUpdater {
         this.teilerAppConfigurator = teilerAppConfigurator;
     }
 
-    @Scheduled(cron = TeilerCoreConst.TEILER_CONFIG_UPDATER_CRON_SV)
+    @Scheduled(cron = TeilerBackendConst.TEILER_CONFIG_UPDATER_CRON_SV)
     public void updateTeilerApps(){
         this.teilerAppConfigurator.updateLanguageAppIdTeilerAppMap();
     }
