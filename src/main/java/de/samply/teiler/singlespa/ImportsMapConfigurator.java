@@ -2,7 +2,7 @@ package de.samply.teiler.singlespa;
 
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.backend.TeilerBackendConst;
-import de.samply.teiler.ui.TeilerUiConfigurator;
+import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,21 +18,21 @@ public class ImportsMapConfigurator {
     private final static Logger logger = LoggerFactory.getLogger(ImportsMapConfigurator.class);
     private JSONObject importsMaps = new JSONObject();
 
-    public ImportsMapConfigurator(@Value(TeilerBackendConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
+    public ImportsMapConfigurator(@Value(TeilerBackendConst.TEILER_ORCHESTRATOR_URL_SV) String teilerOrchestratorUrl,
                                   @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
                                   @Autowired TeilerAppConfigurator teilerAppConfigurator,
-                                  @Autowired TeilerUiConfigurator teilerUiConfigurator) {
+                                  @Autowired TeilerDashboardConfigurator teilerDashboardConfigurator) {
 
         logger.info("Initialize imports map configurator...");
         JSONObject imports = new JSONObject();
 
         imports.put(
                 singleSpaLinkGenerator.generateSingleSpaLink(TeilerBackendConst.SINGLE_SPA_ROOT_CONFIG),
-                singleSpaLinkGenerator.generateSingleSpaSourceLinkForRootConfig(teilerRootConfigUrl));
+                singleSpaLinkGenerator.generateSingleSpaSourceLinkForRootConfig(teilerOrchestratorUrl));
 
-        Arrays.stream(teilerUiConfigurator.getTeilerUiLanguages()).forEach(language -> imports.put(
-                singleSpaLinkGenerator.generateSingleSpaLink(TeilerBackendConst.TEILER_UI_APP_NAME, language),
-                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerUiConfigurator.getTeilerUiUrl(language))));
+        Arrays.stream(teilerDashboardConfigurator.getTeilerDashboardLanguages()).forEach(language -> imports.put(
+                singleSpaLinkGenerator.generateSingleSpaLink(TeilerBackendConst.TEILER_DASHBOARD_APP_NAME, language),
+                singleSpaLinkGenerator.generateSingleSpaSourceLink(teilerDashboardConfigurator.getTeilerDashboardUrl(language))));
 
         teilerAppConfigurator.getTeilerApps().stream()
                 .filter(teilerApp -> !teilerApp.getExternLink())

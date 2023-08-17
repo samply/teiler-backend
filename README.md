@@ -1,5 +1,5 @@
 # Teiler Core
-This service is the backend of the teiler-ui.
+This service is the backend of the teiler-dashboard.
 
 # Building
 mvn clean package
