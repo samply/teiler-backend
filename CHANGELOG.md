@@ -44,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Proxy
 - Java 20
 - Spring 3.1.0
-- Rename: Teiler Backend
 
 ### Fixed
 - Filter external links of import map
@@ -54,3 +53,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Rename to develop
+- Rename: Teiler Dashboard and Teiler Orchestrator

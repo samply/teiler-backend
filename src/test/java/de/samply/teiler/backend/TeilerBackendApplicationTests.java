@@ -31,9 +31,9 @@ class TeilerBackendApplicationTests {
     private static TeilerApp teilerApp3;
     private static TeilerApp teilerApp4;
     private static Map<String,TeilerApp[]> languageOriginalTeilerApps;
-    private static String enTeilerUiUrl = "http://teiler-ui:8540";
-    private static String deTeilerUiUrl = "http://teiler-ui:8541";
-    private static String rootConfigUrl = "http://root-config:9000";
+    private static String enTeilerDashboardUrl = "http://teiler-dashboard:8540";
+    private static String deTeilerDashboardUrl = "http://teiler-dashboard:8541";
+    private static String teilerOrchestratorUrl = "http://root-config:9000";
 
     private static JSONObject importMaps;
     private ConfigurableApplicationContext teilerBackendContext1;
@@ -169,9 +169,9 @@ class TeilerBackendApplicationTests {
         JSONObject importMaps = new JSONObject();
         JSONObject imports = new JSONObject();
         importMaps.put(TeilerBackendConst.SINGLE_SPA_IMPORTS, imports);
-        imports.put("@samply/root-config", generateSingleSpaUrl(rootConfigUrl) + "/samply-root-config.js");
-        imports.put("@samply/en/teiler-ui", generateSingleSpaUrl(enTeilerUiUrl) + "/main.js");
-        imports.put("@samply/de/teiler-ui", generateSingleSpaUrl(deTeilerUiUrl) + "/main.js");
+        imports.put("@samply/root-config", generateSingleSpaUrl(teilerOrchestratorUrl) + "/samply-root-config.js");
+        imports.put("@samply/en/teiler-dashboard", generateSingleSpaUrl(enTeilerDashboardUrl) + "/main.js");
+        imports.put("@samply/de/teiler-dashboard", generateSingleSpaUrl(deTeilerDashboardUrl) + "/main.js");
         Arrays.stream(originalTeilerApps).forEach(teilerApp -> addToImports(
                 imports,
                 teilerApp.getSingleSpaLink(),
@@ -222,12 +222,12 @@ class TeilerBackendApplicationTests {
                         "TEILER_APP2_ISLOCAL=" + teilerApp3.getLocal(),
                         "TEILER_APP2_ICONCLASS=" + teilerApp3.getIconClass(),
                         "TEILER_APP2_ORDER=" + teilerApp3.getOrder(),
-                        "TEILER_UI_EN_URL=" + enTeilerUiUrl,
-                        "TEILER_UI_DE_URL=" + deTeilerUiUrl,
-                        "TEILER_ROOT_CONFIG_URL=" + rootConfigUrl,
+                        "TEILER_DASHBOARD_EN_URL=" + enTeilerDashboardUrl,
+                        "TEILER_DASHBOARD_DE_URL=" + deTeilerDashboardUrl,
+                        "TEILER_ORCHESTRATOR_URL=" + teilerOrchestratorUrl,
                         "CONFIG_ENV_VAR_PATH=ccp.conf",
                         "TEILER_CONFIG_UPDATER_CRON=0 1 * * * *",
-                        "TEILER_ROOT_CONFIG_HTTP_RELATIVE_PATH="
+                        "TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH="
                 ).build();
     }
 

@@ -1,7 +1,7 @@
 package de.samply.teiler.utils;
 
 import de.samply.teiler.backend.TeilerBackendConst;
-import de.samply.teiler.ui.TeilerUiConfigurator;
+import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,15 +15,15 @@ public class CorsChecker {
 
     Set<String> allowedOriginUrls = new HashSet<>();
 
-    public CorsChecker(@Value(TeilerBackendConst.TEILER_ROOT_CONFIG_URL_SV) String teilerRootConfigUrl,
-                       @Autowired TeilerUiConfigurator teilerUiConfigurator) {
+    public CorsChecker(@Value(TeilerBackendConst.TEILER_ORCHESTRATOR_URL_SV) String teilerOrchestratorUrl,
+                       @Autowired TeilerDashboardConfigurator teilerDashboardConfigurator) {
 
-        if (teilerRootConfigUrl != null) {
-            allowedOriginUrls.add(teilerRootConfigUrl);
+        if (teilerOrchestratorUrl != null) {
+            allowedOriginUrls.add(teilerOrchestratorUrl);
         }
 
-        Arrays.stream(teilerUiConfigurator.getTeilerUiLanguages())
-                .forEach(language -> allowedOriginUrls.add(teilerUiConfigurator.getTeilerUiUrl(language)));
+        Arrays.stream(teilerDashboardConfigurator.getTeilerDashboardLanguages())
+                .forEach(language -> allowedOriginUrls.add(teilerDashboardConfigurator.getTeilerDashboardUrl(language)));
 
     }
 
