@@ -9,6 +9,7 @@ public class TeilerBackendConst {
     public final static String APPS_PATH = "/apps/{language}";
     public final static String CONFIG_PATH = "/config";
     public final static String IMPORT_MAP_PATH = "/import-map";
+    public final static String ASSETS_PATH = "/assets";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
@@ -55,7 +56,7 @@ public class TeilerBackendConst {
     public final static String TEILER_ORCHESTRATOR_URL_SV = HEAD_SV + TEILER_ORCHESTRATOR_URL + ":#{null}" + BOTTOM_SV;
     public final static String CONFIG_ENV_VAR_PATH_SV = HEAD_SV + CONFIG_ENV_VAR_PATH + BOTTOM_SV;
     public final static String TEILER_CONFIG_UPDATER_CRON_SV = HEAD_SV + TEILER_CONFIG_UPDATER_CRON + ":#{'-'}" + BOTTOM_SV;
-    public final static String TEILER_BACKEND_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_BACKEND_ASSETS_DIRECTORY + ":#{null}" + BOTTOM_SV;
+    public final static String TEILER_BACKEND_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_BACKEND_ASSETS_DIRECTORY + BOTTOM_SV;
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_CONNECTION_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
     public final static String PING_READ_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_READ_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;
     public final static String CHECK_URLS_CRON_EXPRESSION_SV =
