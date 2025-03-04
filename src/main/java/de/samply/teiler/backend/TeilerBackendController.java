@@ -39,12 +39,15 @@ public class TeilerBackendController {
     private String defaultLanguage;
 
 
-    private String teilerBackendAssetsDirectory;
+    private final String teilerBackendAssetsDirectory;
     private static final Logger logger = LoggerFactory.getLogger(TeilerBackendController.class);
 
     private final ResourceLoader resourceLoader;
 
-    public TeilerBackendController(ResourceLoader resourceLoader) {
+    public TeilerBackendController(
+            @Value(TeilerBackendConst.TEILER_BACKEND_ASSETS_DIRECTORY_SV) String teilerBackendAssetsDirectory,
+            ResourceLoader resourceLoader) {
+        this.teilerBackendAssetsDirectory = teilerBackendAssetsDirectory;
         this.resourceLoader = resourceLoader;
     }
 
@@ -196,11 +199,6 @@ public class TeilerBackendController {
     @Autowired
     public void setDefaultLanguage(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage) {
         this.defaultLanguage = defaultLanguage;
-    }
-
-    @Autowired
-    public void setTeilerBackendAssetsDirectory(@Value(TeilerBackendConst.TEILER_BACKEND_ASSETS_DIRECTORY_SV) String teilerBackendAssetsDirectory) {
-        this.teilerBackendAssetsDirectory = teilerBackendAssetsDirectory;
     }
 
     @Autowired
