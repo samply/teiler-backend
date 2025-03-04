@@ -5,51 +5,46 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.samply</groupId>
-	<artifactId>teiler-core</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>teiler-core</name>
+	<artifactId>teiler-backend</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>teiler-backend</name>
 	<description>Teiler Backend</description>
 	<properties>
-		<java.version>17</java.version>
-		<slf4j-api.version>1.7.36</slf4j-api.version>
-		<log4j-slf4j-impl.version>2.18.0</log4j-slf4j-impl.version>
-		<maven-model.version>3.8.6</maven-model.version>
+		<java.version>20</java.version>
+		<slf4j-api.version>2.0.7</slf4j-api.version>
+		<log4j-slf4j2-impl.version>2.20.0</log4j-slf4j2-impl.version>
+		<maven-model.version>3.9.4</maven-model.version>
+		<json.version>20230618</json.version>
+		<commons-lang3.version>3.13.0</commons-lang3.version>
 	</properties>
 
 	<dependencies>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>org.apache.logging.log4j</groupId>-->
-<!--					<artifactId>log4j-to-slf4j</artifactId>-->
-<!--				</exclusion>-->
-<!--				<exclusion>-->
-<!--					<groupId>ch.qos.logback</groupId>-->
-<!--					<artifactId>logback-classic</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- TODO: Security Issue: Remove snakeyaml with update of Spring -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.yaml</groupId>
+					<artifactId>snakeyaml</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+		<!-- TODO: Security Issue: Remove snakeyaml with update of Spring -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.33</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security</groupId>-->
-<!--			<artifactId>spring-security-test</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -57,18 +52,29 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j-slf4j-impl.version}</version>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>${log4j-slf4j2-impl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-model</artifactId>
 			<version>${maven-model.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
-		<finalName>teiler-core</finalName>
+		<finalName>teiler-backend</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

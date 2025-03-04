@@ -1,6 +1,6 @@
 package de.samply.teiler.utils;
 
-import de.samply.teiler.core.TeilerCoreConst;
+import de.samply.teiler.backend.TeilerBackendConst;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -23,7 +23,7 @@ public class ProjectVersion {
             return getProjectVersion_WithoutManagementException();
         } catch (IOException | XmlPullParserException e) {
             logger.error("Error getting project version", e);
-            return TeilerCoreConst.APP_NAME;
+            return TeilerBackendConst.APP_NAME;
         }
     }
 
