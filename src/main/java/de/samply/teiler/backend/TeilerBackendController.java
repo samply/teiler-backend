@@ -9,8 +9,6 @@ import de.samply.teiler.utils.CorsChecker;
 import de.samply.teiler.utils.ProjectVersion;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -103,9 +101,7 @@ public class TeilerBackendController {
             String contentType = servletContext.getMimeType(fileName);
 
             // Rückgabe der Datei
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_TYPE, contentType)
-                    .body(resource);
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(resource);
         } catch (Exception e) {
             logger.error("Fehler beim Laden der Datei", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -206,6 +202,7 @@ public class TeilerBackendController {
     public void setTeilerBackendAssetsDirectory(@Value(TeilerBackendConst.TEILER_BACKEND_ASSETS_DIRECTORY_SV) String teilerBackendAssetsDirectory) {
         this.teilerBackendAssetsDirectory = teilerBackendAssetsDirectory;
     }
+
     @Autowired
     private ServletContext servletContext;
 
