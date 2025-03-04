@@ -1,0 +1,19 @@
+{
+  "color-palettes": [
+    {
+      "name": "Color-Palette-1",
+      "colors": {
+        "background": "blue",
+        "text": "green",
+        "line": "green",
+        "icon": "green"
+      },
+      "style": {
+        "font": "Arial"
+      }
+    }
+    ]
+    }
+
+
+
