@@ -4,10 +4,7 @@ import de.samply.teiler.backend.TeilerBackendConst;
 import de.samply.teiler.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -22,23 +19,23 @@ public class TeilerDashboardConfigurator {
     private Map<String, String> languageUrlMap = new HashMap<>();
 
     public TeilerDashboardConfigurator(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
-                                       @Autowired Environment environment) {
+                                       EnvironmentUtils environmentUtils) {
         this.defaultLanguage = defaultLanguage;
-        initializeLanguageUrlMap(environment);
+        initializeLanguageUrlMap(environmentUtils);
     }
 
-    private void initializeLanguageUrlMap(Environment environment) {
+    private void initializeLanguageUrlMap(EnvironmentUtils environmentUtils) {
         logger.info("Initialize Teiler UI config...");
-        EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerDashboardUtils::isTeilerDashboard, this::addKeyValue);
+        environmentUtils.addKeyValuesFromEnvironment(TeilerDashboardUtils::isTeilerDashboard, this::addKeyValue);
     }
 
     private void addKeyValue(String key, String value) {
-        if (TeilerDashboardUtils.isUrl(key)){
+        if (TeilerDashboardUtils.isUrl(key)) {
             addUrl(key, value);
         }
     }
 
-    private void addUrl (String key, String value){
+    private void addUrl(String key, String value) {
 
         String language = TeilerDashboardUtils.getLanguage(key);
         if (language == null) {

@@ -7,10 +7,7 @@ import de.samply.teiler.utils.EnvironmentUtils;
 import de.samply.teiler.utils.Ping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -35,10 +32,10 @@ public class TeilerAppConfigurator {
 
     public TeilerAppConfigurator(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
                                  @Value(TeilerBackendConst.TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH_SV) String teilerOrchestratorHttpRelativePath,
-                                 @Autowired SingleSpaLinkGenerator singleSpaLinkGenerator,
-                                 @Autowired TeilerDashboardConfigurator teilerDashboardConfigurator,
-                                 @Autowired Environment environment,
-                                 @Autowired Ping ping) {
+                                 SingleSpaLinkGenerator singleSpaLinkGenerator,
+                                 TeilerDashboardConfigurator teilerDashboardConfigurator,
+                                 EnvironmentUtils environmentUtils,
+                                 Ping ping) {
         this.defaultLanguage = defaultLanguage.toLowerCase();
         this.teilerOrchestratorHttpRelativePath = fetchTeilerOrchestratorHttpRelativePath(teilerOrchestratorHttpRelativePath);
         this.teilerDashboardLanguages = teilerDashboardConfigurator.getTeilerDashboardLanguages();
@@ -46,7 +43,7 @@ public class TeilerAppConfigurator {
         this.ping = ping;
 
         logger.info("Initialize Teiler App Config...");
-        initializeLanguageTeilerAppMap(environment);
+        initializeLanguageTeilerAppMap(environmentUtils);
         logger.info("Expand no languages values...");
         expandNoLanguageValues();
         logger.info("Expand Teiler apps to teiler UI languages...");
@@ -65,8 +62,8 @@ public class TeilerAppConfigurator {
         return result;
     }
 
-    private void initializeLanguageTeilerAppMap(Environment environment) {
-        EnvironmentUtils.addKeyValuesFromEnvironment((AbstractEnvironment) environment, TeilerAppUtils::isTeilerApp, this::addKeyValue);
+    private void initializeLanguageTeilerAppMap(EnvironmentUtils environmentUtils) {
+        environmentUtils.addKeyValuesFromEnvironment(TeilerAppUtils::isTeilerApp, this::addKeyValue);
     }
 
     private void addKeyValue(String key, String value) {
