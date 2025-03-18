@@ -13,12 +13,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class TeilerBackendApplicationTests {
 
@@ -30,7 +33,7 @@ class TeilerBackendApplicationTests {
     private static TeilerApp teilerApp2;
     private static TeilerApp teilerApp3;
     private static TeilerApp teilerApp4;
-    private static Map<String,TeilerApp[]> languageOriginalTeilerApps;
+    private static Map<String, TeilerApp[]> languageOriginalTeilerApps;
     private static String enTeilerDashboardUrl = "http://teiler-dashboard:8540";
     private static String deTeilerDashboardUrl = "http://teiler-dashboard:8541";
     private static String teilerOrchestratorUrl = "http://root-config:9000";
@@ -227,7 +230,10 @@ class TeilerBackendApplicationTests {
                         "TEILER_ORCHESTRATOR_URL=" + teilerOrchestratorUrl,
                         "CONFIG_ENV_VAR_PATH=ccp.conf",
                         "TEILER_CONFIG_UPDATER_CRON=0 1 * * * *",
-                        "TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH="
+                        "TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH=",
+                        "TEILER_DASHBOARD_DE_KEY1=VALUE1",
+                        "TEILER_DASHBOARD_EN_KEY1=VALUE2",
+                        "TEILER_DASHBOARD_KEY2=VALUE3"
                 ).build();
     }
 
@@ -245,7 +251,7 @@ class TeilerBackendApplicationTests {
     @Test
     void getTeilerApps() {
         TeilerAppConfigurator teilerAppConfigurator = teilerBackendContext1.getBean(TeilerAppConfigurator.class);
-        Arrays.stream(languages).forEach(language -> checkTeilerApps(teilerAppConfigurator.getTeilerApps(language),language));
+        Arrays.stream(languages).forEach(language -> checkTeilerApps(teilerAppConfigurator.getTeilerApps(language), language));
     }
 
     private void checkTeilerApps(List<TeilerApp> teilerApps, String language) {
@@ -310,6 +316,39 @@ class TeilerBackendApplicationTests {
 
     private String getTeilerBackendUrl(String port) {
         return "http://localhost:" + port;
+    }
+
+    @Test
+    void testGetDashboardVariable() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Test for the existing key in German (should return "VALUE1")
+        ResponseEntity<String> responseDe = restTemplate.getForEntity(
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_DE_KEY1"),
+                String.class);
+        assertEquals("VALUE1", responseDe.getBody());
+
+        // Test for the existing key in English (should return "VALUE2")
+        ResponseEntity<String> responseEn = restTemplate.getForEntity(
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_EN_KEY1"),
+                String.class);
+        assertEquals("VALUE2", responseEn.getBody());
+
+        // Test for a generic key (should return "VALUE3")
+        ResponseEntity<String> responseGeneric = restTemplate.getForEntity(
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_KEY2"),
+                String.class);
+        assertEquals("VALUE3", responseGeneric.getBody());
+
+        // Test for a non-existing key (should return HTTP 404)
+        try {
+            restTemplate.getForEntity(
+                    getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "NON_EXISTING_KEY"),
+                    String.class);
+            fail("Expected HttpClientErrorException to be thrown");
+        } catch (HttpClientErrorException ex) {
+            assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
+        }
     }
 
 }

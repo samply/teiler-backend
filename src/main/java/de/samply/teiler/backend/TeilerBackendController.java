@@ -5,6 +5,7 @@ import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.config.ConfigBlock;
 import de.samply.teiler.config.ConfigBlocksConfigurator;
 import de.samply.teiler.singlespa.ImportsMapConfigurator;
+import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import de.samply.teiler.utils.CorsChecker;
 import de.samply.teiler.utils.ProjectVersion;
 import jakarta.servlet.ServletContext;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 
 @RestController
@@ -43,6 +45,8 @@ public class TeilerBackendController {
     private static final Logger logger = LoggerFactory.getLogger(TeilerBackendController.class);
 
     private final ResourceLoader resourceLoader;
+    @Autowired
+    private TeilerDashboardConfigurator teilerDashboardConfigurator;
 
     public TeilerBackendController(
             @Value(TeilerBackendConst.TEILER_BACKEND_ASSETS_DIRECTORY_SV) String teilerBackendAssetsDirectory,
@@ -74,6 +78,19 @@ public class TeilerBackendController {
 
         return new ResponseEntity<>(importsMapConfigurator.getImportsMaps().toString(), httpHeaders, HttpStatus.OK);
 
+    }
+
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH)
+    public ResponseEntity<String> getDashboardVariable(@PathVariable String variable, HttpServletRequest request) {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        Optional<String> result = teilerDashboardConfigurator.fetchTeilerDashboardVariable(variable);
+
+        return result.isPresent()
+                ? new ResponseEntity<>(result.get(), httpHeaders, HttpStatus.OK)
+                : new ResponseEntity<>("", httpHeaders, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(TeilerBackendConst.CONFIG_PATH)

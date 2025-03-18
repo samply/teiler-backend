@@ -10,6 +10,7 @@ public class TeilerBackendConst {
     public final static String CONFIG_PATH = "/config";
     public final static String IMPORT_MAP_PATH = "/import-map";
     public final static String ASSETS_PATH = "/assets";
+    public final static String TEILER_DASHBOARD_VARIABLE_PATH = "/variable/{variable}";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
