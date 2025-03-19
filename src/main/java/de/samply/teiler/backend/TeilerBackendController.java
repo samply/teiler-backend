@@ -1,5 +1,7 @@
 package de.samply.teiler.backend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.config.ConfigBlock;
@@ -39,6 +41,7 @@ public class TeilerBackendController {
     private ImportsMapConfigurator importsMapConfigurator;
     private ConfigBlocksConfigurator configBlocksConfigurator;
     private String defaultLanguage;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     private final String teilerBackendAssetsDirectory;
@@ -77,6 +80,17 @@ public class TeilerBackendController {
         httpHeaders.set("Content-Type", "application/importmap+json");
 
         return new ResponseEntity<>(importsMapConfigurator.getImportsMaps().toString(), httpHeaders, HttpStatus.OK);
+
+    }
+
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLES_PATH)
+    public ResponseEntity<String> getVariables(@PathVariable String language, HttpServletRequest request) throws JsonProcessingException {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        return new ResponseEntity<>(objectMapper.writeValueAsString(
+                teilerDashboardConfigurator.fetchDashboardVariables(language)), httpHeaders, HttpStatus.OK);
 
     }
 

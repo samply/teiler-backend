@@ -12,6 +12,7 @@ public class TeilerBackendConst {
     public final static String ASSETS_PATH = "/assets";
     public final static String TEILER_DASHBOARD_VARIABLE_PATH = "/variable/{variable}";
     public final static String TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH = TEILER_DASHBOARD_VARIABLE_PATH + "/{language}";
+    public final static String TEILER_DASHBOARD_VARIABLES_PATH = "/variables/{language}";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";

@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Java 20
 - Spring 3.1.0
 - Rest service "variable"
+- Rest service "variables"
 
 ### Fixed
 - Filter external links of import map

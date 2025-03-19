@@ -356,6 +356,15 @@ class TeilerBackendApplicationTests {
         } catch (HttpClientErrorException ex) {
             assertEquals(HttpStatus.NOT_FOUND, ex.getStatusCode());
         }
+
+        ResponseEntity<Map> variablesResponse = restTemplate.getForEntity(
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLES_PATH
+                        .replace("{language}", "EN"),
+                Map.class);
+        Map<String,String> variables = variablesResponse.getBody();
+        assertEquals(variables.keySet().size(), 3);
+        assertEquals(variables.get("KEY1"), "VALUE2");
+        assertEquals(variables.get("KEY2"), "VALUE3");
     }
 
 }
