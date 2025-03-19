@@ -324,26 +324,33 @@ class TeilerBackendApplicationTests {
 
         // Test for the existing key in German (should return "VALUE1")
         ResponseEntity<String> responseDe = restTemplate.getForEntity(
-                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_DE_KEY1"),
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH
+                        .replace("{variable}", "KEY1")
+                        .replace("{language}", "DE"),
                 String.class);
         assertEquals("VALUE1", responseDe.getBody());
 
         // Test for the existing key in English (should return "VALUE2")
         ResponseEntity<String> responseEn = restTemplate.getForEntity(
-                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_EN_KEY1"),
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH
+                        .replace("{variable}", "KEY1")
+                        .replace("{language}", "EN"),
                 String.class);
         assertEquals("VALUE2", responseEn.getBody());
 
         // Test for a generic key (should return "VALUE3")
         ResponseEntity<String> responseGeneric = restTemplate.getForEntity(
-                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "TEILER_DASHBOARD_KEY2"),
+                getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH
+                        .replace("{variable}", "KEY2"),
                 String.class);
         assertEquals("VALUE3", responseGeneric.getBody());
 
         // Test for a non-existing key (should return HTTP 404)
         try {
             restTemplate.getForEntity(
-                    getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH.replace("{variable}", "NON_EXISTING_KEY"),
+                    getTeilerBackendUrl(APPLICATION_PORT) + TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH
+                            .replace("{variable}", "NON_EXISTING_KEY")
+                            .replace("{language}", "EN"),
                     String.class);
             fail("Expected HttpClientErrorException to be thrown");
         } catch (HttpClientErrorException ex) {

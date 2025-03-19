@@ -81,17 +81,25 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH)
-    public ResponseEntity<String> getDashboardVariable(@PathVariable String variable, HttpServletRequest request) {
+    public ResponseEntity<String> getDashboardVariable(
+            @PathVariable String variable, HttpServletRequest request) {
+        return getDashboardVariableWithLanguage(variable, null, request);
+    }
+
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH)
+    public ResponseEntity<String> getDashboardVariableWithLanguage(
+            @PathVariable String variable, @PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-        Optional<String> result = teilerDashboardConfigurator.fetchTeilerDashboardVariable(variable);
+        Optional<String> result = teilerDashboardConfigurator.fetchTeilerDashboardVariable(variable, language);
 
         return result.isPresent()
                 ? new ResponseEntity<>(result.get(), httpHeaders, HttpStatus.OK)
                 : new ResponseEntity<>("", httpHeaders, HttpStatus.NOT_FOUND);
     }
+
 
     @GetMapping(TeilerBackendConst.CONFIG_PATH)
     public ResponseEntity<ConfigBlock[]> getApps(HttpServletRequest request) {
