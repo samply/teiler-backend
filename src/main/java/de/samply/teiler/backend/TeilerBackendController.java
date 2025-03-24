@@ -127,7 +127,7 @@ public class TeilerBackendController {
 
 
     @GetMapping(TeilerBackendConst.ASSETS_PATH + "/{fileName}")
-    public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName) {
+    public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName, HttpServletRequest request) {
         try {
             // Pfad zur Datei
             Path filePath = Paths.get(teilerBackendAssetsDirectory, fileName);
@@ -139,13 +139,15 @@ public class TeilerBackendController {
 
             // Laden der Datei als Ressource
             Resource resource = resourceLoader.getResource("file:" + filePath.toString());
+            MediaType contentType = MediaType.valueOf(servletContext.getMimeType(fileName));
 
-            String contentType = servletContext.getMimeType(fileName);
+            HttpHeaders httpHeaders = createBasicHeaders(request);
+            httpHeaders.setContentType(contentType);
 
             // Rückgabe der Datei
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(resource);
+            return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Fehler beim Laden der Datei", e);
+            logger.error("Fehler beim Laden der Datei " + fileName);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
