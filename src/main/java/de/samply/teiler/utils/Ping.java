@@ -60,7 +60,9 @@ public class Ping {
     private boolean openConnectionAndPing(String url) {
         try (CloseableHttpUrlConnection httpUrlConnection = new CloseableHttpUrlConnection(url)) {
             logger.info("Ping to " + url + "...");
-            return ping(httpUrlConnection);
+            boolean result = ping(httpUrlConnection);
+            logger.info("[" + ((result) ? "reachable" : "unreachable") + "]");
+            return result;
         } catch (IOException e) {
             return false;
         }
