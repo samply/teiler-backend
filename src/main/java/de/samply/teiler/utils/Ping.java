@@ -64,6 +64,7 @@ public class Ping {
             logger.info("[" + ((result) ? "reachable" : "unreachable") + "]");
             return result;
         } catch (IOException e) {
+            logger.info("[unreachable]");
             return false;
         }
     }
