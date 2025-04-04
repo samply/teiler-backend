@@ -157,7 +157,7 @@ public class TeilerBackendController {
     public ResponseEntity<String> getBackgroundColor(@PathVariable String colorName) {
         try {
             // Laden der JSON
-            Resource resource = resourceLoader.getResource("classpath:colors.json");
+            Resource resource = resourceLoader.getResource("classpath:color-palettes.json");
             InputStream inputStream = resource.getInputStream();
 
             // Einlesen der JSON in String
