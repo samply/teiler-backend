@@ -1,10 +1,13 @@
 package de.samply.teiler.backend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.config.ConfigBlock;
 import de.samply.teiler.config.ConfigBlocksConfigurator;
 import de.samply.teiler.singlespa.ImportsMapConfigurator;
+import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import de.samply.teiler.utils.CorsChecker;
 import de.samply.teiler.utils.ProjectVersion;
 import jakarta.servlet.ServletContext;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 
 @RestController
@@ -37,12 +41,15 @@ public class TeilerBackendController {
     private ImportsMapConfigurator importsMapConfigurator;
     private ConfigBlocksConfigurator configBlocksConfigurator;
     private String defaultLanguage;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     private final String teilerBackendAssetsDirectory;
     private static final Logger logger = LoggerFactory.getLogger(TeilerBackendController.class);
 
     private final ResourceLoader resourceLoader;
+    @Autowired
+    private TeilerDashboardConfigurator teilerDashboardConfigurator;
 
     public TeilerBackendController(
             @Value(TeilerBackendConst.TEILER_BACKEND_ASSETS_DIRECTORY_SV) String teilerBackendAssetsDirectory,
@@ -76,6 +83,38 @@ public class TeilerBackendController {
 
     }
 
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLES_PATH)
+    public ResponseEntity<String> getVariables(@PathVariable String language, HttpServletRequest request) throws JsonProcessingException {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        return new ResponseEntity<>(objectMapper.writeValueAsString(
+                teilerDashboardConfigurator.fetchDashboardVariables(language)), httpHeaders, HttpStatus.OK);
+
+    }
+
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH)
+    public ResponseEntity<String> getDashboardVariable(
+            @PathVariable String variable, HttpServletRequest request) {
+        return getDashboardVariableWithLanguage(variable, null, request);
+    }
+
+    @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH)
+    public ResponseEntity<String> getDashboardVariableWithLanguage(
+            @PathVariable String variable, @PathVariable String language, HttpServletRequest request) {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        Optional<String> result = teilerDashboardConfigurator.fetchTeilerDashboardVariable(variable, language);
+
+        return result.isPresent()
+                ? new ResponseEntity<>(result.get(), httpHeaders, HttpStatus.OK)
+                : new ResponseEntity<>("", httpHeaders, HttpStatus.NOT_FOUND);
+    }
+
+
     @GetMapping(TeilerBackendConst.CONFIG_PATH)
     public ResponseEntity<ConfigBlock[]> getApps(HttpServletRequest request) {
 
@@ -88,7 +127,7 @@ public class TeilerBackendController {
 
 
     @GetMapping(TeilerBackendConst.ASSETS_PATH + "/{fileName}")
-    public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName) {
+    public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName, HttpServletRequest request) {
         try {
             // Pfad zur Datei
             Path filePath = Paths.get(teilerBackendAssetsDirectory, fileName);
@@ -100,13 +139,15 @@ public class TeilerBackendController {
 
             // Laden der Datei als Ressource
             Resource resource = resourceLoader.getResource("file:" + filePath.toString());
+            MediaType contentType = MediaType.valueOf(servletContext.getMimeType(fileName));
 
-            String contentType = servletContext.getMimeType(fileName);
+            HttpHeaders httpHeaders = createBasicHeaders(request);
+            httpHeaders.setContentType(contentType);
 
             // Rückgabe der Datei
-            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType).body(resource);
+            return new ResponseEntity<>(resource, httpHeaders, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Fehler beim Laden der Datei", e);
+            logger.error("Fehler beim Laden der Datei " + fileName);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -116,7 +157,7 @@ public class TeilerBackendController {
     public ResponseEntity<String> getBackgroundColor(@PathVariable String colorName) {
         try {
             // Laden der JSON
-            Resource resource = resourceLoader.getResource("classpath:colors.json");
+            Resource resource = resourceLoader.getResource("classpath:color-palettes.json");
             InputStream inputStream = resource.getInputStream();
 
             // Einlesen der JSON in String

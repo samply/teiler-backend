@@ -10,6 +10,9 @@ public class TeilerBackendConst {
     public final static String CONFIG_PATH = "/config";
     public final static String IMPORT_MAP_PATH = "/import-map";
     public final static String ASSETS_PATH = "/assets";
+    public final static String TEILER_DASHBOARD_VARIABLE_PATH = "/variable/{variable}";
+    public final static String TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH = TEILER_DASHBOARD_VARIABLE_PATH + "/{language}";
+    public final static String TEILER_DASHBOARD_VARIABLES_PATH = "/variables/{language}";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
@@ -63,7 +66,6 @@ public class TeilerBackendConst {
             HEAD_SV + CHECK_URLS_CRON_EXPRESSION + ":#{'0 */5 * * * *'}" + BOTTOM_SV;
     public final static String HTTP_PROXY_SV = HEAD_SV + HTTP_PROXY + ":#{null}" + BOTTOM_SV;
     public final static String HTTPS_PROXY_SV = HEAD_SV + HTTPS_PROXY + ":#{null}" + BOTTOM_SV;
-
 
 
     // Other constants
