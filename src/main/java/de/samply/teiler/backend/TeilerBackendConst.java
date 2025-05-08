@@ -77,5 +77,7 @@ public class TeilerBackendConst {
     public final static String SINGLE_SPA_ROOT_CONFIG = "root-config";
     public final static String SINGLE_SPA_DEFAULT_MAIN_JS = "main.js";
     public final static String TEILER_DASHBOARD_APP_NAME = "teiler-dashboard";
+    public final static String UPDATE_APPS_IN_THE_FIRST_PERIOD_CRON_EXPRESSION = "*/30 * * * * *";
+    public final static int FIRST_PERIOD_FOR_UPDATING_APPS_FREQUENTLY_IN_MINUTES = 5;
 
 }
