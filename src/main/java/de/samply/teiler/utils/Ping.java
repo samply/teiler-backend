@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.function.Consumer;
 
 @Component
 public class Ping {
@@ -30,28 +31,37 @@ public class Ping {
         this.readTimeoutInSeconds = readTimeoutInSeconds;
     }
 
-    public void updatePing(TeilerApp teilerApp) {
-        updatePingFrontendUrl(teilerApp);
-        updatePingBackendUrl(teilerApp);
+    public void updatePing(TeilerApp teilerApp, PingSession pingSession) {
+        updatePingFrontendUrl(teilerApp, pingSession);
+        updatePingBackendUrl(teilerApp, pingSession);
     }
 
-    private void updatePingFrontendUrl(TeilerApp teilerApp) {
+    private void updatePingFrontendUrl(TeilerApp teilerApp, PingSession pingSession) {
         String frontendUrl = (teilerApp.getSourceCheckUrl() != null) ? teilerApp.getSourceCheckUrl() : teilerApp.getSourceUrl();
         if (frontendUrl != null) {
             if (teilerApp.getSingleSpaMainJs() != null) {
                 frontendUrl = UriComponentsBuilder.fromHttpUrl(frontendUrl).path('/' + teilerApp.getSingleSpaMainJs()).toUriString();
             }
-            teilerApp.setFrontendReachable(ping(frontendUrl));
+            pingUrlAndAddToTeilerApp(frontendUrl, pingSession, teilerApp::setFrontendReachable);
         }
     }
 
-    private void updatePingBackendUrl(TeilerApp teilerApp) {
+    private void updatePingBackendUrl(TeilerApp teilerApp, PingSession pingSession) {
         String backendUrl = (teilerApp.getBackendCheckUrl() != null) ? teilerApp.getBackendCheckUrl() : teilerApp.getBackendUrl();
-        if (backendUrl != null) {
-            teilerApp.setBackendReachable(ping(backendUrl));
-        }
+        pingUrlAndAddToTeilerApp(backendUrl, pingSession, teilerApp::setBackendReachable);
     }
 
+    private void pingUrlAndAddToTeilerApp(String url, PingSession pingSession, Consumer<Boolean> pingResultConsumer) {
+        if (url != null) {
+            pingSession.isUrlReachable(url).ifPresentOrElse(
+                    urlReachable -> pingResultConsumer.accept(urlReachable),
+                    () -> {
+                        boolean pingResult = ping(url);
+                        pingSession.addUrlReachable(url, pingResult);
+                        pingResultConsumer.accept(pingResult);
+                    });
+        }
+    }
 
     public boolean ping(String url) {
         return (url != null && !url.isEmpty()) ? openConnectionAndPing(url) : false;

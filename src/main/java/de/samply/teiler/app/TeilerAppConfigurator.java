@@ -5,6 +5,7 @@ import de.samply.teiler.singlespa.SingleSpaLinkGenerator;
 import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import de.samply.teiler.utils.EnvironmentUtils;
 import de.samply.teiler.utils.Ping;
+import de.samply.teiler.utils.PingSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -223,11 +224,11 @@ public class TeilerAppConfigurator {
 
     @Scheduled(cron = TeilerBackendConst.CHECK_URLS_CRON_EXPRESSION_SV)
     public void updateLanguageAppIdTeilerAppMap() {
+        PingSession pingSession = new PingSession();
         getLanguageAppIdTeilerAppMap().values().stream()
                 .map(appIdTeilerAppMap -> appIdTeilerAppMap.values())
                 .flatMap(Collection::stream).toList()
-                .forEach(teilerApp -> ping.updatePing(teilerApp));
-
+                .forEach(teilerApp -> ping.updatePing(teilerApp, pingSession));
     }
 
     public List<TeilerApp> getTeilerApps(String language) {
