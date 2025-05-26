@@ -7,7 +7,6 @@ public class TeilerBackendConst {
     // REST API path
     public final static String INFO_PATH = "/info";
     public final static String APPS_PATH = "/apps/{language}";
-    public final static String CONFIG_PATH = "/config";
     public final static String IMPORT_MAP_PATH = "/import-map";
     public final static String ASSETS_PATH = "/assets";
     public final static String TEILER_DASHBOARD_VARIABLE_PATH = "/variable/{variable}";
@@ -40,7 +39,6 @@ public class TeilerBackendConst {
     public final static String IN_MENU_SUFFIX = "INMENU";
     public final static String SUBROUTES_SUFFIX = "SUBROUTES";
     public final static String TEILER_ORCHESTRATOR_URL = "TEILER_ORCHESTRATOR_URL";
-    public final static String CONFIG_ENV_VAR_PATH = "CONFIG_ENV_VAR_PATH";
     public final static String TEILER_CONFIG_UPDATER_CRON = "TEILER_CONFIG_UPDATER_CRON";
     public final static String TEILER_BACKEND_ASSETS_DIRECTORY = "TEILER_BACKEND_ASSETS_DIRECTORY";
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
@@ -57,7 +55,6 @@ public class TeilerBackendConst {
     public final static String TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH_SV = HEAD_SV + TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH + ":#{''}" + BOTTOM_SV;
     public final static String PROJECT_ORGANISATION_SV = HEAD_SV + PROJECT_ORGANISATION + ":samply" + BOTTOM_SV;
     public final static String TEILER_ORCHESTRATOR_URL_SV = HEAD_SV + TEILER_ORCHESTRATOR_URL + ":#{null}" + BOTTOM_SV;
-    public final static String CONFIG_ENV_VAR_PATH_SV = HEAD_SV + CONFIG_ENV_VAR_PATH + BOTTOM_SV;
     public final static String TEILER_CONFIG_UPDATER_CRON_SV = HEAD_SV + TEILER_CONFIG_UPDATER_CRON + ":#{'-'}" + BOTTOM_SV;
     public final static String TEILER_BACKEND_ASSETS_DIRECTORY_SV = HEAD_SV + TEILER_BACKEND_ASSETS_DIRECTORY + ":#{null}" + BOTTOM_SV;
     public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS_SV = HEAD_SV + PING_CONNECTION_TIMEOUT_IN_SECONDS + ":5" + BOTTOM_SV;

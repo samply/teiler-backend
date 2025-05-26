@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
-import de.samply.teiler.config.ConfigBlock;
-import de.samply.teiler.config.ConfigBlocksConfigurator;
 import de.samply.teiler.singlespa.ImportsMapConfigurator;
 import de.samply.teiler.ui.TeilerDashboardConfigurator;
 import de.samply.teiler.utils.CorsChecker;
@@ -39,7 +37,6 @@ public class TeilerBackendController {
     private CorsChecker corsChecker;
     private TeilerAppConfigurator teilerAppConfigurator;
     private ImportsMapConfigurator importsMapConfigurator;
-    private ConfigBlocksConfigurator configBlocksConfigurator;
     private String defaultLanguage;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -114,18 +111,6 @@ public class TeilerBackendController {
                 : new ResponseEntity<>("", httpHeaders, HttpStatus.NOT_FOUND);
     }
 
-
-    @GetMapping(TeilerBackendConst.CONFIG_PATH)
-    public ResponseEntity<ConfigBlock[]> getApps(HttpServletRequest request) {
-
-        HttpHeaders httpHeaders = createBasicHeaders(request);
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-
-        return new ResponseEntity<>(configBlocksConfigurator.getConfigBlocks(), httpHeaders, HttpStatus.OK);
-
-    }
-
-
     @GetMapping(TeilerBackendConst.ASSETS_PATH + "/{fileName}")
     public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName, HttpServletRequest request) {
         try {
@@ -151,51 +136,6 @@ public class TeilerBackendController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-/*
-    @GetMapping(TeilerBackendConst.ASSETS_PATH + "/colors/{colorName}")
-    public ResponseEntity<String> getBackgroundColor(@PathVariable String colorName) {
-        try {
-            // Laden der JSON
-            Resource resource = resourceLoader.getResource("classpath:color-palettes.json");
-            InputStream inputStream = resource.getInputStream();
-
-            // Einlesen der JSON in String
-            StringBuilder jsonContent = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonContent.append(line);
-                }
-            }
-
-            String jsonString = jsonContent.toString();
-            Map<String, String> colors = parseJsonColors(jsonString);
-
-            // Überprüfen, ob die Farbe vorhanden ist
-            if (!colors.containsKey(colorName)) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Rückgabe der Farbe
-            return ResponseEntity.ok().body(colors.get(colorName));
-        } catch (IOException e) {
-            logger.error("Fehler beim Laden der Farbe", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    // Manuelles Parsen des JSON-Strings, um die Farben zu extrahieren
-    private Map<String, String> parseJsonColors(String jsonString) {
-        Map<String, String> colors = new HashMap<>();
-        JSONObject jsonObject = new JSONObject(jsonString);
-        for (String key : jsonObject.keySet()) {
-            colors.put(key, jsonObject.getString(key));
-        }
-        return colors;
-    }
-
-*/
 
     private TeilerApp[] fetchApps(String language) {
         if (language == null) {
@@ -230,11 +170,6 @@ public class TeilerBackendController {
     @Autowired
     public void setImportsMapConfigurator(ImportsMapConfigurator importsMapConfigurator) {
         this.importsMapConfigurator = importsMapConfigurator;
-    }
-
-    @Autowired
-    public void setConfigBlocksConfigurator(ConfigBlocksConfigurator configBlocksConfigurator) {
-        this.configBlocksConfigurator = configBlocksConfigurator;
     }
 
     @Autowired
