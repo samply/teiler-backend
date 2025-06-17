@@ -39,14 +39,32 @@ public class SingleSpaLinkGenerator {
 
     private String createUrl(String baseUrl, String path) {
         try {
-            return (baseUrl != null) ? UriComponentsBuilder
-                    .fromHttpUrl(baseUrl)
-                    .path('/' + path)
-                    .toUriString()
-                    .substring(new URL(baseUrl).getProtocol().length() + 1) : null;
+            return (baseUrl != null) ?
+                    (isAbsoluteUrl(baseUrl)) ? createUrlFromAbsoluteBaseUrl(baseUrl, path) :
+                            createUrlFromRelativeBaseUrl(baseUrl, path)
+                    : null;
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String createUrlFromAbsoluteBaseUrl(String baseUrl, String path) throws MalformedURLException {
+        return UriComponentsBuilder
+                .fromHttpUrl(baseUrl)
+                .path('/' + path)
+                .toUriString()
+                .substring(new URL(baseUrl).getProtocol().length() + 1);
+    }
+
+    private String createUrlFromRelativeBaseUrl(String baseUrl, String path) throws MalformedURLException {
+        return UriComponentsBuilder
+                .fromPath(baseUrl)
+                .path('/' + path)
+                .toUriString();
+    }
+
+    private boolean isAbsoluteUrl(String url) {
+        return url.startsWith("http://") || url.startsWith("https://");
     }
 
 }
