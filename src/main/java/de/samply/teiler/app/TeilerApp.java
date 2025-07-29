@@ -24,7 +24,7 @@ public class TeilerApp implements Serializable {
     private Boolean isExternLink;
     private Boolean isActivated;
     private Boolean isLocal;
-    private TeilerAppRole[] roles;
+    private String[] roles;
     private String iconClass;
     private String iconSourceUrl;
     private String backendUrl;
@@ -135,11 +135,11 @@ public class TeilerApp implements Serializable {
         }
     }
 
-    public TeilerAppRole[] getRoles() {
+    public String[] getRoles() {
         return roles;
     }
 
-    public void setRoles(TeilerAppRole[] roles) {
+    public void setRoles(String[] roles) {
         this.roles = roles;
     }
 
@@ -279,7 +279,7 @@ public class TeilerApp implements Serializable {
             if (roles == teilerApp.roles) return true;
             if (roles == null || roles.getClass() != teilerApp.roles.getClass() || roles.length != teilerApp.roles.length)
                 return false;
-            Set<TeilerAppRole> rolesSet = new HashSet<>(Arrays.stream(roles).toList());
+            Set<String> rolesSet = new HashSet<>(Arrays.stream(roles).toList());
             return Arrays.stream(teilerApp.roles).filter(role -> !rolesSet.contains(role)).toList().size() == 0;
         }
 

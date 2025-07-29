@@ -64,7 +64,7 @@ public class TeilerAppUtils {
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerBackendConst.SUBROUTES_SUFFIX), TeilerApp::setSubroutes);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerBackendConst.SINGLE_SPA_MAIN_JS_SUFFIX), TeilerApp::setSingleSpaMainJs);
         teilerAppSetterMap.put(key -> isSuffix(key, TeilerBackendConst.ROLES_SUFFIX), (teilerApp, value) -> teilerApp.setRoles(
-                Arrays.stream(value.trim().split(",")).map(role -> TeilerAppRole.valueOf(role)).toArray(TeilerAppRole[]::new)));
+                Arrays.stream(value.trim().split(",")).toArray(String[]::new)));
 
         return teilerAppSetterMap;
 

@@ -61,7 +61,7 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.APPS_PATH)
-    public ResponseEntity<TeilerApp[]> getApps(@PathVariable String language, HttpServletRequest request) {
+    public ResponseEntity<TeilerApp[]> fetchApps(@PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -71,7 +71,7 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.IMPORT_MAP_PATH)
-    public ResponseEntity<String> getImportMap(HttpServletRequest request) {
+    public ResponseEntity<String> fetchImportMap(HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.set("Content-Type", "application/importmap+json");
@@ -80,8 +80,19 @@ public class TeilerBackendController {
 
     }
 
+    @GetMapping(TeilerBackendConst.ROLES_PATH)
+    public ResponseEntity<String> fetchRoles(HttpServletRequest request) throws JsonProcessingException {
+
+        HttpHeaders httpHeaders = createBasicHeaders(request);
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        return new ResponseEntity<>(objectMapper.writeValueAsString(
+                teilerDashboardConfigurator.getGroupRoleMap()), httpHeaders, HttpStatus.OK);
+
+    }
+
     @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLES_PATH)
-    public ResponseEntity<String> getVariables(@PathVariable String language, HttpServletRequest request) throws JsonProcessingException {
+    public ResponseEntity<String> fetchVariables(@PathVariable String language, HttpServletRequest request) throws JsonProcessingException {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -92,13 +103,13 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_PATH)
-    public ResponseEntity<String> getDashboardVariable(
+    public ResponseEntity<String> fetchDashboardVariable(
             @PathVariable String variable, HttpServletRequest request) {
-        return getDashboardVariableWithLanguage(variable, null, request);
+        return fetchDashboardVariableWithLanguage(variable, null, request);
     }
 
     @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH)
-    public ResponseEntity<String> getDashboardVariableWithLanguage(
+    public ResponseEntity<String> fetchDashboardVariableWithLanguage(
             @PathVariable String variable, @PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
@@ -112,7 +123,7 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.ASSETS_PATH + "/{fileName}")
-    public ResponseEntity<Resource> getTeilerBackendAsset(@PathVariable String fileName, HttpServletRequest request) {
+    public ResponseEntity<Resource> fetchTeilerBackendAsset(@PathVariable String fileName, HttpServletRequest request) {
         try {
             // Pfad zur Datei
             Path filePath = Paths.get(teilerBackendAssetsDirectory, fileName);

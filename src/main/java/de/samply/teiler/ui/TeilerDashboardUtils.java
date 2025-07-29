@@ -5,9 +5,12 @@ import org.springframework.util.StringUtils;
 
 public class TeilerDashboardUtils {
 
+    public static boolean isTeilerDashboardRole(String role) {
+        return role.startsWith(TeilerBackendConst.TEILER_ROLE_PREFIX);
+    }
 
     public static boolean isTeilerDashboard(String key) {
-        return key.contains(TeilerBackendConst.TEILER_DASHBOARD_PREFIX);
+        return key.startsWith(TeilerBackendConst.TEILER_DASHBOARD_PREFIX);
     }
 
     public static boolean isUrl(String key) {

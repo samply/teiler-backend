@@ -12,12 +12,23 @@ public class TeilerBackendConst {
     public final static String TEILER_DASHBOARD_VARIABLE_PATH = "/variable/{variable}";
     public final static String TEILER_DASHBOARD_VARIABLE_WITH_LANGUAGE_PATH = TEILER_DASHBOARD_VARIABLE_PATH + "/{language}";
     public final static String TEILER_DASHBOARD_VARIABLES_PATH = "/variables/{language}";
+    public final static String ROLES_PATH = "/roles";
 
     // Environment Variables
     public final static String DEFAULT_LANGUAGE = "DEFAULT_LANGUAGE";
     public final static String TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH = "TEILER_ORCHESTRATOR_HTTP_RELATIVE_PATH";
     public final static String PROJECT_ORGANISATION = "PROJECT_ORGANISATION";
-    public final static String APP_PREFIX = "TEILER_APP";
+
+    public final static String TEILER_ORCHESTRATOR_URL = "TEILER_ORCHESTRATOR_URL";
+    public final static String TEILER_CONFIG_UPDATER_CRON = "TEILER_CONFIG_UPDATER_CRON";
+    public final static String TEILER_BACKEND_ASSETS_DIRECTORY = "TEILER_BACKEND_ASSETS_DIRECTORY";
+    public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
+    public final static String PING_READ_TIMEOUT_IN_SECONDS = "PING_READ_TIMEOUT_IN_SECONDS";
+    public final static String CHECK_URLS_CRON_EXPRESSION = "CHECK_URLS_CRON_EXPRESSION";
+    public final static String HTTP_PROXY = "HTTP_PROXY";
+    public final static String HTTPS_PROXY = "HTTPS_PROXY";
+
+    // Environment Variables Suffix
     public final static String NAME_SUFFIX = "NAME";
     public final static String TITLE_SUFFIX = "TITLE";
     public final static String DESCRIPTION_SUFFIX = "DESCRIPTION";
@@ -34,18 +45,14 @@ public class TeilerBackendConst {
     public final static String ORDER_SUFFIX = "ORDER";
     public final static String ROUTER_LINK_EXTENSION_SUFFIX = "ROUTERLINKEXTENSION";
     public final static String SINGLE_SPA_MAIN_JS_SUFFIX = "SINGLESPAMAINJS";
-    public final static String TEILER_DASHBOARD_PREFIX = "TEILER_DASHBOARD";
     public final static String URL_SUFFIX = "URL";
     public final static String IN_MENU_SUFFIX = "INMENU";
     public final static String SUBROUTES_SUFFIX = "SUBROUTES";
-    public final static String TEILER_ORCHESTRATOR_URL = "TEILER_ORCHESTRATOR_URL";
-    public final static String TEILER_CONFIG_UPDATER_CRON = "TEILER_CONFIG_UPDATER_CRON";
-    public final static String TEILER_BACKEND_ASSETS_DIRECTORY = "TEILER_BACKEND_ASSETS_DIRECTORY";
-    public final static String PING_CONNECTION_TIMEOUT_IN_SECONDS = "PING_CONNECTION_TIMEOUT_IN_SECONDS";
-    public final static String PING_READ_TIMEOUT_IN_SECONDS = "PING_READ_TIMEOUT_IN_SECONDS";
-    public final static String CHECK_URLS_CRON_EXPRESSION = "CHECK_URLS_CRON_EXPRESSION";
-    public final static String HTTP_PROXY = "HTTP_PROXY";
-    public final static String HTTPS_PROXY = "HTTPS_PROXY";
+
+    // Environment Variables Prefix
+    public final static String APP_PREFIX = "TEILER_APP";
+    public final static String TEILER_DASHBOARD_PREFIX = "TEILER_DASHBOARD";
+    public final static String TEILER_ROLE_PREFIX = "TEILER_ROLE";
 
 
     // Spring Values

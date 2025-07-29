@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class TeilerDashboardConfigurator {
@@ -20,7 +19,8 @@ public class TeilerDashboardConfigurator {
     private final Map<String, String> dashboardVariables = new HashMap<>();
     private final Map<String, String> languageUrlMap = new HashMap<>();
     private final Set<String> languages;
-    private final Map<String, Map<String,String>> languageDashboardVariablesCache = new HashMap<>();
+    private final Map<String, String> groupRoleMap = new HashMap<>();
+    private final Map<String, Map<String, String>> languageDashboardVariablesCache = new HashMap<>();
 
     public TeilerDashboardConfigurator(@Value(TeilerBackendConst.DEFAULT_LANGUAGE_SV) String defaultLanguage,
                                        EnvironmentUtils environmentUtils) {
@@ -28,6 +28,7 @@ public class TeilerDashboardConfigurator {
         this.languages = fetchLanguages();
         initializeLanguageUrlMap(environmentUtils);
         initializeDashboardVariables(environmentUtils);
+        initializeGroupRoleMap(environmentUtils);
     }
 
     private Set<String> fetchLanguages() {
@@ -46,6 +47,11 @@ public class TeilerDashboardConfigurator {
     private void initializeDashboardVariables(EnvironmentUtils environmentUtils) {
         logger.info("Initialize Dashboard Variables...");
         environmentUtils.addKeyValuesFromEnvironment(TeilerDashboardUtils::isTeilerDashboard, this::addDashboardVariable);
+    }
+
+    private void initializeGroupRoleMap(EnvironmentUtils environmentUtils) {
+        logger.info("Initialize Role Group Map...");
+        environmentUtils.addKeyValuesFromEnvironment(TeilerDashboardUtils::isTeilerDashboardRole, this::addGroupRole);
     }
 
     private void addKeyValue(String key, String value) {
@@ -70,6 +76,15 @@ public class TeilerDashboardConfigurator {
             this.dashboardVariables.put(
                     key.trim().substring((TeilerBackendConst.TEILER_DASHBOARD_PREFIX + "_").length()).toUpperCase(),
                     value);
+        }
+    }
+
+    private void addGroupRole(String key, String value) {
+        if (StringUtils.isNotEmpty(key) && StringUtils.isNotEmpty(value)) {
+            // The prefix is removed
+            this.groupRoleMap.put(
+                    value,
+                    key.trim().substring((TeilerBackendConst.TEILER_ROLE_PREFIX + "_").length()).toUpperCase());
         }
     }
 
@@ -141,13 +156,17 @@ public class TeilerDashboardConfigurator {
         return true;
     }
 
-    private String removeLanguageFromVariable(String variable){
+    private String removeLanguageFromVariable(String variable) {
         ArrayList<String> elements = new ArrayList<>(Arrays.asList(variable.split("_")));
         if (elements.size() > 1 && languages.contains(elements.get(0))) {
             elements.remove(0);
             return String.join("_", elements);
         }
         return variable;
+    }
+
+    public Map<String, String> getGroupRoleMap() {
+        return groupRoleMap;
     }
 
 }

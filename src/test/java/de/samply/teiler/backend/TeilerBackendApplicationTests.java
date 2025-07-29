@@ -2,7 +2,6 @@ package de.samply.teiler.backend;
 
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
-import de.samply.teiler.app.TeilerAppRole;
 import de.samply.teiler.utils.ProjectVersion;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +69,7 @@ class TeilerBackendApplicationTests {
         teilerApp.setDescription("description1");
         teilerApp.setExternLink(false);
         teilerApp.setSourceUrl("http://sourceurl1:9292");
-        TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
+        String[] roles = {"USER"};
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("name1");
         teilerApp.setSingleSpaLink("@samply/de/name1");
@@ -98,7 +97,7 @@ class TeilerBackendApplicationTests {
         teilerApp.setDescription("description2");
         teilerApp.setExternLink(false);
         teilerApp.setSourceUrl("http://sourceurl2:7070");
-        TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
+        String[] roles = {"USER", "PUBLIC"};
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("name2");
         teilerApp.setSingleSpaLink("@samply/de/name2");
@@ -123,7 +122,7 @@ class TeilerBackendApplicationTests {
         teilerApp.setDescription("description2" + language2);
         teilerApp.setExternLink(false);
         teilerApp.setSourceUrl("http://sourceurl2:7070/" + language2.toLowerCase());
-        TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER, TeilerAppRole.TEILER_PUBLIC};
+        String[] roles = {"USER", "PUBLIC"};
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("en/name2");
         teilerApp.setSingleSpaLink("@samply/en/name2");
@@ -148,7 +147,7 @@ class TeilerBackendApplicationTests {
         teilerApp.setDescription("description1");
         teilerApp.setExternLink(false);
         teilerApp.setSourceUrl("http://sourceurl1:9292");
-        TeilerAppRole[] roles = {TeilerAppRole.TEILER_USER};
+        String[] roles = {"USER"};
         teilerApp.setRoles(roles);
         teilerApp.setRouterLink("en/name1");
         teilerApp.setSingleSpaLink("@samply/en/name1");
@@ -210,13 +209,13 @@ class TeilerBackendApplicationTests {
                         "TEILER_APP1_ICONSOURCEURL=" + teilerApp1.getIconSourceUrl(),
                         "TEILER_APP1_SINGLESPAMAINJS=" + teilerApp1.getSingleSpaMainJs(),
                         "TEILER_APP1_SUBROUTES=" + teilerApp1.getSubroutes(),
-                        "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
+                        "TEILER_APP1_ROLES=" + String.join(",", Arrays.stream(teilerApp1.getRoles()).toArray(String[]::new)),
                         "TEILER_APP2_NAME=" + teilerApp2.getName(),
                         "TEILER_APP2_TITLE=" + teilerApp2.getTitle(),
                         "TEILER_APP2_DESCRIPTION=" + teilerApp2.getDescription(),
                         "TEILER_APP2_ISEXTERNALLINK=" + teilerApp2.getExternLink(),
                         "TEILER_APP2_DE_SOURCEURL=" + teilerApp2.getSourceUrl(),
-                        "TEILER_APP2_ROLES=" + String.join(",", Arrays.stream(teilerApp2.getRoles()).map(TeilerAppRole::toString).toArray(String[]::new)),
+                        "TEILER_APP2_ROLES=" + String.join(",", Arrays.stream(teilerApp2.getRoles()).toArray(String[]::new)),
                         "TEILER_APP2_EN_NAME=" + teilerApp3.getName(),
                         "TEILER_APP2_EN_TITLE=" + teilerApp3.getTitle(),
                         "TEILER_APP2_EN_DESCRIPTION=" + teilerApp3.getDescription(),
