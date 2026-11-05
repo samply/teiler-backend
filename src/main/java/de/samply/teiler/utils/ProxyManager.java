@@ -3,7 +3,7 @@ package de.samply.teiler.utils;
 import de.samply.teiler.backend.TeilerBackendConst;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
