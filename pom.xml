@@ -14,7 +14,7 @@
 	<name>teiler-backend</name>
 	<description>Teiler Backend</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
 		<maven-model.version>3.9.16</maven-model.version>
 		<json.version>20260814</json.version>
 	</properties>
