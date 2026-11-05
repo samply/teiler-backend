@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 
 @Component
 public class SingleSpaLinkGenerator {
@@ -50,10 +50,10 @@ public class SingleSpaLinkGenerator {
 
     private String createUrlFromAbsoluteBaseUrl(String baseUrl, String path) throws MalformedURLException {
         return UriComponentsBuilder
-                .fromHttpUrl(baseUrl)
+                .fromUriString(baseUrl)
                 .path('/' + path)
                 .toUriString()
-                .substring(new URL(baseUrl).getProtocol().length() + 1);
+                .substring(URI.create(baseUrl).toURL().getProtocol().length() + 1);
     }
 
     private String createUrlFromRelativeBaseUrl(String baseUrl, String path) throws MalformedURLException {

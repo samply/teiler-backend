@@ -56,7 +56,7 @@ public class ProxyManager {
         } else if (httpProxy != null){
             proxy = httpProxy;
         }
-        return (HttpURLConnection) new URL(url).openConnection(proxy);
+        return (HttpURLConnection) URI.create(url).toURL().openConnection(proxy);
     }
 
 }
