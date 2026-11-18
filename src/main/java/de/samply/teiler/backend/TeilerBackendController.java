@@ -1,7 +1,6 @@
 package de.samply.teiler.backend;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import de.samply.teiler.app.TeilerApp;
 import de.samply.teiler.app.TeilerAppConfigurator;
 import de.samply.teiler.singlespa.ImportsMapConfigurator;
@@ -81,7 +80,7 @@ public class TeilerBackendController {
     }
 
     @GetMapping(TeilerBackendConst.TEILER_DASHBOARD_VARIABLES_PATH)
-    public ResponseEntity<String> getVariables(@PathVariable String language, HttpServletRequest request) throws JsonProcessingException {
+    public ResponseEntity<String> getVariables(@PathVariable String language, HttpServletRequest request) {
 
         HttpHeaders httpHeaders = createBasicHeaders(request);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

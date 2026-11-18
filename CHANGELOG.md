@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support relative paths in single spa URL's
 
 ### Changed
-- Java 21
+- Java 25 (Docker image eclipse-temurin:25-jre)
+- Spring Boot 4.1.2 (Spring Framework 7, Jackson 3)
+- Maven Wrapper with Maven 3.10.1 (.mvn/ was missing from the repository), maven-model 3.10.1
+- Removed SnakeYAML 1.33 pin (security issue) and the unused Log4j2 SLF4J binding
+- GitHub Actions updated, trivy-action pinned
 
 ### Removed
 - Config App

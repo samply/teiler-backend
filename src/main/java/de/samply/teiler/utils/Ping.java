@@ -40,7 +40,7 @@ public class Ping {
         String frontendUrl = (teilerApp.getSourceCheckUrl() != null) ? teilerApp.getSourceCheckUrl() : teilerApp.getSourceUrl();
         if (frontendUrl != null) {
             if (teilerApp.getSingleSpaMainJs() != null) {
-                frontendUrl = UriComponentsBuilder.fromHttpUrl(frontendUrl).path('/' + teilerApp.getSingleSpaMainJs()).toUriString();
+                frontendUrl = UriComponentsBuilder.fromUriString(frontendUrl).path('/' + teilerApp.getSingleSpaMainJs()).toUriString();
             }
             pingUrlAndAddToTeilerApp(frontendUrl, pingSession, teilerApp::setFrontendReachable);
         }

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>4.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.samply</groupId>
@@ -14,46 +14,20 @@
 	<name>teiler-backend</name>
 	<description>Teiler Backend</description>
 	<properties>
-		<java.version>21</java.version>
-		<slf4j-api.version>2.0.7</slf4j-api.version>
-		<log4j-slf4j2-impl.version>2.20.0</log4j-slf4j2-impl.version>
-		<maven-model.version>3.9.4</maven-model.version>
-		<json.version>20230618</json.version>
-		<commons-lang3.version>3.13.0</commons-lang3.version>
+		<java.version>25</java.version>
+		<maven-model.version>3.10.1</maven-model.version>
+		<json.version>20260814</json.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<!-- TODO: Security Issue: Remove snakeyaml with update of Spring -->
-			<exclusions>
-				<exclusion>
-					<groupId>org.yaml</groupId>
-					<artifactId>snakeyaml</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- TODO: Security Issue: Remove snakeyaml with update of Spring -->
-		<dependency>
-			<groupId>org.yaml</groupId>
-			<artifactId>snakeyaml</artifactId>
-			<version>1.33</version>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-api.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j2-impl</artifactId>
-			<version>${log4j-slf4j2-impl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -63,7 +37,6 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
